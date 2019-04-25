@@ -21,14 +21,13 @@ def tax_recursive(inc):
     Returns the amount of federal tax due
 
     """
-    return 0
-    # if inc > 210371:
-    #     return .33 * (inc - 210371) + tax(210371)
-    # elif inc > 147667:
-    #     return .29 * (inc - 147667) + tax(147667)
-    # elif inc > 95259:
-    #     return .26 * (inc - 95259)  + tax(95259)
-    # elif inc > 47630:
-    #     return .205 * (inc - 47630) + tax(47630)
-    # else:
-    #     return .15 * inc
+    if inc > 210371:
+        return .33 * (inc - 210371) + tax(210371)
+    elif inc > 147667:
+        return .29 * (inc - 147667) + tax(147667)
+    elif inc > 95259:
+        return .26 * (inc - 95259)  + tax(95259)
+    elif inc > 47630:
+        return .205 * (inc - 47630) + tax(47630)
+    else:
+        return .15 * inc
