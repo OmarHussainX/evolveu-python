@@ -4,6 +4,9 @@
 
 
 # misc
+
+__pycache__
+
 .vscode
 
 .DS_Store
