@@ -7,6 +7,14 @@
 
 __pycache__
 
+# for virtual environments...
+pyvenv.cfg
+bin
+include
+lib
+lib64
+share
+
 .vscode
 
 .DS_Store
