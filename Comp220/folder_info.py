@@ -2,20 +2,22 @@ import os
 
 def folder_report():
     """
-    Generates a 'folder_info.txt' report for a specified folder with
+    Generates a 'folder_info.txt' report for a specified folder, with
     information on the entries (files, folders - excluding '.', '..')
     therein, the total number of entires, and their size
     """
     path = '/home/omar/Downloads'
     file_list = []
     folder_list = []
-    colwidth = 12
+    col_width = 12   #
 
     # Obtain an iterator of os.DirEntry objects for the specified
-    #  path (excluding '.' '..')
+    # path, and use that to iterate through the entries (files & folders)
+    # in the folder
     #
     # Note:
-    #   The items are in arbitrary order
+    #   The iterator excludes '.' '..'
+    #   The items are in _arbitrary_ order
     #   scandir() preferable to listdir() when requesting file type/attribute data,
     #   because DirEntry objects expose this info. when scanning directories on
     #   supported operating systems
@@ -26,11 +28,20 @@ def folder_report():
             else:
                 folder_list.append((entry.name, entry.stat().st_size))
 
+
     def case_insensitive(val):
+        """
+        Helper function,
+        Used to sort files & folders alphabetically
+        """
         return val[0].lower()
 
-
     def format_size(val):
+        """
+        Helper function,
+        Receives file-size in bytes as a _number_, converts the size to
+        a kb, Mb, Gb, _string_, and right-justifies the string
+        """
         if val < 1024:
             val = f'{val} b '
         elif val < 1048576:
@@ -40,22 +51,26 @@ def folder_report():
         elif val < 1099511627776:
             val = f'{round(val/1073741824, 1) } Gb'
 
-        return f'{" " * (colwidth-len(val))}{val}'
+        return f'{" " * (col_width - len(val))}{val}'
 
 
+    # sort the file & folder lists
     folder_list.sort(key=case_insensitive)
+    file_list.sort(key=case_insensitive)
 
+
+    # generate the report
+    print(f'{path}\n')
     for folder in folder_list:
         print(f' {format_size(folder[1])}  {folder[0]}')
 
 
-    file_list.sort(key=case_insensitive)
     for file in file_list:
         print(f' {format_size(file[1])}  {file[0]}')
 
 
 def main():
-    print(f'\n---------- {__file__} ----------')
+    # print(f'---------- {__file__} ----------\n')
     folder_report()
 
 
