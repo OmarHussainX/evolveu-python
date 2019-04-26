@@ -25,7 +25,7 @@ def read_file():
             else_count += line.count('else')
     
     return f'Lines: {len(file_lines)}, \
-\'else \' statements: {else_count}, \
+\'else\' statements: {else_count}, \
 characters: {char_count} ({char_count - newline_count} excluding \'\\n\')'
 
 
