@@ -25,13 +25,13 @@ def read_file():
             else_count += line.count('else')
     
     return f'Lines: {len(file_lines)}, \
-        \'else \' statements: {else_count}, \
-        characters: {char_count} ({char_count - newline_count} excluding \'\\n\')'
+\'else \' statements: {else_count}, \
+characters: {char_count} ({char_count - newline_count} excluding \'\\n\')'
 
 
 def main():
-    print('--------------------------')
-    read_file()
+    print(f'\n---------- {__file__} ----------')
+    print(read_file())
 
 
 if __name__ == '__main__':
