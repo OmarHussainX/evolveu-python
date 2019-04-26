@@ -9,7 +9,7 @@ def folder_report():
     path = '/home/omar/Downloads'
     file_list = []
     folder_list = []
-    col_width = 12   #
+    col_width = 8
 
     # Obtain an iterator of os.DirEntry objects for the specified
     # path, and use that to iterate through the entries (files & folders)
@@ -71,27 +71,15 @@ def folder_report():
     # generate the report
     with open('folder_info.txt', 'w') as report:
 
-        report.write(f'{path}\n\n{len(folder_list)} folders\n{len(file_list)} files (total: {total_file_size})\n')
+        report.write(f'{path}\n\n{len(folder_list)} folders\n{len(file_list)} files (total: {total_file_size})\n\n')
 
         for folder in folder_list:
-            report.write(f' {format_size(folder[1])}  {folder[0]}')
+            report.write(f' {format_size(folder[1])}  /{folder[0]}\n')
 
         for file in file_list:
-            report.write(f' {format_size(file[1])}  {file[0]}')
+            report.write(f' {format_size(file[1])}  {file[0]}\n')
 
 
-""" 
-    print(f'{path}\n\n\
-{len(folder_list)} folders\n\
-{len(file_list)} files (total: {total_file_size})\n')
-
-    for folder in folder_list:
-        print(f' {format_size(folder[1])}  {folder[0]}')
-
-    for file in file_list:
-        print(f' {format_size(file[1])}  {file[0]}')
-
- """
 def main():
     print(f'\n---------- {__file__} ----------')
     folder_report()
