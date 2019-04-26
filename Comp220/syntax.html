@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css"/>
+    <title>JS syntax exercise</title>
+</head>
+<body>
+    <div class="flex-container-col">
+        <div class="panel">
+            <h1>JS syntax</h1>
+            <ul>
+                <li>
+                    define attributes / variables
+                    <ul>
+                        <!-- ============================================  -->
+                        <li>number</li>
+                        <script>
+                            // Declare integer variable and print it
+                            const num = 42;
+                            console.log(`number 'num': ${num}`);
+                        </script>
+
+                        <!-- ============================================  -->
+                        <li>string</li>
+                        <script>
+                            // Declare string variable and print it
+                            const str = "The answer to the life, universe, and everything";
+                            console.log(`string 'str': ${str}`);
+                        </script>
+
+                        <!-- ============================================  -->
+                        <li>boolean</li>
+                        <script>
+                            // Declare boolean variable and print it
+                            const bool = true;
+                            console.log(`boolean 'bool': ${bool}`);
+                        </script>    
+
+                        <!-- ============================================  -->
+                        <li>array</li>
+                        <script>
+                            // Declare array variable and print it
+                            const myLaptop = ["ThinkPad", "T", 580];
+                            console.log(`array 'myLaptop': ${myLaptop}`);
+                        </script>    
+
+                        <!-- ============================================  -->
+                        <li>dictionary / objects</li>
+                        <script>
+                            // Create an object, a variable that references it, and print
+                            const learner = {
+                                name: 'Omar',
+                                education: 'Bsc',
+                                JSlevel: 4
+                            };
+                            console.log("Object 'learner':", learner);
+                        </script>    
+
+                        <!-- ============================================  -->
+                        <li>undefined</li>
+                        <script>
+                            // Declare undefined variable and print it
+                            const undef = undefined;
+                            console.log(`undefined variable 'undef': ${undef}`);
+                        </script>
+                    </ul>
+                </li>
+                <li>
+
+                    <!-- ============================================  -->
+                    sample if / else
+                    <script>
+                        // basic if/else construct...
+                        const { name } = learner;
+                        if (name === 'Omar') {
+                            console.log("Assalaamolaikum, Omar!");
+                        } else
+                            console.log('Who are you!?');
+                    </script>
+                </li>
+                <li>
+
+                    <!-- ============================================  -->
+                    functions
+                    <ul>
+                        <li>parameters</li>
+                        <li>returns</li>
+                    </ul>
+                    <script>
+                        // function takes two parameters: num1 & num2, returns their sum
+                        const adder = function (num1, num2) {
+                            let sum = num1 + num2;
+                            return sum;
+                        }
+                        const adderArrow = (num1, num2) => num1 + num2;
+                        console.log("result of calling adder(2,3):", adder(2,3));
+                        console.log("result of calling adderArrow(4,5):", adderArrow(4,5));
+                    </script>
+                    <script>
+
+                        // ==========================================  -->
+                        // Working with arrays
+                        // (using one script block for: arrays, loops)
+
+                        // 'myLaptop'array was declared earlier:
+                        // myLaptop = ["ThinkPad", "T", 580];
+                        console.log(`array 'myLaptop before updates': ${myLaptop}`);
+
+                        // ==========================================  -->
+                        // Arrays - add to front
+                        myLaptop.unshift("Lenovo");
+                        console.log(`array 'myLaptop after add to front': ${myLaptop}`);
+
+                        // ==========================================  -->
+                        // Arrays - add to end
+                        myLaptop.push("8GB");
+                        console.log(`array 'myLaptop after add to end': ${myLaptop}`);
+
+                        // ==========================================  -->
+                        // Array - update values
+                        myLaptop[4] = "16GB";
+                        console.log(`array 'myLaptop after changing value': ${myLaptop}`);
+
+                        // ==========================================  -->
+                        // Working with loops
+                        // for loop
+                        console.log(`printing array contents via for loop:`);
+                        for (let i=0; i < myLaptop.length; i++) {
+                            console.log(myLaptop[i]);
+                        }
+
+                        // ==========================================  -->
+                        // for/in loop
+                        console.log(`printing array contents via for/in loop:`);
+                        for (item in myLaptop) {
+                            console.log(myLaptop[item]);
+                        }
+
+                        // ==========================================  -->
+                        // while loop
+                        console.log(`printing array contents via while loop:`);
+                        let i = 0;
+                        while (i < myLaptop.length) {
+                            console.log(myLaptop[i]);
+                            i++;
+                        }
+
+                        // ==========================================  -->
+                        // do while loop
+                        console.log(`printing array contents via do while:`);
+                        let j = 0;
+                        do {
+                            console.log(myLaptop[j]);
+                            j++;
+                        }
+                        while (j < myLaptop.length)
+
+                        // ==========================================  -->
+                        // forEach
+                        console.log(`printing array via forEach:`);
+                        myLaptop.forEach(function(item) {
+                            console.log(item);
+                        });
+
+                    </script>
+                <li>
+                    arrays
+                    <ul>
+                        <li>add to the front</li>
+                        <li>add to the end</li>
+                        <li>update values</li>
+                    </ul>
+                </li>
+                <li>
+                    loops
+                    <ul>
+                        <li>for</li>
+                        <li>for/in</li>
+                        <li>while</li>
+                        <li>do while</li>
+                        <li>forEach (with array and function)</li>
+                    </ul>
+                </li>
+                <li>
+                    Objects / Dictionaries
+                    <ul>
+                        <li>declare object</li>
+                        <li>lookup key to retrieve value</li>
+                    </ul>
+
+                    <script>
+                        // ==========================================  -->
+                        // Working with objects
+                        /*
+                        I already declared an Object earlier, under define/attributes:
+
+                        const learner = {
+                                name: 'Omar',
+                                education: 'Bsc',
+                                JSlevel: 4
+                            };
+                        -> Here's how to use a key to return the associated value:
+                        */
+                        console.log(`using object 'education' key to return value: ${learner['education']}`);
+                    </script>
+                </li>    
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
