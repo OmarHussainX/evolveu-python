@@ -5,7 +5,7 @@ def read_file():
     """
     # open file _with_ promise to close as soon as code block has executed
     with open('syntax.html', 'r') as f:
-        file_lines = f.readlines()
+        file_lines = f.readlines()  # list(f) also works
         char_count = 0
         newline_count = 0
         else_count = 0
