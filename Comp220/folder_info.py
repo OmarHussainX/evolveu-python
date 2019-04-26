@@ -14,6 +14,7 @@ def folder_report():
     # Obtain an iterator of os.DirEntry objects for the specified
     # path, and use that to iterate through the entries (files & folders)
     # in the folder
+    # For each entry generate a tuple: (name, size)
     #
     # Note:
     #   The iterator excludes '.' '..'
@@ -58,9 +59,20 @@ def folder_report():
     folder_list.sort(key=case_insensitive)
     file_list.sort(key=case_insensitive)
 
+    # calculate the total file size
+    total_file_size = 0
+    for file in file_list:
+        total_file_size += file[1]
+    
+    total_file_size = format_size(total_file_size).strip()
+
+
 
     # generate the report
-    print(f'{path}\n')
+    print(f'{path}\n\n\
+{len(folder_list)} folders\n\
+{len(file_list)} files (total: {total_file_size})\n')
+
     for folder in folder_list:
         print(f' {format_size(folder[1])}  {folder[0]}')
 
