@@ -1,5 +1,5 @@
 import csv
-from collections import OrderedDict
+# from collections import OrderedDict
 
 def census_report(filename):
     """
@@ -44,31 +44,37 @@ def census_report(filename):
                 res_cnt_by_sector[row["SECTOR"]] = int(row["RES_CNT"])
 
 
-        # Sort the dictionaries by key
+        # Sort the dictionaries by key (for ouptut)
         #   - obtain a list[] of tuples(,) for each key:value pair
         #   - use sorted() to sort the list
         #   - construct a new OrderedDict from the sorted list (using
         #     OrderedDict is essential as a regular dictionary would not
         #     preserve insertion order)
-        #
-        # Note: an alternative approach to sorting the dictionaries would
-        #       be to sort by key when preparing the report
-        res_cnt_by_class = OrderedDict(sorted(res_cnt_by_class.items()))
+        # 
+        # res_cnt_by_class = OrderedDict(sorted(res_cnt_by_class.items()))
         # res_cnt_by_sector = OrderedDict(sorted(res_cnt_by_sector.items()))
+        #
+        # Note: Taking alternative approach to the above:
+        #       Sort by key when preparing the report
 
         # Generate report
-        print(f'({line_count} records)\n')
-        print(f'RES_CNT by CLASS {res_cnt_by_class}\n')
-        # print(f'RES_CNT by SECTOR {res_cnt_by_sector}')
+        print(f'({line_count} records)\n\n')
+
+        print('RESIDENT COUNT BY CLASS')
+        print('-' * 33)
+        for key,val in sorted(res_cnt_by_class.items()):
+            print(format(key, '20'), format(val, '12,d'))
+
+        print('\n')
 
         print('RESIDENT COUNT BY SECTOR')
-        print('------------------------')
+        print('-' * 25)
         for key,val in sorted(res_cnt_by_sector.items()):
-            print(format(key, '12'), format(val, '10,d'))
+            print(format(key, '14'), format(val, '10,d'))
 
 
 def main():
-    print(f'\n---------- {__file__} ----------')
+    # print(f'\n---------- {__file__} ----------')
     census_report('Census_by_Community_2018.csv')
 
 
