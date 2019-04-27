@@ -50,13 +50,21 @@ def census_report(filename):
         #   - construct a new OrderedDict from the sorted list (using
         #     OrderedDict is essential as a regular dictionary would not
         #     preserve insertion order)
+        #
+        # Note: an alternative approach to sorting the dictionaries would
+        #       be to sort by key when preparing the report
         res_cnt_by_class = OrderedDict(sorted(res_cnt_by_class.items()))
-        res_cnt_by_sector = OrderedDict(sorted(res_cnt_by_sector.items()))
+        # res_cnt_by_sector = OrderedDict(sorted(res_cnt_by_sector.items()))
 
         # Generate report
         print(f'({line_count} records)\n')
         print(f'RES_CNT by CLASS {res_cnt_by_class}\n')
-        print(f'RES_CNT by SECTOR {res_cnt_by_sector}')
+        # print(f'RES_CNT by SECTOR {res_cnt_by_sector}')
+
+        print('RESIDENT COUNT BY SECTOR')
+        print('------------------------')
+        for key,val in sorted(res_cnt_by_sector.items()):
+            print(format(key, '12'), format(val, '10,d'))
 
 
 def main():
