@@ -10,12 +10,12 @@ Residual Sub Area          2,580
 
 
 RESIDENT COUNT BY SECTOR
-------------------------
-CENTRE           199,977
-EAST              58,405
-NORTH            160,576
-NORTHEAST        185,562
-NORTHWEST        175,448
-SOUTH            227,421
-SOUTHEAST        135,314
-WEST             124,533
+--------------------------------
+CENTRE                   199,977
+EAST                      58,405
+NORTH                    160,576
+NORTHEAST                185,562
+NORTHWEST                175,448
+SOUTH                    227,421
+SOUTHEAST                135,314
+WEST                     124,533

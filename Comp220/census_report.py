@@ -5,18 +5,18 @@ def census_report(filename):
     """
     Receive parameter 'filename', which references a csv file containing
     community census data from the City of Calgary.
-    Generates a 'census_report.txt' report, with information on the
-    number of lines/records processed, and sums of RES_CNT (resident count)
-    by CLASS (Industrial, Residential, etc.) and SECTOR (NW, SE, etc.).
+    Generates 'census_report.txt', containing information on the number
+    of lines/records processed, and sums of RES_CNT (resident count) by
+    CLASS (Industrial, Residential, etc.) and SECTOR (NW, SE, etc.).
     """
     with open(filename, mode='r') as csv_file:
-        #  obtain a reader object which can be used to iterate over the rows of
+        # Obtain a reader object which can be used to iterate over the rows of
         # the spreadsheet - the data in each row is mapped to a dictionary
-        # (specifically, and OrderedDict dictionary)
+        # (specifically, an OrderedDict dictionary)
         csv_reader = csv.DictReader(csv_file)
         
         # Initialise line/record count, and dictionaries for the total
-        # resident count by class, and by sector
+        # resident counts by class, and by sector
         line_count = 0
         res_cnt_by_class = {}
         res_cnt_by_sector = {}
@@ -49,13 +49,13 @@ def census_report(filename):
         #   - use sorted() to sort the list
         #   - construct a new OrderedDict from the sorted list (using
         #     OrderedDict is essential as a regular dictionary would not
-        #     preserve insertion order)
+        #     preserve insertion order when iterating over it)
         # 
         # res_cnt_by_class = OrderedDict(sorted(res_cnt_by_class.items()))
         # res_cnt_by_sector = OrderedDict(sorted(res_cnt_by_sector.items()))
         #
-        # Note: Taking alternative approach to the above:
-        #       Sort by key when preparing the report
+        # Note: Taking alternative approach to the above - instead of creating
+        # sorted dictionaries, sort by key when preparing the report
 
         # Generate report
         with open('census_report.txt', 'w') as report:
@@ -70,9 +70,9 @@ def census_report(filename):
             report.write('\n\n')
 
             report.write('RESIDENT COUNT BY SECTOR\n')
-            report.write('-' * 24 + '\n')
+            report.write('-' * 32 + '\n')
             for key,val in sorted(res_cnt_by_sector.items()):
-                report.write(format(key, '14') + format(val, '10,d') + '\n')
+                report.write(format(key, '20') + format(val, '12,d') + '\n')
 
 
 
