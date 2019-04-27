@@ -58,19 +58,22 @@ def census_report(filename):
         #       Sort by key when preparing the report
 
         # Generate report
-        print(f'({line_count} records)\n\n')
+        with open('census_report.txt', 'w') as report:
 
-        print('RESIDENT COUNT BY CLASS')
-        print('-' * 33)
-        for key,val in sorted(res_cnt_by_class.items()):
-            print(format(key, '20'), format(val, '12,d'))
+            report.write(f'({line_count} records)\n\n\n')
 
-        print('\n')
+            report.write('RESIDENT COUNT BY CLASS\n')
+            report.write('-' * 32 + '\n')
+            for key,val in sorted(res_cnt_by_class.items()):
+                report.write(format(key, '20') + format(val, '12,d') + '\n')
 
-        print('RESIDENT COUNT BY SECTOR')
-        print('-' * 25)
-        for key,val in sorted(res_cnt_by_sector.items()):
-            print(format(key, '14'), format(val, '10,d'))
+            report.write('\n\n')
+
+            report.write('RESIDENT COUNT BY SECTOR\n')
+            report.write('-' * 24 + '\n')
+            for key,val in sorted(res_cnt_by_sector.items()):
+                report.write(format(key, '14') + format(val, '10,d') + '\n')
+
 
 
 def main():
