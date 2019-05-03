@@ -17,13 +17,21 @@ columns = inv_wksheet.max_column
 
 
 # Iterate over rows in worksheet, build dictionary of:
-#   invoice Date with Invoice_ID as key
+#   invoice Date with Invoice_ID as key, AND
+#   lists of Invoice_ID with invoice Date as key
 dates_by_inv = {}
+inv_by_dates = {}
 for i in range(2,47+1):
         dates_by_inv[str(inv_wksheet.cell(i,2).value)] = inv_wksheet.cell(i,3).value
+        if inv_wksheet.cell(i,3).value in inv_by_dates:
+            inv_by_dates[str(inv_wksheet.cell(i,3).value)].append(int(inv_wksheet.cell(i,2).value))
+        else:
+            inv_by_dates[str(inv_wksheet.cell(i,3).value)] = [int(inv_wksheet.cell(i,2).value)]
 
 print('\ninvoice Date with Invoice_ID as key')
 print(dates_by_inv)
+print('\nInvoice_ID with invoice Date as key')
+print(inv_by_dates)
 
 
 # Iterate over rows in worksheet, build dictionary with Invoice_ID as key.
