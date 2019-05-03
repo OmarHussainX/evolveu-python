@@ -31,11 +31,11 @@ columns = inv_wksheet.max_column
 dates_by_inv = {}
 inv_by_dates = {}
 for i in range(2,47+1):
-        dates_by_inv[str(inv_wksheet.cell(i,2).value)] = inv_wksheet.cell(i,3).value
-        if inv_wksheet.cell(i,3).value in inv_by_dates:
-            inv_by_dates[str(inv_wksheet.cell(i,3).value)].append(int(inv_wksheet.cell(i,2).value))
+        dates_by_inv[str(inv_wksheet.cell(i,1).value)] = inv_wksheet.cell(i,2).value
+        if inv_wksheet.cell(i,2).value in inv_by_dates:
+            inv_by_dates[str(inv_wksheet.cell(i,2).value)].append(int(inv_wksheet.cell(i,1).value))
         else:
-            inv_by_dates[str(inv_wksheet.cell(i,3).value)] = [int(inv_wksheet.cell(i,2).value)]
+            inv_by_dates[str(inv_wksheet.cell(i,2).value)] = [int(inv_wksheet.cell(i,1).value)]
 
 print('\ninvoice Date with Invoice_ID as key')
 print(dates_by_inv)
@@ -67,6 +67,7 @@ print('\nunit Price with Product_ID as key')
 print(products_by_id)
 print('-----------------------------------\n\n')
 
+line_total = 0
 for (k,v) in inv_by_dates.items():
     print(f'invoices dated {k}: {v}')
     for i in v:
@@ -78,10 +79,11 @@ for (k,v) in inv_by_dates.items():
                 prod_id = str(l[0])
                 units_sold = l[1]
                 unit_price = products_by_id[prod_id]
-                line_total = units_sold * unit_price
+                line_total += units_sold * unit_price
 
                 print(f'prod. id: {prod_id}')
                 print(f'# units sold: {units_sold}')
                 print(f'unit price: {unit_price}')
                 print(f'line total: {line_total}')
                 
+print(f'\n\nfinal line total: {line_total}')
