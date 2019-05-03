@@ -27,8 +27,8 @@ for i in range(2,47+1):
 line_items_by_inv={}
 for i in range(2,66+1):
         if line_items_wksheet.cell(i,1).value in line_items_by_inv:
-                line_items_by_inv[line_items_wksheet.cell(i,1).value].append({str(line_items_wksheet.cell(i,2).value): line_items_wksheet.cell(i,3).value})
+                line_items_by_inv[line_items_wksheet.cell(i,1).value].append({str(line_items_wksheet.cell(i,2).value): int(line_items_wksheet.cell(i,3).value)})
         else:
-                line_items_by_inv[line_items_wksheet.cell(i,1).value] = [{str(line_items_wksheet.cell(i,2).value): line_items_wksheet.cell(i,3).value}]
+                line_items_by_inv[line_items_wksheet.cell(i,1).value] = [{str(line_items_wksheet.cell(i,2).value): int(line_items_wksheet.cell(i,3).value)}]
 
 print(line_items_by_inv)
