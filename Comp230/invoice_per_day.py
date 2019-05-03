@@ -7,7 +7,15 @@ TODO
 
 2: unique ID for line items sheet
 
-3: re-arrange column order: primary key always first
+"""
+""" 
+- Run the python script
+- grep output for 'units sold', split based ':'
+- initialise 'sum' to 0
+- add the value from filed #2 to 'sum'
+- at the end, display the total 'sum'
+
+python invoice_per_day.py | grep "units sold" | awk -F':' 'BEGIN {sum = 0;} {sum += $2;} END {print sum;}'
 """
 
 import openpyxl
