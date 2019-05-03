@@ -1,3 +1,15 @@
+"""
+TODO
+
+1: check for empty rows while iterating, and skip
+   (this will allows for the possibility of empty rows
+   interspersed amongst populated ones)
+
+2: unique ID for line items sheet
+
+3: re-arrange column order: primary key always first
+"""
+
 import openpyxl
 
 wk = openpyxl.load_workbook('sales_data.xlsx')
@@ -9,9 +21,6 @@ products_wksheet = wk['Product']
 
 # Issue with using max_row as iteration limit:
 #    spreadsheet has *several* empty rows...
-# TODO: check for empty rows while iterating, and skip
-#   (this will allows for the possibility of empty rows
-#   interspersed amongst populated ones)
 rows = inv_wksheet.max_row
 columns = inv_wksheet.max_column
 
@@ -56,3 +65,23 @@ for i in range(2,9+1):
         
 print('\nunit Price with Product_ID as key')
 print(products_by_id)
+print('-----------------------------------\n\n')
+
+for (k,v) in inv_by_dates.items():
+    print(f'invoices dated {k}: {v}')
+    for i in v:
+        print(f'inv.# {i} line items: {line_items_by_inv[str(i)]}')
+        for j in line_items_by_inv[str(i)]:
+            print(j)
+            for l in j.items():
+                print(f'l: {l}')
+                prod_id = str(l[0])
+                units_sold = l[1]
+                unit_price = products_by_id[prod_id]
+                line_total = units_sold * unit_price
+
+                print(f'prod. id: {prod_id}')
+                print(f'# units sold: {units_sold}')
+                print(f'unit price: {unit_price}')
+                print(f'line total: {line_total}')
+                
