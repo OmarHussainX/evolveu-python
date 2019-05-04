@@ -6,7 +6,7 @@
 
 # reports we need:
 # total amount invoiced on a given date
-def generate_invoice (invoice_id):
+def make_invoice (invoice_id):
         # determine customer name and invoice date from invoice_id from the invoices table
         # build a header that shows invoice id, date, and customer
         # initialize grand total as 0
