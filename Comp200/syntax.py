@@ -10,11 +10,9 @@ x = 42
 print(f'number \'x\': {x}')
 
 
-
 # Declare string variable and print it
 x = 'The answer to the life, universe, and everything'
 print(f'string \'x\': {x}')
-
 
 
 # Declare boolean variable and print it
@@ -22,11 +20,9 @@ bool = True
 print(f'boolean \'bool\': {bool}')
 
 
-
 # Declare list variable and print it
 myLaptop = ['ThinkPad', 'T580']
 print(f'list \'myLaptop\': {myLaptop}')
-
 
 
 # Declare dictionary and print it
@@ -42,15 +38,13 @@ print(f'dictionary \'learner\' values: {learner.values()}')
 print(f'dictionary \'learner\' items: {learner.items()}')
 
 
-
 # Declare 'None' (undefined) variable and print it
 undef = None
 print('\n--------------------------------------------------')
 print(f'undefined variable \'undef\': {undef}')
 
 
-
-#basic if/else construct...
+# basic if/else construct...
 name = 'Omar'
 if (name == 'Omar'):
     print('Assalaamolaikum, Omar!')
@@ -60,15 +54,13 @@ else:
 print('Assalaamolaikum, Omar!') if (name == 'Omar') else print('Who are you!?')
 
 
-
 # function takes two parameters: num1 & num2, returns their sum
-def adder (num1, num2):
+def adder(num1, num2):
     """returns sum of two numbers"""
     return num1 + num2
 
 print('\n--------------------------------------------------')
 print(f'result of calling adder(2,3): {adder(2, 3)}')
-
 
 
 # Working with lists
@@ -89,7 +81,6 @@ myLaptop[-1] = '16GB'
 print(f'\'myLaptop\' after changing value: {myLaptop}')
 
 
-
 # Working with loops
 # for/in loop
 print('\n--------------------------------------------------')
@@ -104,7 +95,6 @@ for key, value in learner.items():
     print(f'key: {key}, value: {value}')
 
 
-
 # while loop
 print('\n--------------------------------------------------')
 print('printing list contents via while loop: ')
@@ -114,11 +104,11 @@ while i < len(myLaptop):
     i += 1
 
 
-
 # do/while equivalent
 # http://kogs-www.informatik.uni-hamburg.de/~meine/python_tricks
 print('\n--------------------------------------------------')
-print('printing list contents via while..True..break loop (no do/while in python): ')
+print('printing list contents via while..True..break loop \
+(no do/while in python): ')
 i = 0
 while True:
     print(myLaptop[i])
