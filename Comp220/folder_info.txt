@@ -1,19 +1,23 @@
 /home/omar/Downloads
 
 4 folders
-10 files (total: 208.8 Mb)
+14 files (total: 210.7 Mb)
 
    4.0 kb  /Google+ archive
    4.0 kb  /kittiez 2019 birthday
    4.0 kb  /Material Design Business Card
    4.0 kb  /misc
    1.1 Mb  banking.png
- 195.1 kb  D469rayXkAERXmA.jpeg
   18.3 Mb  Design Patterns - Elements of Reusable Object-Oriented Software (1994).pdf
+  49.3 kb  e-mail 2019-05-08.html
  125.3 Mb  EvolveU_UnityDemo_Pack.unitypackage
    2.9 Mb  geo.zip
   75.8 kb  health-app.png
  328.4 kb  How To Do Object Oriented Programming The Right Way.pdf
+ 600.5 kb  Image from iOS (1).jpg
+ 688.3 kb  Image from iOS (2).jpg
+ 641.6 kb  Image from iOS.jpg
+ 105.0 kb  job_descriptions.pdf
   71.7 kb  LifePath Pre-Work.pdf
  345.9 kb  Reflections of the Future.pdf
   60.2 Mb  UnityHubSetup.AppImage

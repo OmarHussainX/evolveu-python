@@ -1,5 +1,6 @@
 import os
 
+
 def folder_report():
     """
     Generates a 'folder_info.txt' report for a specified folder, with
@@ -19,16 +20,15 @@ def folder_report():
     # Note:
     #   The iterator excludes '.' '..'
     #   The items are in _arbitrary_ order
-    #   scandir() preferable to listdir() when requesting file type/attribute data,
-    #   because DirEntry objects expose this info. when scanning directories on
-    #   supported operating systems
+    #   scandir() preferable to listdir() when requesting file type/attribute
+    #   data, because DirEntry objects expose this info. when scanning
+    #   directories on supported operating systems
     with os.scandir(path) as dir_entry_iterator:
         for entry in dir_entry_iterator:
             if entry.is_file():
                 file_list.append((entry.name, entry.stat().st_size))
             else:
                 folder_list.append((entry.name, entry.stat().st_size))
-
 
     def case_insensitive(val):
         """
@@ -54,7 +54,6 @@ def folder_report():
 
         return f'{" " * (col_width - len(val))}{val}'
 
-
     # sort the file & folder lists
     folder_list.sort(key=case_insensitive)
     file_list.sort(key=case_insensitive)
@@ -63,15 +62,14 @@ def folder_report():
     total_file_size = 0
     for file in file_list:
         total_file_size += file[1]
-    
+
     total_file_size = format_size(total_file_size).strip()
-
-
 
     # generate the report
     with open('folder_info.txt', 'w') as report:
 
-        report.write(f'{path}\n\n{len(folder_list)} folders\n{len(file_list)} files (total: {total_file_size})\n\n')
+        report.write(f'{path}\n\n{len(folder_list)} folders\n{len(file_list)} \
+files (total: {total_file_size})\n\n')
 
         for folder in folder_list:
             report.write(f' {format_size(folder[1])}  /{folder[0]}\n')
