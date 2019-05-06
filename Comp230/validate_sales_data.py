@@ -83,8 +83,9 @@ def validate_sales_data(filename):
     for i in range(2, line_items_sheet.max_row + 1):
             if not (line_items_sheet.cell(i, 2).value is None):
                 # keys for each invoice # were created earlier
-                items_per_invoice[line_items_sheet.cell(i, 2).value]\
-                            .append(line_items_sheet.cell(i, 3).value)
+                if line_items_sheet.cell(i, 2).value in items_per_invoice:
+                    items_per_invoice[line_items_sheet.cell(i, 2).value]\
+                                .append(line_items_sheet.cell(i, 3).value)
 
                 invoices_total += line_items_sheet.cell(i, 6).value
 
