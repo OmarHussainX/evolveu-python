@@ -22,7 +22,7 @@ invoices_for_one_month = True
 invoices_per_month_in_range = True
 
 
-# Load worksheets
+# Load worksheet iterators
 # Set 'data_only' so that the _results_ of formulae are accessible
 wb = openpyxl.load_workbook('sales_data.xlsx', data_only=True)
 client_sheet = wb['customers']
@@ -30,7 +30,7 @@ invoices_sheet = wb['invoices']
 inv_line_items_sheet = wb['invoice line items']
 
 
-# Create list of customer #
+# Create list of client #
 # - check for duplicates
 # - check if there are between 10 and 15 clients
 client_list = []
@@ -47,11 +47,12 @@ client_count_in_range = 10 <= len(client_list) <= 15
 # Ensure there are 3 - 4 invoices per client:
 # - using client # as key, build up a list of invoices, and then
 #   check that each client has 3 - 4 invoices
+# Ensure all invoices were issued in the same month:
 # - build up a list of the month of issue for each invoice, and then
 #   check that all invoices were issued in the same month
 invoices_per_client = {}
 invoices_month = []
-for i in range(2, invoices_sheet.max_row+1):
+for i in range(2, invoices_sheet.max_row + 1):
         if not (invoices_sheet.cell(i, 3).value is None):
             if invoices_sheet.cell(i, 3).value in invoices_per_client:
                     invoices_per_client[invoices_sheet.cell(i, 3).value]\
@@ -70,8 +71,9 @@ for invoices in invoices_per_client.values():
 
 
 # Ensure there are 1 - 5 items per invoice:
-# - using invoice # as key, build up a list of invoices, and then
-#   check that each client has 3 - 4 invoices
+# - using invoice # as key, build up a list of line items, and then
+#   check that each invoice has 1 - 5 line items
+# Ensure total of all invoices is $15,000 (+/- 1,500):
 # - add up the line totals for each invoice to get the total of all
 #   invoices issued, and then ensure it is valid
 items_per_invoice = {}
