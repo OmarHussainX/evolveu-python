@@ -2,7 +2,7 @@
 sales_data.xlsx MUST have four worksheets (in any order) named:
 'customers', 'invoices', 'invoice line items', 'products'
 
-The data will be validated to ensure that it has:
+Spreadsheet data will be validated to ensure that it has:
 * 10 - 15 _unique_ clients
 * 3 - 4 invoices per client
 * 1 - 5 items per invoice
@@ -28,7 +28,6 @@ wb = openpyxl.load_workbook('sales_data.xlsx', data_only=True)
 client_sheet = wb['customers']
 invoices_sheet = wb['invoices']
 inv_line_items_sheet = wb['invoice line items']
-products_sheet = wb['products']
 
 
 # Create list of customer #
@@ -66,7 +65,6 @@ for i in range(2, invoices_sheet.max_row+1):
 invoices_for_one_month = len(set(invoices_month)) == 1
 
 for invoices in invoices_per_client.values():
-    print(f'invoices, count: {invoices}, {len(invoices)}')
     if len(invoices) < 3 or len(invoices) > 4:
         client_invoice_count_in_range = False
 
@@ -91,6 +89,5 @@ for i in range(2, inv_line_items_sheet.max_row+1):
 invoices_per_month_in_range = (15000-1500) <= invoices_total <= (15000+1500)
 
 for line_items in items_per_invoice.values():
-    print(f'line_items, count: {line_items}, {len(line_items)}')
     if len(line_items) < 1 or len(line_items) > 5:
         client_invoice_count_in_range = False
