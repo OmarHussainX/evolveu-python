@@ -1,4 +1,4 @@
-from valiate_sales_data import validate_clients
+from validate_sales_data import validate_clients
 
 
 def test_validate_clients():
