@@ -3,9 +3,9 @@ import openpyxl
 
 def make_invoice(invoice_id):
     """
-    Receives an integer (invoice id) as parameter, obtains
-    invoice data from a spreadhseet ('sales_data.xlsx') and
-    produces an invoice with the following format:
+    Receives an integer as parameter, obtains invoice data from a spreadsheet
+    ('sales_data.xlsx') and appends an invoice with the following format to
+    'invoice.txt':
 
     Andrew Wang (client ID: 124)
                                            Invoice #  266       
@@ -21,6 +21,7 @@ def make_invoice(invoice_id):
 
                                                       ----------
                                           TOTAL       $   720.00
+    ============================================================
     """
     # - Open 'sales_data.xlsx', obtain iterators for worksheets of interest
     # - Use 'invoice_id' to obtain customer id and invoice date
@@ -126,14 +127,17 @@ def make_invoice(invoice_id):
 {format("----------", ">11")}\n\
 {format("TOTAL", ">43")}\
 {format("$", ">8")}\
-{format(invoice_total, "9,.2f")}\n'
+{format(invoice_total, "9,.2f")}\n\
+{"=" * 60}\n\n'
 
-    print(invoice_txt)
+    with open('invoice.txt', 'a+') as invoice:
+        invoice.write(invoice_txt)
 
 
 def main():
     # print(f'\n---------- {__file__} ----------')
-    make_invoice(266)
+    for i in range(222, 268):
+        make_invoice(i)
 
 
 if __name__ == '__main__':
