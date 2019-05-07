@@ -1,0 +1,669 @@
+Roger Kondrat (client ID: 125)
+                                       Invoice #  222       
+                                    Invoice date  2019-04-01
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Pencil                    10.00       $    50.00
+     6      Ruler                     30.00       $   180.00
+     3      Eraser                    10.00       $    30.00
+     6      Stapler                   40.00       $   240.00
+
+
+                                                  ----------
+                                      TOTAL       $   500.00
+============================================================
+
+Roman Winger (client ID: 133)
+                                       Invoice #  223       
+                                    Invoice date  2019-04-01
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Binder                    10.00       $    50.00
+     8      Pen                       70.00       $   560.00
+     2      Eraser                    10.00       $    20.00
+     3      Pencil-case               50.00       $   150.00
+
+
+                                                  ----------
+                                      TOTAL       $   780.00
+============================================================
+
+Bob Sugar (client ID: 131)
+                                       Invoice #  224       
+                                    Invoice date  2019-04-02
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     7      Calculator               100.00       $   700.00
+     5      Pencil                    10.00       $    50.00
+
+
+                                                  ----------
+                                      TOTAL       $   750.00
+============================================================
+
+Bob Sugar (client ID: 131)
+                                       Invoice #  225       
+                                    Invoice date  2019-04-03
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     4      Ruler                     30.00       $   120.00
+     3      Pen                       70.00       $   210.00
+
+
+                                                  ----------
+                                      TOTAL       $   330.00
+============================================================
+
+Bobby Ford (client ID: 128)
+                                       Invoice #  226       
+                                    Invoice date  2019-04-03
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Stapler                   40.00       $   200.00
+     6      Binder                    10.00       $    60.00
+
+
+                                                  ----------
+                                      TOTAL       $   260.00
+============================================================
+
+Roman Winger (client ID: 133)
+                                       Invoice #  227       
+                                    Invoice date  2019-04-04
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     3      Pen                       70.00       $   210.00
+
+
+                                                  ----------
+                                      TOTAL       $   210.00
+============================================================
+
+Bobby Ford (client ID: 128)
+                                       Invoice #  228       
+                                    Invoice date  2019-04-05
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Eraser                    10.00       $    60.00
+     5      Pencil-case               50.00       $   250.00
+
+
+                                                  ----------
+                                      TOTAL       $   310.00
+============================================================
+
+Omar Wang (client ID: 127)
+                                       Invoice #  229       
+                                    Invoice date  2019-04-05
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     4      Calculator               100.00       $   400.00
+     9      Binder                    10.00       $    90.00
+     6      Pen                       70.00       $   420.00
+
+
+                                                  ----------
+                                      TOTAL       $   910.00
+============================================================
+
+Pop Rocks (client ID: 130)
+                                       Invoice #  230       
+                                    Invoice date  2019-04-06
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Binder                    10.00       $    90.00
+     2      Pencil-case               50.00       $   100.00
+
+
+                                                  ----------
+                                      TOTAL       $   190.00
+============================================================
+
+Mash It (client ID: 129)
+                                       Invoice #  231       
+                                    Invoice date  2019-04-07
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Calculator               100.00       $   900.00
+
+
+                                                  ----------
+                                      TOTAL       $   900.00
+============================================================
+
+Marcela Wang (client ID: 123)
+                                       Invoice #  232       
+                                    Invoice date  2019-04-07
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Binder                    10.00       $    60.00
+
+
+                                                  ----------
+                                      TOTAL       $    60.00
+============================================================
+
+Andrew Wang (client ID: 124)
+                                       Invoice #  233       
+                                    Invoice date  2019-04-08
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     3      Pen                       70.00       $   210.00
+
+
+                                                  ----------
+                                      TOTAL       $   210.00
+============================================================
+
+Pop Rocks (client ID: 130)
+                                       Invoice #  234       
+                                    Invoice date  2019-04-09
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Binder                    10.00       $    60.00
+
+
+                                                  ----------
+                                      TOTAL       $    60.00
+============================================================
+
+Omar Wang (client ID: 127)
+                                       Invoice #  235       
+                                    Invoice date  2019-04-09
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     7      Pencil-case               50.00       $   350.00
+
+
+                                                  ----------
+                                      TOTAL       $   350.00
+============================================================
+
+Andrew Wang (client ID: 124)
+                                       Invoice #  236       
+                                    Invoice date  2019-04-09
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     4      Stapler                   40.00       $   160.00
+     5      Pencil                    10.00       $    50.00
+
+
+                                                  ----------
+                                      TOTAL       $   210.00
+============================================================
+
+Omar Wang (client ID: 127)
+                                       Invoice #  237       
+                                    Invoice date  2019-04-10
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     8      Stapler                   40.00       $   320.00
+
+
+                                                  ----------
+                                      TOTAL       $   320.00
+============================================================
+
+Pip Python (client ID: 132)
+                                       Invoice #  238       
+                                    Invoice date  2019-04-11
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Ruler                     30.00       $   270.00
+     6      Eraser                    10.00       $    60.00
+
+
+                                                  ----------
+                                      TOTAL       $   330.00
+============================================================
+
+Omar Hussain (client ID: 126)
+                                       Invoice #  239       
+                                    Invoice date  2019-04-11
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     1      Calculator               100.00       $   100.00
+     5      Binder                    10.00       $    50.00
+     9      Pencil-case               50.00       $   450.00
+
+
+                                                  ----------
+                                      TOTAL       $   600.00
+============================================================
+
+Roger Kondrat (client ID: 125)
+                                       Invoice #  240       
+                                    Invoice date  2019-04-12
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Stapler                   40.00       $   240.00
+
+
+                                                  ----------
+                                      TOTAL       $   240.00
+============================================================
+
+Omar Wang (client ID: 127)
+                                       Invoice #  241       
+                                    Invoice date  2019-04-12
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     2      Pencil                    10.00       $    20.00
+
+
+                                                  ----------
+                                      TOTAL       $    20.00
+============================================================
+
+Bob Sugar (client ID: 131)
+                                       Invoice #  242       
+                                    Invoice date  2019-04-13
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Stapler                   40.00       $   200.00
+
+
+                                                  ----------
+                                      TOTAL       $   200.00
+============================================================
+
+Pop Rocks (client ID: 130)
+                                       Invoice #  243       
+                                    Invoice date  2019-04-14
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Ruler                     30.00       $   150.00
+
+
+                                                  ----------
+                                      TOTAL       $   150.00
+============================================================
+
+Bobby Ford (client ID: 134)
+                                       Invoice #  244       
+                                    Invoice date  2019-04-15
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Pencil-case               50.00       $   300.00
+     5      Calculator               100.00       $   500.00
+
+
+                                                  ----------
+                                      TOTAL       $   800.00
+============================================================
+
+Mash It (client ID: 129)
+                                       Invoice #  245       
+                                    Invoice date  2019-04-15
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     8      Eraser                    10.00       $    80.00
+     9      Pencil-case               50.00       $   450.00
+
+
+                                                  ----------
+                                      TOTAL       $   530.00
+============================================================
+
+Bobby Ford (client ID: 134)
+                                       Invoice #  246       
+                                    Invoice date  2019-04-16
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Stapler                   40.00       $   240.00
+
+
+                                                  ----------
+                                      TOTAL       $   240.00
+============================================================
+
+Pop Rocks (client ID: 130)
+                                       Invoice #  247       
+                                    Invoice date  2019-04-16
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     7      Pencil                    10.00       $    70.00
+
+
+                                                  ----------
+                                      TOTAL       $    70.00
+============================================================
+
+Bob Sugar (client ID: 131)
+                                       Invoice #  248       
+                                    Invoice date  2019-04-17
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Stapler                   40.00       $   200.00
+
+
+                                                  ----------
+                                      TOTAL       $   200.00
+============================================================
+
+Pip Python (client ID: 132)
+                                       Invoice #  249       
+                                    Invoice date  2019-04-18
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Ruler                     30.00       $   270.00
+
+
+                                                  ----------
+                                      TOTAL       $   270.00
+============================================================
+
+Omar Hussain (client ID: 126)
+                                       Invoice #  250       
+                                    Invoice date  2019-04-18
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Pencil-case               50.00       $   300.00
+
+
+                                                  ----------
+                                      TOTAL       $   300.00
+============================================================
+
+Pip Python (client ID: 132)
+                                       Invoice #  251       
+                                    Invoice date  2019-04-19
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Calculator               100.00       $   500.00
+
+
+                                                  ----------
+                                      TOTAL       $   500.00
+============================================================
+
+Bobby Ford (client ID: 128)
+                                       Invoice #  252       
+                                    Invoice date  2019-04-19
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Binder                    10.00       $    60.00
+
+
+                                                  ----------
+                                      TOTAL       $    60.00
+============================================================
+
+Roger Kondrat (client ID: 125)
+                                       Invoice #  253       
+                                    Invoice date  2019-04-20
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     7      Eraser                    10.00       $    70.00
+
+
+                                                  ----------
+                                      TOTAL       $    70.00
+============================================================
+
+Marcela Wang (client ID: 123)
+                                       Invoice #  254       
+                                    Invoice date  2019-04-21
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Stapler                   40.00       $   240.00
+
+
+                                                  ----------
+                                      TOTAL       $   240.00
+============================================================
+
+Bobby Ford (client ID: 128)
+                                       Invoice #  255       
+                                    Invoice date  2019-04-22
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Pencil                    10.00       $    50.00
+
+
+                                                  ----------
+                                      TOTAL       $    50.00
+============================================================
+
+Mash It (client ID: 129)
+                                       Invoice #  256       
+                                    Invoice date  2019-04-23
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     8      Stapler                   40.00       $   320.00
+
+
+                                                  ----------
+                                      TOTAL       $   320.00
+============================================================
+
+Mash It (client ID: 129)
+                                       Invoice #  257       
+                                    Invoice date  2019-04-24
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Ruler                     30.00       $   270.00
+
+
+                                                  ----------
+                                      TOTAL       $   270.00
+============================================================
+
+Omar Hussain (client ID: 126)
+                                       Invoice #  258       
+                                    Invoice date  2019-04-25
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Pencil-case               50.00       $   300.00
+
+
+                                                  ----------
+                                      TOTAL       $   300.00
+============================================================
+
+Marcela Wang (client ID: 123)
+                                       Invoice #  259       
+                                    Invoice date  2019-04-25
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     7      Calculator               100.00       $   700.00
+
+
+                                                  ----------
+                                      TOTAL       $   700.00
+============================================================
+
+Bobby Ford (client ID: 134)
+                                       Invoice #  260       
+                                    Invoice date  2019-04-26
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Binder                    10.00       $    50.00
+
+
+                                                  ----------
+                                      TOTAL       $    50.00
+============================================================
+
+Pip Python (client ID: 132)
+                                       Invoice #  261       
+                                    Invoice date  2019-04-27
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Pencil-case               50.00       $   450.00
+
+
+                                                  ----------
+                                      TOTAL       $   450.00
+============================================================
+
+Marcela Wang (client ID: 123)
+                                       Invoice #  262       
+                                    Invoice date  2019-04-27
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Eraser                    10.00       $    60.00
+
+
+                                                  ----------
+                                      TOTAL       $    60.00
+============================================================
+
+Roman Winger (client ID: 133)
+                                       Invoice #  263       
+                                    Invoice date  2019-04-27
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Pencil                    10.00       $    50.00
+
+
+                                                  ----------
+                                      TOTAL       $    50.00
+============================================================
+
+Andrew Wang (client ID: 124)
+                                       Invoice #  264       
+                                    Invoice date  2019-04-28
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     6      Stapler                   40.00       $   240.00
+
+
+                                                  ----------
+                                      TOTAL       $   240.00
+============================================================
+
+Omar Hussain (client ID: 126)
+                                       Invoice #  265       
+                                    Invoice date  2019-04-30
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     5      Ruler                     30.00       $   150.00
+
+
+                                                  ----------
+                                      TOTAL       $   150.00
+============================================================
+
+Andrew Wang (client ID: 124)
+                                       Invoice #  266       
+                                    Invoice date  2019-04-30
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     9      Pen                       70.00       $   630.00
+     2      Stapler                   40.00       $    80.00
+     1      Binder                    10.00       $    10.00
+
+
+                                                  ----------
+                                      TOTAL       $   720.00
+============================================================
+
+Roger Kondrat (client ID: 125)
+                                       Invoice #  267       
+                                    Invoice date  2019-04-30
+
+
+  Quantity  Item                 Unit price       Line total
+  --------  ----                 ----------       ----------
+     2      Calculator               100.00       $   200.00
+     2      Ruler                     30.00       $    60.00
+     6      Pencil                    10.00       $    60.00
+     2      Pen                       70.00       $   140.00
+     3      Binder                    10.00       $    30.00
+
+
+                                                  ----------
+                                      TOTAL       $   490.00
+============================================================
+
