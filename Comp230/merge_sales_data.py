@@ -16,9 +16,18 @@ def merge_sales_data(file1, file2):
                    source_start_row, target_start_offset):
         """
         Helper function
-        Copies an entire worksheet from 'source' to 'target'
+        Copies an entire worksheet from 'source' to 'target',
+        which are in _different_ workbooks (this precludes the use
+        of 'target = wb.copy_worksheet(source)')
         """
         for i in range(source_start_row, source_rows_max + 1):
+            # skip blank rows (NOTE: any row where the first cell/column
+            # is empty, is considered to be blank. Cannot have sensible
+            # data if the first cell/column - where an ID is expected - is
+            # empty!)
+            if source.cell(i, 1).value is None:
+                print(f'{i} (in {source}) is an empty row? {source.cell(i, 1).value}')
+                continue
             for j in range(1, source_cols_max + 1):
                     target.cell(target_start_offset + i, j).value = \
                         source.cell(i, j).value
@@ -48,6 +57,13 @@ def merge_sales_data(file1, file2):
     copy_sheet(wb['products'], ws_products, wb['products'].max_row,
                wb['products'].max_column, 1, 0)
 
+    # build list of customer IDs from first workbook, and:
+    # - remove header cell ('Customers')
+    # - remove values from empty cells (None)
+    file1_customers = [cell.value for cell in wb['customers']['A']]
+    del file1_customers[0]
+    file1_customers = [id for id in file1_customers if id is not None]
+
     # Open second workbook whose data is to be merged, and then...
     wb = openpyxl.load_workbook(file2, data_only=True)
 
@@ -55,10 +71,15 @@ def merge_sales_data(file1, file2):
     # taking care to:
     #   - skip the first row of the source (headers already present in target)
     #   - start writing data from the last row of the target
-    #   - when merging customer data, need to ensure that customers common
-    #     to both source spreadsheets are not repeated!
-    copy_sheet(wb['customers'], ws_clients, wb['customers'].max_row,
-               wb['customers'].max_column, 2, ws_clients.max_row)
+    #   - when merging customer data, ensure that customers common to both
+    #     source spreadsheets are not repeated!
+    merge_row_offset = ws_clients.max_row
+    for i in range(2, wb['customers'].max_row + 1):
+        if wb['customers'].cell(i, 1).value in file1_customers:
+            continue
+        for j in range(1, wb['customers'].max_column + 1):
+                ws_clients.cell(merge_row_offset + i, j).value = \
+                    wb['customers'].cell(i, j).value
 
     copy_sheet(wb['invoices'], ws_invoices, wb['invoices'].max_row,
                wb['invoices'].max_column, 2, ws_invoices.max_row)
