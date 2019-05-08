@@ -20,18 +20,21 @@ def merge_sales_data(file1, file2):
         """
         for i in range(source_start_row, source_rows_max + 1):
             for j in range(1, source_cols_max + 1):
-                    target.cell(i, j).value = \
-                        source.cell(target_start_offset + i, j).value
+                    target.cell(target_start_offset + i, j).value = \
+                        source.cell(i, j).value
 
-    new_wb = openpyxl.Workbook()
-    ws_clients = new_wb.active
+    # Create new (target) workbook with blank sheets
+    wb_new = openpyxl.Workbook()
+    ws_clients = wb_new.active
     ws_clients.title = 'customers'
-    ws_invoices = new_wb.create_sheet('invoices')
-    ws_line_items = new_wb.create_sheet('invoice line items')
-    ws_products = new_wb.create_sheet('products')
+    ws_invoices = wb_new.create_sheet('invoices')
+    ws_line_items = wb_new.create_sheet('invoice line items')
+    ws_products = wb_new.create_sheet('products')
 
+    # Open first workbook whose data is to be merged, and then...
     wb = openpyxl.load_workbook(file1, data_only=True)
 
+    # ...copy all worksheets of interest from source to target
     copy_sheet(wb['customers'], ws_clients, wb['customers'].max_row,
                wb['customers'].max_column, 1, 0)
 
@@ -45,7 +48,27 @@ def merge_sales_data(file1, file2):
     copy_sheet(wb['products'], ws_products, wb['products'].max_row,
                wb['products'].max_column, 1, 0)
 
-    new_wb.save(merged_file)
+    # Open second workbook whose data is to be merged, and then...
+    wb = openpyxl.load_workbook(file2, data_only=True)
+
+    # ...copy all worksheets of interest from source to target,
+    # taking care to:
+    #   - skip the first row of the source (headers already present in target)
+    #   - start writing data from the last row of the target
+    #   - when merging customer data, need to ensure that customers common
+    #     to both source spreadsheets are not repeated!
+    copy_sheet(wb['customers'], ws_clients, wb['customers'].max_row,
+               wb['customers'].max_column, 2, ws_clients.max_row)
+
+    copy_sheet(wb['invoices'], ws_invoices, wb['invoices'].max_row,
+               wb['invoices'].max_column, 2, ws_invoices.max_row)
+
+    copy_sheet(wb['invoice line items'], ws_line_items,
+               wb['invoice line items'].max_row,
+               wb['invoice line items'].max_column, 2, ws_line_items.max_row)
+
+    # Save target workbook to disk
+    wb_new.save(merged_file)
 
 
 def main():
@@ -70,7 +93,7 @@ See \'validate_sales_data_report.txt\' for details')
 
     file2 = input("Enter second file (hit enter for 'sales_data2.xlsx')\n> ")
     if file2 == "":
-        file2 = 'sales_data.xlsx'
+        file2 = 'sales_data2.xlsx'
     print(f'Second file: {file2}\n')
 
     file_path2 = Path(file2)
