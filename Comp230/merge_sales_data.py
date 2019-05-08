@@ -64,24 +64,26 @@ def main():
         return
 
     if not validate_sales_data(file1):
-        print(f'ERROR: file \'{file1}\' contains invalid data - see \
-\'validate_sales_data_report.txt\' for details')
+        print(f'ERROR: file \'{file1}\' contains invalid data\n\
+See \'validate_sales_data_report.txt\' for details')
         return
 
-#     file2 = input("Enter second file\n> ")
-#     print(f'Second file: {file2}\n')
+    file2 = input("Enter second file (hit enter for 'sales_data2.xlsx')\n> ")
+    if file2 == "":
+        file2 = 'sales_data.xlsx'
+    print(f'Second file: {file2}\n')
 
-#     file_path2 = Path(file2)
-#     if not file_path2.is_file():
-#         print(f'ERROR: file \'{file2}\' not found')
-#         return
+    file_path2 = Path(file2)
+    if not file_path2.is_file():
+        print(f'ERROR: file \'{file2}\' not found')
+        return
 
-#     if not validate_sales_data(file2):
-#         print(f'ERROR: file \'{file2}\' contains invalid data - see \
-# \'validate_sales_data_report.txt\' for details')
-#         return
+    if not validate_sales_data(file2):
+        print(f'ERROR: file \'{file2}\' contains invalid data\n\
+See \'validate_sales_data_report.txt\' for details')
+        return
 
-    merge_sales_data(file1, None)
+    merge_sales_data(file1, file2)
 
 if __name__ == '__main__':
     main()

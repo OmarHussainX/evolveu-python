@@ -137,11 +137,11 @@ def main():
         return
 
     if not validate_sales_data(spreadsheet):
-        print(f'ERROR: \'{spreadsheet}\' contains invalid data - see \
-\'validate_sales_data_report.txt\' for details')
+        print(f'ERROR: \'{spreadsheet}\' contains invalid data\n\
+See \'validate_sales_data_report.txt\' for details')
     else:
-        print(f'\'{spreadsheet}\' contains valid data - see \
-\'validate_sales_data_report.txt\' for details')
+        print(f'\'{spreadsheet}\' contains valid data\n\
+See \'validate_sales_data_report.txt\' for details')
 
 
 if __name__ == '__main__':
