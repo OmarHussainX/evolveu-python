@@ -21,16 +21,17 @@ def merge_sales_data(file1, file2):
         of 'target = wb.copy_worksheet(source)')
         """
         for i in range(source_start_row, source_rows_max + 1):
-            # skip blank rows (NOTE: any row where the first cell/column
-            # is empty, is considered to be blank. Cannot have sensible
-            # data if the first cell/column - where an ID is expected - is
-            # empty!)
+            # NOTE: skipping blank rows found in the source sheet doesn't help -
+            # even if the blank source row is skipped, the row counter must
+            # advance by one, which will by necessity create a blank row in the
+            # target
             if source.cell(i, 1).value is None:
-                print(f'{i} (in {source}) is an empty row? {source.cell(i, 1).value}')
+                print(f'row {i} (in {source}) is empty ({source.cell(i, 1).value})')
                 continue
             for j in range(1, source_cols_max + 1):
-                    target.cell(target_start_offset + i, j).value = \
-                        source.cell(i, j).value
+                print(f'row {i} in {source}')
+                target.cell(target_start_offset + i, j).value = \
+                    source.cell(i, j).value
 
     # Create new (target) workbook with blank sheets
     wb_new = openpyxl.Workbook()
