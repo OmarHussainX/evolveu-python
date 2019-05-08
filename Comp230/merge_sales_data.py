@@ -25,11 +25,7 @@ def merge_sales_data(file1, file2):
             # even if the blank source row is skipped, the row counter must
             # advance by one, which will by necessity create a blank row in the
             # target
-            if source.cell(i, 1).value is None:
-                print(f'row {i} (in {source}) is empty ({source.cell(i, 1).value})')
-                continue
             for j in range(1, source_cols_max + 1):
-                print(f'row {i} in {source}')
                 target.cell(target_start_offset + i, j).value = \
                     source.cell(i, j).value
 
