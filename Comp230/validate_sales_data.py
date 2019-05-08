@@ -1,9 +1,10 @@
 import openpyxl
+from pathlib import Path
 
 
 def validate_sales_data(filename):
     """
-    sales_data.xlsx MUST have four worksheets (in any order) named:
+    'filename' MUST be a spreadsheet with four worksheets (in any order) named:
     'customers', 'invoices', 'invoice line items', 'products'
 
     Spreadsheet data will be validated to ensure that it has:
@@ -124,7 +125,23 @@ def validate_sales_data(filename):
 
 def main():
     # print(f'\n---------- {__file__} ----------')
-    validate_sales_data('sales_data.xlsx')
+    print(f'\n== This will validate the data in a specified spreadsheet ==\n')
+
+    spreadsheet = input("Enter filename (hit enter for 'sales_data.xlsx')\n> ")
+    if spreadsheet == "":
+        spreadsheet = 'sales_data.xlsx'
+
+    file_path = Path(spreadsheet)
+    if not file_path.is_file():
+        print(f'ERROR: file \'{spreadsheet}\' not found')
+        return
+
+    if not validate_sales_data(spreadsheet):
+        print(f'ERROR: \'{spreadsheet}\' contains invalid data - see \
+\'validate_sales_data_report.txt\' for details')
+    else:
+        print(f'\'{spreadsheet}\' contains valid data - see \
+\'validate_sales_data_report.txt\' for details')
 
 
 if __name__ == '__main__':
