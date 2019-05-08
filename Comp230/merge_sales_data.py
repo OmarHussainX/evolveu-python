@@ -16,22 +16,34 @@ def merge_sales_data(file1, file2):
                    source_start_row, target_start_offset):
         """
         Helper function
-        Copies an entire worksheet from 'source' to 'target'
+        Copies an entire worksheet from 'source' to 'target',
+        which are in _different_ workbooks (this precludes the use
+        of 'target = wb.copy_worksheet(source)')
         """
         for i in range(source_start_row, source_rows_max + 1):
+            # skip blank rows (NOTE: any row where the first cell/column
+            # is empty, is considered to be blank. Cannot have sensible
+            # data if the first cell/column - where an ID is expected - is
+            # empty!)
+            if source.cell(i, 1).value is None:
+                print(f'{i} (in {source}) is an empty row? {source.cell(i, 1).value}')
+                continue
             for j in range(1, source_cols_max + 1):
-                    target.cell(i, j).value = \
-                        source.cell(target_start_offset + i, j).value
+                    target.cell(target_start_offset + i, j).value = \
+                        source.cell(i, j).value
 
-    new_wb = openpyxl.Workbook()
-    ws_clients = new_wb.active
+    # Create new (target) workbook with blank sheets
+    wb_new = openpyxl.Workbook()
+    ws_clients = wb_new.active
     ws_clients.title = 'customers'
-    ws_invoices = new_wb.create_sheet('invoices')
-    ws_line_items = new_wb.create_sheet('invoice line items')
-    ws_products = new_wb.create_sheet('products')
+    ws_invoices = wb_new.create_sheet('invoices')
+    ws_line_items = wb_new.create_sheet('invoice line items')
+    ws_products = wb_new.create_sheet('products')
 
+    # Open first workbook whose data is to be merged, and then...
     wb = openpyxl.load_workbook(file1, data_only=True)
 
+    # ...copy all worksheets of interest from source to target
     copy_sheet(wb['customers'], ws_clients, wb['customers'].max_row,
                wb['customers'].max_column, 1, 0)
 
@@ -45,7 +57,39 @@ def merge_sales_data(file1, file2):
     copy_sheet(wb['products'], ws_products, wb['products'].max_row,
                wb['products'].max_column, 1, 0)
 
-    new_wb.save(merged_file)
+    # build list of customer IDs from first workbook, and:
+    # - remove header cell ('Customers')
+    # - remove values from empty cells (None)
+    file1_customers = [cell.value for cell in wb['customers']['A']]
+    del file1_customers[0]
+    file1_customers = [id for id in file1_customers if id is not None]
+
+    # Open second workbook whose data is to be merged, and then...
+    wb = openpyxl.load_workbook(file2, data_only=True)
+
+    # ...copy all worksheets of interest from source to target,
+    # taking care to:
+    #   - skip the first row of the source (headers already present in target)
+    #   - start writing data from the last row of the target
+    #   - when merging customer data, ensure that customers common to both
+    #     source spreadsheets are not repeated!
+    merge_row_offset = ws_clients.max_row
+    for i in range(2, wb['customers'].max_row + 1):
+        if wb['customers'].cell(i, 1).value in file1_customers:
+            continue
+        for j in range(1, wb['customers'].max_column + 1):
+                ws_clients.cell(merge_row_offset + i, j).value = \
+                    wb['customers'].cell(i, j).value
+
+    copy_sheet(wb['invoices'], ws_invoices, wb['invoices'].max_row,
+               wb['invoices'].max_column, 2, ws_invoices.max_row)
+
+    copy_sheet(wb['invoice line items'], ws_line_items,
+               wb['invoice line items'].max_row,
+               wb['invoice line items'].max_column, 2, ws_line_items.max_row)
+
+    # Save target workbook to disk
+    wb_new.save(merged_file)
 
 
 def main():
@@ -64,24 +108,26 @@ def main():
         return
 
     if not validate_sales_data(file1):
-        print(f'ERROR: file \'{file1}\' contains invalid data - see \
-\'validate_sales_data_report.txt\' for details')
+        print(f'ERROR: file \'{file1}\' contains invalid data\n\
+See \'validate_sales_data_report.txt\' for details')
         return
 
-#     file2 = input("Enter second file\n> ")
-#     print(f'Second file: {file2}\n')
+    file2 = input("Enter second file (hit enter for 'sales_data2.xlsx')\n> ")
+    if file2 == "":
+        file2 = 'sales_data2.xlsx'
+    print(f'Second file: {file2}\n')
 
-#     file_path2 = Path(file2)
-#     if not file_path2.is_file():
-#         print(f'ERROR: file \'{file2}\' not found')
-#         return
+    file_path2 = Path(file2)
+    if not file_path2.is_file():
+        print(f'ERROR: file \'{file2}\' not found')
+        return
 
-#     if not validate_sales_data(file2):
-#         print(f'ERROR: file \'{file2}\' contains invalid data - see \
-# \'validate_sales_data_report.txt\' for details')
-#         return
+    if not validate_sales_data(file2):
+        print(f'ERROR: file \'{file2}\' contains invalid data\n\
+See \'validate_sales_data_report.txt\' for details')
+        return
 
-    merge_sales_data(file1, None)
+    merge_sales_data(file1, file2)
 
 if __name__ == '__main__':
     main()
