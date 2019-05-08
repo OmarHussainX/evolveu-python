@@ -12,14 +12,16 @@ def merge_sales_data(file1, file2):
     the two data sets) merges them into a new spreadsheet
     """
 
-    def copy_sheet(source, target, rows, cols):
+    def copy_sheet(source, target, source_rows_max, source_cols_max,
+                   source_start_row, target_start_offset):
         """
         Helper function
         Copies an entire worksheet from 'source' to 'target'
         """
-        for i in range(1, rows + 1):
-            for j in range(1, cols + 1):
-                    target.cell(i, j).value = source.cell(i, j).value
+        for i in range(source_start_row, source_rows_max + 1):
+            for j in range(1, source_cols_max + 1):
+                    target.cell(i, j).value = \
+                        source.cell(target_start_offset + i, j).value
 
     new_wb = openpyxl.Workbook()
     ws_clients = new_wb.active
@@ -31,17 +33,17 @@ def merge_sales_data(file1, file2):
     wb = openpyxl.load_workbook(file1, data_only=True)
 
     copy_sheet(wb['customers'], ws_clients, wb['customers'].max_row,
-               wb['customers'].max_column)
+               wb['customers'].max_column, 1, 0)
 
     copy_sheet(wb['invoices'], ws_invoices, wb['invoices'].max_row,
-               wb['invoices'].max_column)
+               wb['invoices'].max_column, 1, 0)
 
     copy_sheet(wb['invoice line items'], ws_line_items,
                wb['invoice line items'].max_row,
-               wb['invoice line items'].max_column)
+               wb['invoice line items'].max_column, 1, 0)
 
     copy_sheet(wb['products'], ws_products, wb['products'].max_row,
-               wb['products'].max_column)
+               wb['products'].max_column, 1, 0)
 
     new_wb.save(merged_file)
 
