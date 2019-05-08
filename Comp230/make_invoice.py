@@ -3,8 +3,8 @@ import openpyxl
 
 def make_invoice(invoice_id):
     """
-    Receives an integer as parameter, obtains invoice data from a spreadsheet
-    ('sales_data.xlsx') and appends an invoice with the following format to
+    Receives an invoice id as parameter, obtains invoice data from spreadsheet
+    'sales_data.xlsx', and appends an invoice with the following format to
     'invoice.txt':
 
     Andrew Wang (client ID: 124)
