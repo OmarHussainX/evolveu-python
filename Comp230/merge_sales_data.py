@@ -2,6 +2,7 @@ from validate_sales_data import validate_sales_data
 from pathlib import Path
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.styles import Font, Fill
 import pandas as pd
 
 merged_file = 'merged_sales_data.xlsx'
@@ -108,7 +109,6 @@ def merge_sales_data(file1, file2):
         df = pd.DataFrame(data, columns=columns)
         df.sort_values([key_header_title], inplace=True)
         df.dropna(subset=[key_header_title], inplace=True)
-        print(df)
 
         # remove current worksheet from merged workbook, and...
         # worksheet_title = worksheet.title
@@ -127,6 +127,14 @@ def merge_sales_data(file1, file2):
     worksheet_cleaner(ws_clients, 'Customer', 0)
     worksheet_cleaner(ws_invoices, 'Invoice', 1)
     worksheet_cleaner(ws_line_items, 'Invoice', 2)
+
+    # Apply styles
+    for sheet in wb_new:
+        print(f'Worksheet: {sheet.title}')
+        print(f'row #1: {sheet[1]}')
+        for cell in sheet[1]:
+            print(f'make bold: {cell.value}')
+            cell.font = Font(bold=True)
 
     # Save target workbook to disk
     wb_new.save(merged_file)
