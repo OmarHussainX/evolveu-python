@@ -97,6 +97,7 @@ def merge_sales_data(file1, file2):
     # by cunstomer ID in order to 'remove' blank rows
     df = pd.DataFrame(data, columns=columns)
     df.sort_values(['Customer'], inplace=True)
+    df.dropna(subset=['Customer'], inplace=True)
     print(df)
 
     # remove current 'customers' worksheet from merged workbook, and...
