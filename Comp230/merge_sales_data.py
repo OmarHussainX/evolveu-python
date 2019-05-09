@@ -88,28 +88,39 @@ def merge_sales_data(file1, file2):
                wb['invoice line items'].max_column, 2, ws_line_items.max_row)
 
     # -------------- attempt to remove blank rows --------------
+    def worksheet_cleaner(worksheet, key_header_title, sheet_index):
+        """
+        Receives a reference to a worksheet, and the title of a key
+        header in that worksheet. Deletes the worksheet and creates a
+        new one at 'sheet_index' which is:
+        - sorted by the key header
+        - devoid of any rows where the key column is empty/NaN
+        """
+        data = worksheet.values
+        # Get column headers from first row
+        columns = next(data)[0:]
 
-    data = ws_clients.values
-    # Get column headers from first row
-    columns = next(data)[0:]
+        # Create a DataFrame from the second row of data onward, and sort
+        # by key header in order to 'remove' blank rows
+        df = pd.DataFrame(data, columns=columns)
+        df.sort_values([key_header_title], inplace=True)
+        df.dropna(subset=[key_header_title], inplace=True)
+        print(df)
 
-    # Create a DataFrame from the second row of data onward, and sort
-    # by cunstomer ID in order to 'remove' blank rows
-    df = pd.DataFrame(data, columns=columns)
-    df.sort_values(['Customer'], inplace=True)
-    df.dropna(subset=['Customer'], inplace=True)
-    print(df)
+        # remove current worksheet from merged workbook, and...
+        # worksheet_title = worksheet.title
+        wb_new.remove(worksheet)
 
-    # remove current 'customers' worksheet from merged workbook, and...
-    wb_new.remove(ws_clients)
+        # ...add new worksheet with the same title, containing data from
+        # the sorted and cleaned DataFrame
+        worksheet = wb_new.create_sheet(worksheet.title, sheet_index)
 
-    # add new 'customers' worksheet, containing data from sorted DataFrame
-    ws_clients = wb_new.create_sheet('customers', 0)
-
-    for row in dataframe_to_rows(df, index=False, header=True):
-        ws_clients.append(row)
+        for row in dataframe_to_rows(df, index=False, header=True):
+            worksheet.append(row)
 
     # ----------------------------------------------------------
+
+    worksheet_cleaner(ws_clients, 'Customer', 0)
 
     # Save target workbook to disk
     wb_new.save(merged_file)
