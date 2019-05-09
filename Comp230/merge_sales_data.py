@@ -132,17 +132,19 @@ def merge_sales_data(file1, file2):
     # Create styles
     basic = NamedStyle(name='basic')
     basic.font = Font(name='Arial', size=12)
+    wb_new.add_named_style(basic)
+    
     basic_bold = NamedStyle(name='basic_bold')
     basic_bold.font = Font(name='Arial', size=12, bold=True)
+    wb_new.add_named_style(basic_bold)
+    
     date_style = NamedStyle(name='date_style', number_format='YYYY-MM-DD')
     date_style.font = Font(name='Arial', size=12)
-    wb_new.add_named_style(basic)
-    wb_new.add_named_style(basic_bold)
     wb_new.add_named_style(date_style)
 
     # Apply styles
     for sheet in wb_new:
-        # sheet.sheet_format.defaultColWidth = 12.25
+        sheet.sheet_format.defaultColWidth = 14
         sheet.sheet_format.defaultRowHeight = 18
         for row in sheet.iter_rows():
             for cell in row:
@@ -151,9 +153,9 @@ def merge_sales_data(file1, file2):
                     cell.style = 'basic_bold'
 
     # Grab second column from 'invoices' worksheet and format as Date
-    dateCol = wb_new['invoices']['B']
-    for cell in dateCol:
-        if cell.row > 1:       # skip header
+    date_col = wb_new['invoices']['B']
+    for cell in date_col:
+        if cell.row > 1:                # skip header
             cell.style = 'date_style'
 
     # Save merged workbook to disk
