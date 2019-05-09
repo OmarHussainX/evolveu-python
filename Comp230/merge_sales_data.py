@@ -14,6 +14,7 @@ def merge_sales_data(file1, file2):
     the two data sets) merges them into a new spreadsheet
     """
 
+    # ----------------------------------------------------------
     def copy_sheet(source, target, source_rows_max, source_cols_max,
                    source_start_row, target_start_offset):
         """
@@ -30,6 +31,7 @@ def merge_sales_data(file1, file2):
             for j in range(1, source_cols_max + 1):
                 target.cell(target_start_offset + i, j).value = \
                     source.cell(i, j).value
+    # ----------------------------------------------------------
 
     # Create new (target) workbook with blank sheets
     wb_new = openpyxl.Workbook()
@@ -87,9 +89,10 @@ def merge_sales_data(file1, file2):
                wb['invoice line items'].max_row,
                wb['invoice line items'].max_column, 2, ws_line_items.max_row)
 
-    # -------------- attempt to remove blank rows --------------
+    # ----------------------------------------------------------
     def worksheet_cleaner(worksheet, key_header_title, sheet_index):
         """
+        Helper function
         Receives a reference to a worksheet, and the title of a key
         header in that worksheet. Deletes the worksheet and creates a
         new one at 'sheet_index' which is:
@@ -120,7 +123,10 @@ def merge_sales_data(file1, file2):
 
     # ----------------------------------------------------------
 
+    # 'Clean' each worksheet: sort by ID, and remove blank rows
     worksheet_cleaner(ws_clients, 'Customer', 0)
+    worksheet_cleaner(ws_invoices, 'Invoice', 1)
+    worksheet_cleaner(ws_line_items, 'Invoice', 2)
 
     # Save target workbook to disk
     wb_new.save(merged_file)
