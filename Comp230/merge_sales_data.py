@@ -2,6 +2,7 @@ from validate_sales_data import validate_sales_data
 from pathlib import Path
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.styles import Font, NamedStyle
 import pandas as pd
 
 merged_file = 'merged_sales_data.xlsx'
@@ -108,7 +109,6 @@ def merge_sales_data(file1, file2):
         df = pd.DataFrame(data, columns=columns)
         df.sort_values([key_header_title], inplace=True)
         df.dropna(subset=[key_header_title], inplace=True)
-        print(df)
 
         # remove current worksheet from merged workbook, and...
         # worksheet_title = worksheet.title
@@ -123,12 +123,42 @@ def merge_sales_data(file1, file2):
 
     # ----------------------------------------------------------
 
-    # 'Clean' each worksheet: sort by ID, and remove blank rows
+    # 'Clean' each worksheet: sort by ID, and remove blank rows -
+    # cleaned worksheet is saved in merged workbook
     worksheet_cleaner(ws_clients, 'Customer', 0)
     worksheet_cleaner(ws_invoices, 'Invoice', 1)
     worksheet_cleaner(ws_line_items, 'Invoice', 2)
 
-    # Save target workbook to disk
+    # Create styles
+    basic = NamedStyle(name='basic')
+    basic.font = Font(name='Arial', size=12)
+    wb_new.add_named_style(basic)
+    
+    basic_bold = NamedStyle(name='basic_bold')
+    basic_bold.font = Font(name='Arial', size=12, bold=True)
+    wb_new.add_named_style(basic_bold)
+    
+    date_style = NamedStyle(name='date_style', number_format='YYYY-MM-DD')
+    date_style.font = Font(name='Arial', size=12)
+    wb_new.add_named_style(date_style)
+
+    # Apply styles
+    for sheet in wb_new:
+        sheet.sheet_format.defaultColWidth = 14
+        sheet.sheet_format.defaultRowHeight = 18
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.style = 'basic'
+                if cell.row == 1:       # make header bold
+                    cell.style = 'basic_bold'
+
+    # Grab second column from 'invoices' worksheet and format as Date
+    date_col = wb_new['invoices']['B']
+    for cell in date_col:
+        if cell.row > 1:                # skip header
+            cell.style = 'date_style'
+
+    # Save merged workbook to disk
     wb_new.save(merged_file)
 
 
