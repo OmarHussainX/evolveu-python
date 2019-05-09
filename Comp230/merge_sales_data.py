@@ -1,6 +1,7 @@
 from validate_sales_data import validate_sales_data
 from pathlib import Path
 import openpyxl
+import pandas as pd
 
 merged_file = 'merged_sales_data.xlsx'
 
@@ -21,16 +22,13 @@ def merge_sales_data(file1, file2):
         of 'target = wb.copy_worksheet(source)')
         """
         for i in range(source_start_row, source_rows_max + 1):
-            # skip blank rows (NOTE: any row where the first cell/column
-            # is empty, is considered to be blank. Cannot have sensible
-            # data if the first cell/column - where an ID is expected - is
-            # empty!)
-            if source.cell(i, 1).value is None:
-                print(f'{i} (in {source}) is an empty row? {source.cell(i, 1).value}')
-                continue
+            # NOTE: skipping blank rows found in the source sheet doesn't help -
+            # even if the blank source row is skipped, the row counter must
+            # advance by one, which will by necessity create a blank row in the
+            # target
             for j in range(1, source_cols_max + 1):
-                    target.cell(target_start_offset + i, j).value = \
-                        source.cell(i, j).value
+                target.cell(target_start_offset + i, j).value = \
+                    source.cell(i, j).value
 
     # Create new (target) workbook with blank sheets
     wb_new = openpyxl.Workbook()
@@ -87,6 +85,16 @@ def merge_sales_data(file1, file2):
     copy_sheet(wb['invoice line items'], ws_line_items,
                wb['invoice line items'].max_row,
                wb['invoice line items'].max_column, 2, ws_line_items.max_row)
+
+    # -------------- attempt to remove blank rows --------------
+    data = ws_clients.values
+    # Get the first line in file as a header line
+    columns = next(data)[0:]
+    # Create a DataFrame based on the second and subsequent lines of data
+    df = pd.DataFrame(data, columns=columns)
+    df.sort_values(['Customer'], inplace=True)
+    print(df)
+    # ----------------------------------------------------------
 
     # Save target workbook to disk
     wb_new.save(merged_file)
