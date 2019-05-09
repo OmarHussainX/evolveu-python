@@ -137,12 +137,11 @@ def merge_sales_data(file1, file2):
     wb_new.add_named_style(basic_bold)
 
     # Apply styles
-    row_count = 1
     for sheet in wb_new:
+        # sheet.sheet_format.defaultColWidth = 12.25
+        sheet.sheet_format.defaultRowHeight = 18
         print(sheet.dimensions)
         for row in sheet.iter_rows():
-            sheet.row_dimensions[row_count].height = 18
-            row_count += 1
             for cell in row:
                 cell.style = 'basic'
                 if cell.row == 1:       # make header bold
