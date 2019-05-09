@@ -123,7 +123,8 @@ def merge_sales_data(file1, file2):
 
     # ----------------------------------------------------------
 
-    # 'Clean' each worksheet: sort by ID, and remove blank rows
+    # 'Clean' each worksheet: sort by ID, and remove blank rows -
+    # cleaned worksheet is saved in merged workbook
     worksheet_cleaner(ws_clients, 'Customer', 0)
     worksheet_cleaner(ws_invoices, 'Invoice', 1)
     worksheet_cleaner(ws_line_items, 'Invoice', 2)
@@ -133,19 +134,27 @@ def merge_sales_data(file1, file2):
     basic.font = Font(name='Arial', size=12)
     basic_bold = NamedStyle(name='basic_bold')
     basic_bold.font = Font(name='Arial', size=12, bold=True)
+    date_style = NamedStyle(name='date_style', number_format='YYYY-MM-DD')
+    date_style.font = Font(name='Arial', size=12)
     wb_new.add_named_style(basic)
     wb_new.add_named_style(basic_bold)
+    wb_new.add_named_style(date_style)
 
     # Apply styles
     for sheet in wb_new:
         # sheet.sheet_format.defaultColWidth = 12.25
         sheet.sheet_format.defaultRowHeight = 18
-        print(sheet.dimensions)
         for row in sheet.iter_rows():
             for cell in row:
                 cell.style = 'basic'
                 if cell.row == 1:       # make header bold
                     cell.style = 'basic_bold'
+
+    # Grab second column from 'invoices' worksheet and format as Date
+    dateCol = wb_new['invoices']['B']
+    for cell in dateCol:
+        if cell.row > 1:       # skip header
+            cell.style = 'date_style'
 
     # Save merged workbook to disk
     wb_new.save(merged_file)
