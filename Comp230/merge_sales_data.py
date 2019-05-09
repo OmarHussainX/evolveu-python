@@ -1,6 +1,7 @@
 from validate_sales_data import validate_sales_data
 from pathlib import Path
 import openpyxl
+from openpyxl.utils.dataframe import dataframe_to_rows
 import pandas as pd
 
 merged_file = 'merged_sales_data.xlsx'
@@ -13,6 +14,7 @@ def merge_sales_data(file1, file2):
     the two data sets) merges them into a new spreadsheet
     """
 
+    # ----------------------------------------------------------
     def copy_sheet(source, target, source_rows_max, source_cols_max,
                    source_start_row, target_start_offset):
         """
@@ -22,13 +24,14 @@ def merge_sales_data(file1, file2):
         of 'target = wb.copy_worksheet(source)')
         """
         for i in range(source_start_row, source_rows_max + 1):
-            # NOTE: skipping blank rows found in the source sheet doesn't help -
-            # even if the blank source row is skipped, the row counter must
+            # NOTE: skipping blank rows found in the source sheet doesn't help:
+            # Even if the blank source row is skipped, the row counter must
             # advance by one, which will by necessity create a blank row in the
-            # target
+            # target.
             for j in range(1, source_cols_max + 1):
                 target.cell(target_start_offset + i, j).value = \
                     source.cell(i, j).value
+    # ----------------------------------------------------------
 
     # Create new (target) workbook with blank sheets
     wb_new = openpyxl.Workbook()
@@ -86,15 +89,44 @@ def merge_sales_data(file1, file2):
                wb['invoice line items'].max_row,
                wb['invoice line items'].max_column, 2, ws_line_items.max_row)
 
-    # -------------- attempt to remove blank rows --------------
-    data = ws_clients.values
-    # Get the first line in file as a header line
-    columns = next(data)[0:]
-    # Create a DataFrame based on the second and subsequent lines of data
-    df = pd.DataFrame(data, columns=columns)
-    df.sort_values(['Customer'], inplace=True)
-    print(df)
     # ----------------------------------------------------------
+    def worksheet_cleaner(worksheet, key_header_title, sheet_index):
+        """
+        Helper function
+        Receives a reference to a worksheet, and the title of a key
+        header in that worksheet. Deletes the worksheet and creates a
+        new one at 'sheet_index' which is:
+        - sorted by the key header
+        - devoid of any rows where the key column is empty/NaN
+        """
+        data = worksheet.values
+        # Get column headers from first row
+        columns = next(data)[0:]
+
+        # Create a DataFrame from the second row of data onward, and sort
+        # by key header in order to 'remove' blank rows
+        df = pd.DataFrame(data, columns=columns)
+        df.sort_values([key_header_title], inplace=True)
+        df.dropna(subset=[key_header_title], inplace=True)
+        print(df)
+
+        # remove current worksheet from merged workbook, and...
+        # worksheet_title = worksheet.title
+        wb_new.remove(worksheet)
+
+        # ...add new worksheet with the same title, containing data from
+        # the sorted and cleaned DataFrame
+        worksheet = wb_new.create_sheet(worksheet.title, sheet_index)
+
+        for row in dataframe_to_rows(df, index=False, header=True):
+            worksheet.append(row)
+
+    # ----------------------------------------------------------
+
+    # 'Clean' each worksheet: sort by ID, and remove blank rows
+    worksheet_cleaner(ws_clients, 'Customer', 0)
+    worksheet_cleaner(ws_invoices, 'Invoice', 1)
+    worksheet_cleaner(ws_line_items, 'Invoice', 2)
 
     # Save target workbook to disk
     wb_new.save(merged_file)
