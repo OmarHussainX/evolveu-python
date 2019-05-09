@@ -1,6 +1,7 @@
 from validate_sales_data import validate_sales_data
 from pathlib import Path
 import openpyxl
+from openpyxl.utils.dataframe import dataframe_to_rows
 import pandas as pd
 
 merged_file = 'merged_sales_data.xlsx'
@@ -22,10 +23,10 @@ def merge_sales_data(file1, file2):
         of 'target = wb.copy_worksheet(source)')
         """
         for i in range(source_start_row, source_rows_max + 1):
-            # NOTE: skipping blank rows found in the source sheet doesn't help -
-            # even if the blank source row is skipped, the row counter must
+            # NOTE: skipping blank rows found in the source sheet doesn't help:
+            # Even if the blank source row is skipped, the row counter must
             # advance by one, which will by necessity create a blank row in the
-            # target
+            # target.
             for j in range(1, source_cols_max + 1):
                 target.cell(target_start_offset + i, j).value = \
                     source.cell(i, j).value
@@ -87,13 +88,26 @@ def merge_sales_data(file1, file2):
                wb['invoice line items'].max_column, 2, ws_line_items.max_row)
 
     # -------------- attempt to remove blank rows --------------
+
     data = ws_clients.values
-    # Get the first line in file as a header line
+    # Get column headers from first row
     columns = next(data)[0:]
-    # Create a DataFrame based on the second and subsequent lines of data
+
+    # Create a DataFrame from the second row of data onward, and sort
+    # by cunstomer ID in order to 'remove' blank rows
     df = pd.DataFrame(data, columns=columns)
     df.sort_values(['Customer'], inplace=True)
     print(df)
+
+    # remove current 'customers' worksheet from merged workbook, and...
+    wb_new.remove(ws_clients)
+
+    # add new 'customers' worksheet, containing data from sorted DataFrame
+    ws_clients = wb_new.create_sheet('customers', 0)
+
+    for row in dataframe_to_rows(df, index=False, header=True):
+        ws_clients.append(row)
+
     # ----------------------------------------------------------
 
     # Save target workbook to disk

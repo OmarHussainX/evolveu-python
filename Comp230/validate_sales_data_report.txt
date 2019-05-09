@@ -1,8 +1,8 @@
-sales_data_bad8.xlsx - data INVALID
+sales_data2.xlsx - data VALIDATED
 
 10 - 15 clients                         True
 clients are unique                      True
 3 - 4 invoices per client               True
 1 - 5 items per invoice                 True
 invoices in same month                  True
-invoices total = $15,000 (+/- 1,500)    False
+invoices total = $15,000 (+/- 1,500)    True
