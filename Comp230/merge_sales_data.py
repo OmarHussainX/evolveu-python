@@ -2,7 +2,7 @@ from validate_sales_data import validate_sales_data
 from pathlib import Path
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
-from openpyxl.styles import Font, Fill
+from openpyxl.styles import Font, NamedStyle
 import pandas as pd
 
 merged_file = 'merged_sales_data.xlsx'
@@ -128,15 +128,27 @@ def merge_sales_data(file1, file2):
     worksheet_cleaner(ws_invoices, 'Invoice', 1)
     worksheet_cleaner(ws_line_items, 'Invoice', 2)
 
-    # Apply styles
-    for sheet in wb_new:
-        print(f'Worksheet: {sheet.title}')
-        print(f'row #1: {sheet[1]}')
-        for cell in sheet[1]:
-            print(f'make bold: {cell.value}')
-            cell.font = Font(bold=True)
+    # Create styles
+    basic = NamedStyle(name='basic')
+    basic.font = Font(name='Arial', size=12)
+    basic_bold = NamedStyle(name='basic_bold')
+    basic_bold.font = Font(name='Arial', size=12, bold=True)
+    wb_new.add_named_style(basic)
+    wb_new.add_named_style(basic_bold)
 
-    # Save target workbook to disk
+    # Apply styles
+    row_count = 1
+    for sheet in wb_new:
+        print(sheet.dimensions)
+        for row in sheet.iter_rows():
+            sheet.row_dimensions[row_count].height = 18
+            row_count += 1
+            for cell in row:
+                cell.style = 'basic'
+                if cell.row == 1:       # make header bold
+                    cell.style = 'basic_bold'
+
+    # Save merged workbook to disk
     wb_new.save(merged_file)
 
 
