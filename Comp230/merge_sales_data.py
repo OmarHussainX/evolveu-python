@@ -5,7 +5,7 @@ import pandas
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import Font, NamedStyle
 
-merged_file = 'merged_sales_data.xlsx'
+merged_filename = 'merged_sales_data.xlsx'
 
 
 def merge_sales_data(file1, file2):
@@ -145,7 +145,6 @@ def merge_sales_data(file1, file2):
         # ...append the data from the sorted and cleaned DataFrame
         for row in dataframe_to_rows(df, index=False, header=True):
             worksheet.append(row)
-
     # ----------------------------------------------------------
 
     # 'Clean' each worksheet in the merged workbook:
@@ -184,7 +183,8 @@ def merge_sales_data(file1, file2):
             cell.style = 'date_cell'
 
     # Save merged workbook to disk
-    wb_new.save(merged_file)
+    wb_new.save(merged_filename)
+###############################################################################
 
 
 def main():
@@ -194,7 +194,7 @@ def main():
     """
 
     print(f'\n== This will merge two sales data spreadsheets into \
-\'{merged_file}\' ==\n')
+\'{merged_filename}\' ==\n')
 
     file1 = input("Enter first file (hit enter for 'sales_data.xlsx')\n> ")
     if file1 == '':
@@ -227,7 +227,7 @@ See \'validate_sales_data_report.txt\' for details')
         return
 
     merge_sales_data(file1, file2)
-    print(f'Merged \'{file1}\' and \'{file2}\' into \'{merged_file}\'')
+    print(f'Merged \'{file1}\' and \'{file2}\' into \'{merged_filename}\'')
 
 if __name__ == '__main__':
     main()
