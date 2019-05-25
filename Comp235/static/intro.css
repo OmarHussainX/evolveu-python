@@ -1,7 +1,14 @@
+html {
+    height: 100%;
+}
 body {
     background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4
     100%);
     font-family: helvetica;
+    min-height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .people {
