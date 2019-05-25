@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
+
+
 people = {1: {'fname': 'Bird', 'lname': 'Person', 'age': 299},
           5: {'fname': 'Rick', 'lname': 'Sanchez', 'age': 65},
           12: {'fname': 'Justin', 'lname': 'Roiland', 'age': 39}
@@ -28,7 +32,7 @@ def person(id=None):
                                              'Given', 'age': None}))
 
 
-@app.route('/info')
+@app.route('/info', methods=['GET'])
 def info():
     print(f'\n--> Args: {request.args}\n')
 # http://flask.pocoo.org/docs/1.0/api/#flask.Request.args
