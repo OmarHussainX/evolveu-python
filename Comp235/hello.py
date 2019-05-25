@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-from flask_cors import CORS
+# from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 
 people = {1: {'fname': 'Bird', 'lname': 'Person', 'age': 299},
@@ -32,7 +32,7 @@ def person(id=None):
                                              'Given', 'age': None}))
 
 
-@app.route('/info', methods=['GET'])
+@app.route('/info')
 def info():
     print(f'\n--> Args: {request.args}\n')
 # http://flask.pocoo.org/docs/1.0/api/#flask.Request.args
