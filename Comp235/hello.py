@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 # from flask_cors import CORS
 
 
@@ -41,9 +41,15 @@ def info():
     #                        parm2=request.args.get("parm2", default="parm2"),
     #                        parm3=request.args.get("parm3", default="parm3"))
 
-    return (f'parm1={request.args.get("parm1", default="parm1_default")}, \
-parm2={request.args.get("parm2", default="parm2_default")}, \
-parm3={request.args.get("parm3", default="parm3_default")}')
+#     return (f'parm1={request.args.get("parm1", default="parm1_default")}, \
+# parm2={request.args.get("parm2", default="parm2_default")}, \
+# parm3={request.args.get("parm3", default="parm3_default")}')
+
+    resp = jsonify(people)
+    resp_type = type(resp)
+    print('--> json data from \'/info\': {resp.response}\n\
+type of data: {resp_type}\n')
+    return resp, 200
 
 
 @app.route('/update')
