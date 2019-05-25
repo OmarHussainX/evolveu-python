@@ -16,7 +16,7 @@ async function onWindowHasLoaded() {
         console.log(`--> Response: ${response}, status: ${response.status}`)
 
         const data = await response.text()
-        console.log(`--> Data: ${data}`)
+        console.log(`--> Data: [${data}], type: [${typeof data}]`)
  
     } catch (error) {
         console.error(`--> *** onWindowHasLoaded error: ${error} ***`)

@@ -36,11 +36,14 @@ def person(id=None):
 def info():
     print(f'\n--> Args: {request.args}\n')
 # http://flask.pocoo.org/docs/1.0/api/#flask.Request.args
-    return render_template('info.html',
-                           parm1=request.args.get("parm1", default="parm1"),
-                           parm2=request.args.get("parm2", default="parm2"),
-                           parm3=request.args.get("parm3", default="parm3"),
-                           )
+    # return render_template('info.html',
+    #                        parm1=request.args.get("parm1", default="parm1"),
+    #                        parm2=request.args.get("parm2", default="parm2"),
+    #                        parm3=request.args.get("parm3", default="parm3"))
+
+    return (f'parm1={request.args.get("parm1", default="parm1_default")}, \
+parm2={request.args.get("parm2", default="parm2_default")}, \
+parm3={request.args.get("parm3", default="parm3_default")}')
 
 
 @app.route('/update')
