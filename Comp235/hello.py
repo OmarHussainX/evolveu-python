@@ -46,9 +46,9 @@ def info():
 # parm3={request.args.get("parm3", default="parm3_default")}')
 
     resp = jsonify(people)
-    resp_type = type(resp)
-    print('--> json data from \'/info\': {resp.response}\n\
-type of data: {resp_type}\n')
+    print(f'--> json data sent from \'/info()\' route:\n\
+{resp.response}\n\
+type of data sent: {type(resp)}\n')
     return resp, 200
 
 
