@@ -16,15 +16,15 @@ async function onWindowHasLoaded() {
         console.log(`--> Response: ${response}, status: ${response.status}, class of response Object: ${response.constructor.name}`)
 
         // const data = await response.text()
-        // console.log(`--> Data rec'd:\n${data}\ndata type: ${typeof data}`)
+        // console.log(`--> Data rec'd:\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
  
         const data = await response.json()
-        console.log(`--> data rec'd from response.json():\n${data}\ndata type: ${typeof data}`)
+        console.log(`--> data rec'd from response.json():\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
 
         const dataString = JSON.stringify(data)
         console.log(`--> data after processing via JSON.stringify():\n[${dataString}]\ndata type: ${typeof dataString}, class: ${dataString.constructor.name}`)
 
-        // display data recieved from server on the front-end
+        // display data received from server on the front-end
         document.getElementById('response_data').innerText = dataString
 
     } catch (error) {
