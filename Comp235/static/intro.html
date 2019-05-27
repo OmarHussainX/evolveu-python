@@ -7,10 +7,16 @@
 </head>
 
 <body>
-    <h1>Static 'front-end' from Flask server</h1>
-    <div id="response_data">
+    <h1>'front-end' <em>(static page from Flask server)</em></h1>
+    <div>
+        <button id="fetchData">Get data from server</button>
         <h3>Data from Flask server's '/info' route:</h3>
-        ...none...
+        <div id="response_data">...none...</div>
+    </div>
+    <p>&nbsp;</p>
+    <div>
+        <button id="sendData">Send data to server</button>
+        <h3>Send new person to Flask server's '/update' route:</h3>
     </div>
     <script src="intro.js"></script>
 </body>

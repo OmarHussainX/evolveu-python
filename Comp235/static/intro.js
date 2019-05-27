@@ -1,12 +1,19 @@
 console.log(`--> 'Hello world' from Flask server 'front-end'`)
 
+// setup click event listeners for the buttons
+document.getElementById('fetchData').addEventListener('click', fetchData);
+document.getElementById('sendData').addEventListener('click', updatePerson);
 
 window.onload = onWindowHasLoaded
 async function onWindowHasLoaded() {
     console.log(`--> 'intro.html' has finished loading`)
- 
+}
+
+async function fetchData() {
+    console.log(`--> sending fetch request to server's '/info' route`)
+
     let response
- 
+
     try {
         response = await fetch('/info')
 
@@ -17,7 +24,7 @@ async function onWindowHasLoaded() {
 
         // const data = await response.text()
         // console.log(`--> Data rec'd:\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
- 
+
         const data = await response.json()
         console.log(`--> data rec'd from response.json():\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
 
@@ -30,5 +37,31 @@ async function onWindowHasLoaded() {
     } catch (error) {
         console.error(`--> *** onWindowHasLoaded error: ${error} ***`)
         console.error(`--> Response: ${response}, status: ${response.status}`)
+    }
+}
+
+async function updatePerson(id, age) {
+    console.log('about to update:', id, age);
+    let response;
+    try {
+        response = await fetch('/update', {
+            method: "post",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+                age: age
+            })
+        });
+        if (response.status != 200)
+            throw 'Invalid HTTP Response:' + response.status;
+        const res = await response.json();
+        console.log('Response from update:', res);
+    } catch (error) {
+        console.trace();
+        console.log('*** We Have and error updatePerson:', error);
+        console.log('Response:', response);
     }
 }
