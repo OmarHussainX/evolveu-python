@@ -12,6 +12,10 @@ body {
     padding: 1em;
 }
 
+fieldset {
+    width: fit-content;
+}
+
 .people {
     background: white;
     border: solid;

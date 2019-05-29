@@ -1,8 +1,8 @@
 console.log(`--> 'Hello world' from Flask server 'front-end'`)
 
 // setup click event listeners for the buttons
-document.getElementById('fetchData').addEventListener('click', fetchData);
-document.getElementById('sendData').addEventListener('click', updatePerson);
+document.getElementById('fetchData').addEventListener('click', fetchData)
+document.getElementById('sendData').addEventListener('click', updatePerson)
 
 window.onload = onWindowHasLoaded
 async function onWindowHasLoaded() {
@@ -28,6 +28,7 @@ async function fetchData() {
         const data = await response.json()
         console.log(`--> data rec'd from response.json():\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
 
+        // converts the JavaScript object (or value) to a JSON string
         const dataString = JSON.stringify(data)
         console.log(`--> data after processing via JSON.stringify():\n[${dataString}]\ndata type: ${typeof dataString}, class: ${dataString.constructor.name}`)
 
@@ -40,9 +41,25 @@ async function fetchData() {
     }
 }
 
-async function updatePerson(id, age) {
-    console.log('about to update:', id, age);
-    let response;
+async function updatePerson() {
+    console.log(`--> sending post request to server's '/update' route`)
+    let firstName = document.getElementById('firstName').value
+    let lastName = document.getElementById('lastName').value
+    let age = document.getElementById('age').value
+    let userId = document.getElementById('userId').value
+
+    console.log(`--> Data to send:
+id: ${userId}
+name: ${firstName} ${lastName}
+age: ${age}`)
+
+    document.getElementById('firstName').value = ''
+    document.getElementById('lastName').value = ''
+    document.getElementById('age').value = ''
+    document.getElementById('userId').value = ''
+
+    let response
+
     try {
         response = await fetch('/update', {
             method: "post",
@@ -50,18 +67,19 @@ async function updatePerson(id, age) {
                 Accept: "application/json, text/plain, */*",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                id: id,
-                age: age
-            })
-        });
+            body: JSON.stringify(
+                { [userId]: { 'fname': firstName, 'lname': lastName, 'age': age } }
+            )
+        })
         if (response.status != 200)
-            throw 'Invalid HTTP Response:' + response.status;
-        const res = await response.json();
-        console.log('Response from update:', res);
+            throw 'Invalid HTTP Response:' + response.status
+        const res = await response.json()
+        console.log('Response from update:', res)
+
     } catch (error) {
-        console.trace();
-        console.log('*** We Have and error updatePerson:', error);
-        console.log('Response:', response);
+        console.trace()
+        console.error(`--> *** updatePerson error: ${error} ***`)
+        console.error(`--> Response: ${response}, status: ${response.status}`)
     }
+
 }
