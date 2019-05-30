@@ -26,7 +26,7 @@ async function fetchData() {
         // console.log(`--> Data rec'd:\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
 
         const data = await response.json()
-        console.log(`--> data rec'd from response.json():\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}`)
+        console.log(`--> data rec'd from response.json():\n${data}\ndata type: ${typeof data}, class: ${data.constructor.name}, \nkeys: ${Object.keys(data)}, values: ${Object.values(data)}`)
 
         // converts the JavaScript object (or value) to a JSON string
         const dataString = JSON.stringify(data)
