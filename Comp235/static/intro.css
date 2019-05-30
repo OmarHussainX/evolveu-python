@@ -1,32 +1,159 @@
+/* --> Style resets, and some intitalisations ---------- */
 html {
     height: 100%;
 }
-
 body {
-    background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4
-    100%);
-    font-family: helvetica;
-    /* min-height: 100%; */
-    /* width: 100%; */
-    margin: 0;
-    padding: 1em;
-}
-
+    /* background-image: linear-gradient(to top, #d9e1eb 0%, #d5e8fa 100%); */
+    background-color: #d9e1eb;
+    color: rgb(40, 40, 40);
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-size: 0.9em;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 1em !important;
+    width: 100% !important;
+  }
+  /* ================================================== */
+  
 fieldset {
     width: fit-content;
 }
-
-.people {
-    background: white;
-    border: solid;
-    width: 25%;
-    min-height: 60px;
-    margin: auto;
-    margin-top: 15px;
+  
+  /* --> Headings ---------- */
+  h1, h2, h3, h4, h5, h6 {
+    color: rgb(80, 80, 80);
+    font-family: 'Roboto', sans-serif;
+  }
+  /* ================================================== */
+  
+  
+  
+  /* --> Primary wrapper ---------- 
+  NOTE:
+    - This container is a wrapper, providing a centered single-column layout for its children
+    - The children could be anything, but are intended to be <div> elements with class="panel"
+    - These 'panels' are intended to be the main containers of actual content
+  */
+  .flex-container-col {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+  }
+  /* ================================================== */
+  
+  
+  
+  /* --> Panel (*primary* general-purpose container) ---------- 
+  NOTE:
+    - panels are rendered as simple white boxes with slightly rounded corners and a soft shadow
+    - no specified width: they shrink/grow with content (this could always be changed)
+  */
+  .panel {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin-top: 2em;
+    /* min-width: 70%; */
+    padding: 0 2em 2em 2em;
+    /* transition: all 0.3s cubic-bezier(.25,.8,.25,1); */
+  }
+  
+  /* --> Add top margin to any panel placed immediately after a panel */
+  .panel + .panel {
+    margin-top: 4em;
+  }
+  /* ================================================== */
+  
+  
+  
+  /* --> Card (*secondary* general-purpose container) ----------
+  NOTE:
+   - A <div> with class="cardsContainer" is meant to contain a (centered) series of 'cards'
+   - 'cards' are simple white boxes, with slightly rounded corners, a soft shadow,
+      and appear to raise on hover
+   - 'cards' are not restricted to use inside a 'cardsContainer' - they can be
+     used inside 'panels', or elsewhere...
+  */
+  
+  .cardsContainer {
     text-align: center;
-    padding: 50px;
-    border-radius: 10px;
-    padding: 10px;
-    /*margin: 20px;*/
-    box-shadow: 10px 10px 15px;
-}
+  }
+  
+  .card {
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin-top: 1em;
+    padding: 1em;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  
+  .card:hover {
+    box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 10px rgba(0,0,0,0.22);
+  }
+  /* ================================================== */
+  
+  
+  
+  /* --> Buttons & input fields ---------- 
+  NOTE:
+    - Renders small blue buttons, with rounded corners, soft shadows, and subtle hover effects
+    - Any <button> with class="severe" is red
+    - Text and number input fields have rounded corners with thin borders, which darken on hover
+  */
+  button {
+    background: rgb(50, 120, 200);
+    border-radius: 0.25em;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.9em;
+    font-weight:bold;
+    line-height: 0.5em;
+    margin: 0.1em;
+    margin-top: 0.5em;
+    padding: 0.6em;
+    text-align: center;
+    text-decoration: none;
+    transition: background 100ms ease-in-out, 
+                transform 100ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  button:hover,
+  button:focus {
+    background: rgb(50, 90, 170);
+  }
+  
+  button:active {
+    transform: scale(0.90);
+  }
+  
+  button.severe {
+    background: rgb(230, 90, 90);
+  }
+  
+  button.severe:hover, button.severe:focus {
+    background: rgb(210, 70, 70);
+  }
+  
+  input[type=text], input[type=number] {
+    border-radius: 4px;
+    border: 1px solid #ccc; 
+    padding: 5px;
+    transition: border-color 80ms ease-in-out;
+  }
+  
+  input[type=text]:hover, input[type=number]:hover {
+    border-color: darkgrey;
+  }
+  
+  input[type=text]:focus, input[type=number]:focus {
+    border-color: darkgrey;
+  }
+  /* ================================================== */
+  
