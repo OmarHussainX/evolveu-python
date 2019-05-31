@@ -6,6 +6,7 @@
 # misc
 test_Comp240
 __pycache__
+.pytest_cache
 
 # for virtual environments...
 pyvenv.cfg
