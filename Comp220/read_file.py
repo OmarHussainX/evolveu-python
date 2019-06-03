@@ -16,7 +16,7 @@ def read_file():
         #    Better to strip out the '\n'. But strip() would make
         #    a copy of the string. Better yet, count occurences
         #    of '\n' per line and subtract them - this works in all
-        #    cases, even for 0 '\n', and does not create unnecessary 
+        #    cases, even for 0 '\n', and does not create unnecessary
         #    copies of the line-string.)
         #  - increment else_count for every 'else' word in the line
         for line in file_lines:
