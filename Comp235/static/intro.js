@@ -5,7 +5,7 @@ document.getElementById('fetchData').addEventListener('click', fetchData)
 document.getElementById('sendData').addEventListener('click', updatePerson)
 
 window.onload = onWindowHasLoaded
-async function onWindowHasLoaded() {
+function onWindowHasLoaded() {
     console.log(`--> 'intro.html' has finished loading`)
 }
 

@@ -75,6 +75,9 @@ def update():
     # print('Update:', request, content)
     print(f'content: {content}, type: {type(content)}')
 
+    if content is None:
+        return jsonify({'worked': 'No - no data provided for update!'}), 400
+
     # get id of person sent by front-end: first (and only) key
     id = int(next(iter(content.keys())))
     # grab person data: first (and only) list entry
