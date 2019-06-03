@@ -87,9 +87,11 @@ def update():
     #   - othwerwise add the new person to 'people'
     #     same operation in both cases...
     if id in people:
-        print(f'{people[id]["fname"]} {people[id]["lname"]} with id {id}, already exists')
+        print(f'{people[id]["fname"]} {people[id]["lname"]} \
+with id {id}, already exists')
     else:
-        print(f'adding {new_person["fname"]} {new_person["lname"]} with id {id}')
+        print(f'adding {new_person["fname"]} {new_person["lname"]} \
+with id {id}')
 
     people[id] = new_person
 

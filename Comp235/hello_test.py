@@ -33,11 +33,11 @@ def test_info(client, capsys):
         print(f'\n --> status, status code: {rv.status}, {rv.status_code}')
         print(f'\n --> rv.data: {rv.data}')
         print(f'\n --> data: {data}')
-        
+
         # https://wiki.python.org/moin/BytesStr
         # assert that the 'bytes' Object contains these bytes...
         assert(b'Rick' in rv.data)
         assert(b'Justin' in rv.data)
-        
+
         assert('5' in data)
         print(f'\n ============== ending test_info ==============')
