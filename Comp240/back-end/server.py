@@ -1,4 +1,5 @@
 import os
+import json
 import pandas
 from flask import Flask, jsonify
 
@@ -23,8 +24,18 @@ def data_dump():
 
     # convert pandas DataFrame to JSON
     resp_data = df.to_json(orient='records')
-    # resp_data = df.to_json(orient='records', lines=True)
+
     print(f'DataFrame data (type: {type(resp_data)}) after conversion to JSON string:\n{resp_data}')
+    
+    # this returns a JSON string, but Content-Type in response headers
+    # is text/html instead of application/json
+    return resp_data
+
+    # trying to formaat JSON properly...
+    # this didn't work
+    # alt_resp_data = json.dumps(resp_data)
+    # # resp_data = df.to_json(orient='records', lines=True)
+    # print(f'DataFrame data (type: {type(alt_resp_data)}) after json.dumps():\n{alt_resp_data}')
 
     # create a Flask Response object
     resp = jsonify(resp_data)
