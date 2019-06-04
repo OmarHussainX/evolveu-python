@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 
-
 app = Flask(__name__)
 people = {1: {'fname': 'Bird', 'lname': 'Person', 'age': 299},
           5: {'fname': 'Rick', 'lname': 'Sanchez', 'age': 65},
@@ -46,3 +45,4 @@ def update():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+
