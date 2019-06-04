@@ -2,7 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 # Configure a secret SECRET_KEY
-# Will learn a better way to do this...
+# When will we learn a better way to do this...?
 app.config['SECRET_KEY'] = 'mysecretkey'
 
 
@@ -12,4 +12,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)``
+    app.run(debug=True)
