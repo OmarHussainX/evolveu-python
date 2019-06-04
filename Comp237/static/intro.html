@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Static HTML</title>
+
+<head>
+    <link rel="stylesheet" href="intro.css" />
+</head>
+
+<body>
+    <h1>'front-end' <em>(static page from Flask server)</em></h1>
+    <div>
+        <button id="fetchData">Get data from server</button>
+        <h3>Data from Flask server's '/info' route:</h3>
+        <div id="response_data">...none...</div>
+    </div>
+    <p>&nbsp;</p>
+    <div>
+        <h3>Send new person to Flask server's '/update' route:</h3>
+        <fieldset>
+            <legend>New person's data</legend>
+            <!-- <label for="firstName">First name</label> -->
+            <input id="firstName" type="text" size="30" placeholder="Enter first name">
+            <!-- <label for="lastName">Last name</label> -->
+            <input id="lastName" type="text" size="30" placeholder="Enter last name">
+            <br>
+            <!-- <label for="age">Age</label> -->
+            <input id="age" type="number" min="1" size="15" placeholder="Enter age">
+            <input id="userId" type="number" min="1" size="15" placeholder="Enter user ID">
+        </fieldset>
+
+        <button id="sendData">Send data to server</button>
+    </div>
+    <script src="intro.js"></script>
+</body>
+
+</html>
