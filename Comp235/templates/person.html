@@ -1,0 +1,10 @@
+{% extends "base.html"%}
+{% block content %}
+<div class="jumbotron">
+<p>'person(id={{id}})'</p>
+<ul>
+    <li>Name: {{person.fname}} {{person.lname}}</li>
+    <li>age: {{person.age}}</li>
+</ul>
+</div>
+{% endblock %}
