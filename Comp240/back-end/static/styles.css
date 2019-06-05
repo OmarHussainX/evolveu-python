@@ -32,7 +32,7 @@ NOTE:
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: 2em;
+  /* margin-bottom: 2em; */
 }
 /* ================================================== */
 
@@ -92,6 +92,20 @@ NOTE:
     font-size: 1.1em;
     padding: 1em;
 }
+
+.card table {
+    border-collapse: separate;
+    border-spacing: 25px 0px;
+}
+
+.card thead {
+    font-size: 1.1em;
+    font-weight: bold;
+} 
+
+.card td:first-child {
+    text-align: center;
+} 
 /* ================================================== */
 
 

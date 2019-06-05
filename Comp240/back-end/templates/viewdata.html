@@ -8,16 +8,18 @@
 
     <div class="cardsContainer">
         <div class="card">
-            <h3>Default 'to_dict()' conversion from DataFrame to dictionary</h3>
-            <p>The column headings are the dictionary's <em>keys</em>, and the <em>values</em> are a dictionary of all the cell-values in a column, with row number as key.</p>
-            <p><em>{{col_dic_data}}</em></p>
+            <h3>1. <code>dataframe.to_dict()</code> conversion to dictionary</h3>
+            <p>The column headings are the dictionary's <em>keys</em>, and the <em>values</em> are dictionaries of the cell-values in each column, with row number as key.</p>
+            <p><code>{{col_dic_data}}</code></p>
         </div>
         <div class="card">
-            <h3>Customised 'to_dict()' conversion from DataFrame to dictionary</h3>
-            <p>The column headings are the dictionary's <em>keys</em>, and the <em>values</em> are a dictionary of all the cell-values in a column, with row number as key.</p>
-            <p><em>{{data}}</em></p>
+            <h3>2. <code>dataframe.set_index('Customer').T.to_dict('list')</code> conversion to dictionary</h3>
+            <p>The first column's cell-vaues are the dictionary's <em>keys</em>, and the <em>values</em> are lists of the cell-values from the other columns in each row.</p>
+            <p><code>{{data}}</code></p>
         </div>
         <div class="card">
+            <h3>Second dictionary's data rendered in a table</h3>
+            <p>The customised dictionary is passed from the <em>'/viewdata'</em> route to this template, where it's <em>'.items()'</em> are rendered in a  &lt;table&gt;.</p>
             <table>
                 <thead>
                     <tr>
@@ -35,5 +37,4 @@
         </div>
     </div>
 </div>
-<h5>(end of viewdata.html)</h5>
 {% endblock %}
