@@ -14,7 +14,21 @@ def index():
 
 @app.route('/viewdata', methods=['GET'])
 def view_data():
-    return render_template('viewdata.html')
+    df = pandas.read_excel('./sales_data.xlsx',
+                           sheet_name='customers',
+                           dtype=object)
+    df.dropna(inplace=True)
+    # by default, 'to_dict()' will create a dictionary where the keys are
+    # column headings, and the values are a dictionary of all the values
+    # in a column, with row index as key
+    col_dic_data = df.to_dict()
+
+    # https://stackoverflow.com/a/26716774/11245656
+    data = df.set_index('Customer').T.to_dict('list')
+
+    return render_template('viewdata.html',
+                           col_dic_data=col_dic_data,
+                           data=data)
 
 
 @app.route('/datadump', methods=['GET'])

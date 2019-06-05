@@ -1,7 +1,32 @@
 {% extends "base.html" %}
+{% block title %}
+{{ super() }}
+{% endblock %}
 {% block content %}
-  <h3>Data from Flask server's '/datadump' route:</h3>
-  <br>
-  <p><em>...no data loaded...</em></p>
-  <h5>(end of viewdata.html)</h5>
+<h1>(Served from Flask server's '/viewdata' route)</h1>
+<br>
+<div class="cardsContainer">
+    <div class="card">
+        <h3>Default 'to_dict()' conversion from DataFrame to dictionary</h3>
+        <p>The column headings are the dictionary's <em>keys</em>, and the <em>values</em> are a dictionary of all the cell-values in a column, with row number as key.</p>
+        <p><em>{{col_dic_data}}</em></p>
+    </div>
+    <div class="card">
+        <h3>Customised 'to_dict()' conversion from DataFrame to dictionary</h3>
+        <p><em>{{data}}</em></p>
+    </div>
+</div>
+<table>
+    <thead>
+        <td>Customer ID</td>
+        <td>Name</td>
+    </thead>
+    {% for (k,v) in data.items() %}
+    <tr>
+        <td>{{k}}</td>
+        <td>{{' '.join(v)}}</td>
+    </tr>
+        {% endfor %}
+</table>
+<h5>(end of viewdata.html)</h5>
 {% endblock %}
