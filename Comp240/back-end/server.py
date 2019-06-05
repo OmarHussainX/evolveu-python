@@ -9,12 +9,9 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 
 @app.route('/', methods=['GET'])
 def index():
-    return '<h1>Comp240 flask server...</h1>'
-
-
-@app.route('/viewdata', methods=['GET'])
-def view_data():
-    return render_template('viewdata.html')
+    return f'<h1>Comp240 Flask server</h1>\n\
+<h3>route <code>\'/datadump\'</code> for raw dump of JSON data</h3>\n\
+<h3>route <code>\'/viewdata\'</code> for Jinja2 template rendering of JSON data</h3>'
 
 
 @app.route('/datadump', methods=['GET'])
@@ -62,6 +59,30 @@ resp.response:\n{resp.response}\n\
 type of resp.response : {type(resp.response )}\n')
 
     return resp
+
+
+@app.route('/viewdata', methods=['GET'])
+def view_data():
+    df = pandas.read_excel('./sales_data.xlsx',
+                           sheet_name='customers',
+                           dtype=object)
+    df.dropna(inplace=True)
+    # by default, 'to_dict()' will create a dictionary where the keys are
+    # column headings, and the values are a dictionary of all the values
+    # in a column, with row index as key
+    col_dic_data = df.to_dict()
+
+    # https://stackoverflow.com/a/26716774/11245656
+    # set 'Customer' column as index so that the values from this column are
+    # the dictionary's keys, then transpose the DataFrame.
+    # For the dictionary's values, specify that a 'list' is to be returned for
+    # each column - otherwise by default a dictionary of key:value pairs will
+    # be returned
+    data = df.set_index('Customer').T.to_dict('list')
+
+    return render_template('viewdata.html',
+                           col_dic_data=col_dic_data,
+                           data=data)
 
 
 if __name__ == '__main__':

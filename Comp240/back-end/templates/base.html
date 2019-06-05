@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,43 +8,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
     <title>Comp 240 Jinja2 template front-end</title>
 </head>
+
 <body>
     <div class="flex-container-col">
-        <!-- =========================================================== -->
-        <!-- 'Basic DOM section -->
-        <div class="panel" id="basicDom">
-            <h1>Basic DOM</h1>
-            <!-- <p>This is a list of stuff</p> -->
-            {% block content %}
-            {% endblock %}
-            <input id="newItem" type="text" size="40" placeholder="Enter new item">
-            <br>
-            <button id="appendButton">Append</button>
-            <button id="prependButton">Prepend</button>
-            <br>
-            <ol>
-                <li>First list item</li>
-                <li>Stuck in the middle</li>
-                <li>The 'bigliest' item (for now)</li>
-            </ol>
-            <button id="hideButton">Hide</button>
-            <button id="showButton">Show</button>
-        </div>
-        <!-- =========================================================== -->
-        <!-- 'Working with Cards section -->
-        <div class="panel">
-            <div class="cardsContainer">
-                <h1>Working with Cards</h1>
-                <button id="addCard">Add card</button>
-                <!-- <div class="card">
-                    <h3>Card #</h3>
-                    <button>Add before</button>
-                    <button>Add after</button>
-                    <br>
-                    <button class="severe">Delete</button>
-                </div> -->
-            </div>
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
+
 </html>

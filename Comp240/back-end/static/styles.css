@@ -32,7 +32,7 @@ NOTE:
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: 2em;
+  /* margin-bottom: 2em; */
 }
 /* ================================================== */
 
@@ -47,7 +47,7 @@ NOTE:
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin-top: 2em;
+  margin: 4em;
   /* min-width: 70%; */
   padding: 0 2em 2em 2em;
   /* transition: all 0.3s cubic-bezier(.25,.8,.25,1); */
@@ -71,7 +71,7 @@ NOTE:
 */
 
 .cardsContainer {
-  text-align: center;
+  text-align: left;
 }
 
 .card {
@@ -86,6 +86,26 @@ NOTE:
 .card:hover {
   box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 10px rgba(0,0,0,0.22);
 }
+
+.card h3+p {
+    background-color: #eee;
+    font-size: 1.1em;
+    padding: 1em;
+}
+
+.card table {
+    border-collapse: separate;
+    border-spacing: 25px 0px;
+}
+
+.card thead {
+    font-size: 1.1em;
+    font-weight: bold;
+} 
+
+.card td:first-child {
+    text-align: center;
+} 
 /* ================================================== */
 
 
