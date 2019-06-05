@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import './FrontEnd.css'
 
 
@@ -6,9 +7,9 @@ import './FrontEnd.css'
 const DEBUG_MSG = true
 
 const FrontEnd = () => {
-    if (DEBUG_MSG) console.log(`--- FrontEnd()`)
+  if (DEBUG_MSG) console.log(`--- FrontEnd()`)
 
-    const [excelData, setExcelData] = useState([])
+  const [data, setData] = useState({ hits: [] })
 
   // Akin to componentDidMount, componentDidUpdate, and componentWillUnmount combined
   // Runs after every render: both after the first render and after every update,
@@ -17,19 +18,35 @@ const FrontEnd = () => {
   // particular render
   useEffect(() => {
     if (DEBUG_MSG) console.log(`--- useEffect()`)
-  })
+    const fetchData = async () => {
+      const result = await axios(
+        // 'http://hn.algolia.com/api/v1/search?query=redux',
+        'http://127.0.0.1:5000/datadump',
+      )
 
+      setData(result.data)
+    }
+
+    fetchData()
+  }, [])
   return (
     <div class="flex-container-col">
       <div class="panel">
         <header>
-          <h2>Data from Flask server's <code>'/viewdata'</code> route</h2>
+          <h2>Data from Flask server's <code>'/datadump'</code> route</h2>
         </header>
         <div class="cardsContainer">
           <div class="card">
             <p>
-              {excelData.length ? excelData : 'No data loaded...'}
+              {/* {excelData.length ? excelData : 'No data loaded...'} */}
             </p>
+            <ul>
+              {data.hits.map(item => (
+                <li key={item.objectID}>
+                  <a href={item.url}>{item.title}</a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
