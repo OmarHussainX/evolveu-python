@@ -8,6 +8,8 @@ pep8 = "*"
 
 [packages]
 flask = "*"
+pandas = "*"
+xlrd = "*"
 
 [requires]
 python_version = "3.7"
