@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
     <title>Comp 240 Jinja2 template front-end</title>
 </head>
+
 <body>
     <div class="flex-container-col">
-        <!-- =========================================================== -->
-        <!-- 'Basic DOM section -->
-        <div class="panel" id="basicDom">
-            <h1>{% block title %}{{title}}{% endblock %}</h1>
-            {% block content %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
+
 </html>
