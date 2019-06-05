@@ -1,7 +1,12 @@
 import pandas
 from flask import Flask, render_template
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
+
+
 # Configure a secret SECRET_KEY
 # When will we learn a better way to do this...?
 app.config['SECRET_KEY'] = 'mysecretkey'
@@ -11,7 +16,7 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 def index():
     return f'<h1>Comp240 Flask server</h1>\n\
 <h3>route <code>\'/datadump\'</code> for raw dump of JSON data</h3>\n\
-<h3>route <code>\'/viewdata\'</code> for Jinja2 template rendering of JSON data</h3>'
+<h3>route <code>\'/viewdata\'</code> for template rendering of JSON data</h3>'
 
 
 @app.route('/datadump', methods=['GET'])
