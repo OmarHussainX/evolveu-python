@@ -1,5 +1,5 @@
 import pandas
-from flask import Flask, jsonify
+from flask import Flask, render_template
 
 app = Flask(__name__)
 # Configure a secret SECRET_KEY
@@ -10,6 +10,11 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 @app.route('/', methods=['GET'])
 def index():
     return '<h1>Comp240 flask server...</h1>'
+
+
+@app.route('/viewdata', methods=['GET'])
+def view_data():
+    return render_template('viewdata.html')
 
 
 @app.route('/datadump', methods=['GET'])
