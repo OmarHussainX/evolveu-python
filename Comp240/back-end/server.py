@@ -1,4 +1,3 @@
-import os
 import pandas
 from flask import Flask, jsonify
 
@@ -18,13 +17,19 @@ def data_dump():
     # load 'customers' worksheet into a DataFrame object,
     # preserving data as stored in Excel - i.e. no interpretation of the types
     # of data in the columns
+    #
+    # https://www.marsja.se/pandas-excel-tutorial-how-to-read-and-write-excel-files/#Setting_the_Data_type_for_data_or_columns
+    # (unable to get dtype={'Customer': 'int'} working...)
     df = pandas.read_excel('./sales_data.xlsx',
                            sheet_name='customers',
                            dtype=object)
-    
+
+    print('printing df.info()...')
+    df.info()
+
     # drop empty rows
     df.dropna(inplace=True)
-    
+
     print(f'\nDataFrame (type: {type(df)}) generated from spreadsheet:\n{df}')
 
     # convert pandas DataFrame to JSON string
@@ -43,13 +48,16 @@ string:\n{resp_data}')
     resp = app.response_class(response=resp_data,
                               status=200,
                               mimetype='application/json')
+
     print(f'\n--> \'200 OK\' Response object (containing JSON string data), sent from\
 \'/datadump()\' route:\n\
-resp:\n{resp}\n\
+resp: {resp}\n\
 type of resp: {type(resp)}\n\
 resp.response:\n{resp.response}\n\
 type of resp.response : {type(resp.response )}\n')
+
     return resp
+
 
 if __name__ == '__main__':
     app.run(debug=True)
