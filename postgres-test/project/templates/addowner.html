@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Someone wants to adopt a puppy?</h1>
+  <p>Add the puppy's new owner with the form below:</p>
+  <form method="POST">
+      {# This hidden_tag is a CSRF security feature. #}
+      {{ form.hidden_tag() }}
+      {{ form.name.label }} {{ form.name() }}<br/>
+      {{ form.id.label }} {{ form.id() }}<br/>
+      {{ form.submit() }}
+  </form>
+{% endblock %}
