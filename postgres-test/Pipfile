@@ -13,7 +13,8 @@ psycopg2 = "==2.7.6.1"
 wtforms = "*"
 flask-wtf = "*"
 jinja2 = "*"
-sqlalchemy = "*"
+pandas = "*"
+xlrd = "*"
 
 [requires]
 python_version = "3.7"

@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from sqlalchemy import create_engine
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -21,3 +21,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 Migrate(app, db)
+
+
+# load spreadsheet data into a dictionary of DataFrames
+db_data = pd.read_excel('db_data.xls',
+                        sheet_name=['puppies', 'owners'],
+                        # index_col=0,
+                        dtype=object)
+
+print(f'\ndb_data:\n{db_data}')
+
+print(f'\ndb_data["puppies"]:\n{db_data["puppies"]}')
+print(f'\ndb_data["owners"]:\n{db_data["owners"]}')
