@@ -1,6 +1,7 @@
 """
 NOTE:
-Installation of psycopg2 failed for latest release, worked fine when specifying an older version: 2.7.6.1
+Installation of psycopg2 failed for latest release, worked fine when
+specifying an older version: 2.7.6.1
 Didn't test to see what the last installable version is...
 https://www.reddit.com/r/learnpython/comments/aah5da/pipenv_install_psycopg2_installs_package_but_cant/
 """
