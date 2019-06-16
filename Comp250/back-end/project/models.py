@@ -20,7 +20,7 @@ class Customer(db.Model):
         self.last_name = last_name
 
     def __repr__(self):
-        return f'(# {self.id}) {self.first_name} {self.last_name.name}'
+        return f'(# {self.id}) {self.first_name} {self.last_name}'
 """
     def serialize(self):
         return {
@@ -35,7 +35,7 @@ class Invoice(db.Model):
 
     __tablename__ = 'invoices'
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date)
+    date = db.Column(db.Date, nullable=False)
     # 'ForeignKey' constrains entries in the invoices.customer_id column
     # to values in customers.id
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
@@ -45,7 +45,7 @@ class Invoice(db.Model):
     # relationship explicitly:
     # https://docs.sqlalchemy.org/en/13/orm/backref.html#relationships-backref
 
-    def __init__(self, date, puppy_id):
+    def __init__(self, date):
         self.date = date
 
     def __repr__(self):
