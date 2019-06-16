@@ -9,7 +9,7 @@ class Customer(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     # One-to-many relationship (a customer may have many invoices)
     # If a customer is deleted, delete their invoices as well...
-    invoices = db.relationship('Invoices',
+    invoices = db.relationship('Invoice',
                                uselist=True,
                                backref='customer',
                                cascade='all, delete-orphan',
@@ -21,14 +21,13 @@ class Customer(db.Model):
 
     def __repr__(self):
         return f'(# {self.id}) {self.first_name} {self.last_name}'
-"""
+
     def serialize(self):
         return {
             'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name
         }
- """
 
 
 class Invoice(db.Model):

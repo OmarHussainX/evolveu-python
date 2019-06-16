@@ -1,5 +1,6 @@
+from flask import jsonify
 from project import app, db
-from project.models import Customer
+from project.models import Customer, Invoice
 
 
 @app.route('/')
@@ -14,7 +15,7 @@ def list_customers():
     # and display it
     customers = Customer.query.all()
     print(f'customers: {customers}')
-    return customers
+    return jsonify([customer.serialize() for customer in customers])
 
 
 if __name__ == '__main__':
