@@ -11,9 +11,9 @@ flask db upgrade
 """
 
 from project import app, db
-from flask import render_template, url_for, redirect
-from project.forms import AddForm, OwnerForm, DelForm
-from project.models import Puppy, Owner
+# from flask import render_template, url_for, redirect
+# from project.forms import AddForm, OwnerForm, DelForm
+from project.models import Customer
 
 
 ############################################
@@ -21,7 +21,17 @@ from project.models import Puppy, Owner
 ############################################
 
 @app.route('/')
-return f'<h1>Comp250 Flask server</h1>\n\'
+return f'<h1>Comp250 Flask server</h1>\n'
+
+
+@app.route('/list')
+def list_customers():
+    pass
+    # Grab a list of all customers from the database
+    # and display it
+    customers = Customer.query.all()
+    print(f'customers: {customers}')
+    return customers
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -45,6 +55,7 @@ def add_pup():
     return render_template('add.html', form=form)
  """
 
+
 @app.route('/addowner', methods=['GET', 'POST'])
 def add_owner():
     pass
@@ -67,14 +78,6 @@ def add_owner():
     return render_template('addowner.html', form=form)
  """
 
-@app.route('/list')
-def list_pup():
-    pass
-"""     # Grab a list of all puppies from the database
-    # and display it
-    puppies = Puppy.query.all()
-    return render_template('list.html', puppies=puppies)
- """
 
 @app.route('/delete', methods=['GET', 'POST'])
 def del_pup():
@@ -93,6 +96,7 @@ def del_pup():
 
     return render_template('delete.html', form=form)
  """
+
 
 if __name__ == '__main__':
     app.run(debug=True)

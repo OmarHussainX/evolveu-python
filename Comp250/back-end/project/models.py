@@ -1,42 +1,52 @@
-"""
-NOTE:
-Installation of psycopg2 failed for latest release, worked fine when
-specifying an older version: 2.7.6.1
-Didn't test to see what the last installable version is...
-https://www.reddit.com/r/learnpython/comments/aah5da/pipenv_install_psycopg2_installs_package_but_cant/
-"""
 from project import db
 
 
-class Puppy(db.Model):
+class Customer(db.Model):
 
-    __tablename__ = 'puppies'
+    __tablename__ = 'customers'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text)
-    # One-to-one relationship (1 dog per 1 owner & vice versa)
-    # If a puppy is deleted, delete the owner as well
-    owner = db.relationship('Owner',
-                            backref='puppies',
-                            uselist=False,
-                            cascade='all, delete-orphan')
+    first_name = db.Column(db.Text, nullable=False)
+    last_name = db.Column(db.Text, nullable=False)
+    # One-to-many relationship (a customer may have many invoices)
+    # If a customer is deleted, delete their invoices as well...
+    invoices = db.relationship('Invoices',
+                               uselist=True,
+                               backref='customer',
+                               cascade='all, delete-orphan',
+                               lazy='select')
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
 
     def __repr__(self):
-        if self.owner:
-            return f"(id: {self.id}) Puppy {self.name}, owner {self.owner.name}"
-        else:
-            return f"(id: {self.id}) Puppy {self.name} - no owner"
+        return f'(# {self.id}) {self.first_name} {self.last_name.name}'
+"""
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name
+        }
+ """
 
 
-class Owner(db.Model):
+class Invoice(db.Model):
 
-    __tablename__ = 'owners'
+    __tablename__ = 'invoices'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text)
-    puppy_id = db.Column(db.Integer, db.ForeignKey('puppies.id'))
+    date = db.Column(db.Date)
+    # 'ForeignKey' constrains entries in the invoices.customer_id column
+    # to values in customers.id
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    # Many-to-one relationship (many invoices may link to the same customer)
+    # automatically established via 'backref' in customers.invoices
+    # If desired, could use 'back_populates' on both tables to establish
+    # relationship explicitly:
+    # https://docs.sqlalchemy.org/en/13/orm/backref.html#relationships-backref
 
-    def __init__(self, name, puppy_id):
-        self.name = name
-        self.puppy_id = puppy_id
+    def __init__(self, date, puppy_id):
+        self.date = date
+
+    def __repr__(self):
+        return f'(# {self.id}) {self.date.strftime("%Y-%m-%d")}'
