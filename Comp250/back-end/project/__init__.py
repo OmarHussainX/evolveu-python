@@ -21,20 +21,17 @@ db = SQLAlchemy(app)
 
 # Load spreadsheet data into a dictionary of DataFrames
 # zeroth column has 'id' for postgres DB
-sales_data = pd.read_excel('sales_data.xls',
+sales_data = pd.read_excel('sales_data.xlsx',
                            sheet_name=['customers',
                                        'invoices',
                                        'invoice line items',
                                        'products'],
-                           index_col=0,
-                           dtype=object)
+                           skip_blank_lines=True,
+                           index_col=0)
 
-
-print(f'\nsales_data["customers"]:\n{sales_data["customers"]}')
-print(f'\nsales_data["invoices"]:\n{sales_data["invoices"]}')
-print(
-    f'\nsales_data["invoice line items"]:\n{sales_data["invoice line items"]}')
-print(f'\nsales_data["products"]:\n{sales_data["products"]}')
+for key in sales_data:
+    sales_data[key].dropna(inplace=True)
+    print(f'\nsales_data["{key}"]:\n{sales_data[key]}')
 
 engine = create_engine(
     'postgresql+psycopg2://postgres:postgres@localhost/sales')
