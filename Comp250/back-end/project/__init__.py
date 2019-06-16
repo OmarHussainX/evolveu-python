@@ -1,9 +1,22 @@
+"""
+To create database:
+
+1. in pgAdmin, create 'sales' table
+2. export FLASK_APP=app.py  
+3. flask db init 
+4. flask db migrate -m "initial migration"
+5. flask db upgrade
+
+NOTE: before performing the migration, need to comment out any code which
+writes to the database!
+"""
+
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from sqlalchemy import create_engine
 import pandas as pd
-
 
 app = Flask(__name__)
 
@@ -17,7 +30,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-
+Migrate(app, db)
 
 ############################################
 #        LOAD RECORDS INTO DATABASE
@@ -45,23 +58,39 @@ for key in sales_data:
 engine = create_engine(
     'postgresql+psycopg2://postgres:postgres@localhost/sales')
 
+# rename DataFrame columns to match DB table fields
+sales_data['customers'] = sales_data['customers'].rename(index=str,
+                               columns={'Customer': 'id',
+                                        'First': 'first_name',
+                                        'Last': 'last_name'})
+sales_data['invoices'] = sales_data['invoices'].rename(index=str,
+                              columns={'Invoice': 'id',
+                                       'Date': 'date',
+                                       'Customer': 'customer_id'})
+
 # Load DataFrame data into a postgres table
 # - do not add the DatFrame index/row numbers as a column
 # - set primary key 'id' as Integer to avoid default 'bigint'
 sales_data['customers'].to_sql('customers',
                                engine,
-                               if_exists='replace',
+                               if_exists='append',
                                index=False,
-                               dtype={'Customer': db.Integer})
+                               dtype={'id': db.Integer})
+
+with engine.connect() as con:
+    # https://gist.github.com/scaryguy/6269293
+    # con.execute('ALTER TABLE "customers" DROP CONSTRAINT "customers_pkey";')
+    con.execute('ALTER TABLE "customers" SELECT setval("customers_id_seq", (SELECT MAX(id) FROM "customers")+1);')
+    pass
 
 sales_data['invoices'].to_sql('invoices',
                               engine,
-                              if_exists='replace',
+                              if_exists='append',
                               index=False,
                               dtype={
-                                  'Invoice': db.Integer,
-                                  'Customer': db.Integer})
-
+                                  'id': db.Integer,
+                                  'customer_id': db.Integer})
+""" 
 sales_data['invoice line items'].to_sql('invoice line items',
                                         engine,
                                         if_exists='replace',
@@ -93,6 +122,6 @@ with engine.connect() as con:
     con.execute('ALTER TABLE "invoice line items" ADD PRIMARY KEY (id);')
     con.execute('ALTER TABLE "products" RENAME COLUMN "Product" TO "id";')
     con.execute('ALTER TABLE "products" ADD PRIMARY KEY (id);')
-
+ """
 
 print(f'\ntables in postgres DB: {engine.table_names()}')

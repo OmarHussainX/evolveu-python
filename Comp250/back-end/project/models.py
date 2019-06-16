@@ -38,7 +38,7 @@ class Invoice(db.Model):
     date = db.Column(db.Date, nullable=False)
     # 'ForeignKey' constrains entries in the invoices.customer_id column
     # to values in customers.id
-    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), unique=False)
     # Many-to-one relationship (many invoices may link to the same customer)
     # automatically established via 'backref' in customers.invoices
     # If desired, could use 'back_populates' on both tables to establish
