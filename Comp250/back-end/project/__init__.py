@@ -43,6 +43,7 @@ Migrate(app, db)
 -----------------------------------------------------------
 """
 # Load worksheets into a dictionary of DataFrames
+# (set certain columns as int to prevent them being treated as float)
 sales_data = pd.read_excel('sales_data.xlsx',
                            sheet_name=['customers',
                                        'products',
@@ -50,14 +51,14 @@ sales_data = pd.read_excel('sales_data.xlsx',
                                        'invoice line items'],
                            dtype={
                                'Customer': db.Integer,
-                               'Invoice': db.Integer,
-                               'Line': db.Integer,
                                'Product': db.Integer,
                                'Units': db.Integer,
+                               'Invoice': db.Integer,
+                               'Line': db.Integer
                            })
 
 
-# rename DataFrame columns to match DB table fields
+# Rename DataFrames' columns to match database's tables' fields
 sales_data['customers'] = \
     sales_data['customers'].rename(index=str,
                                    columns={'Customer': 'id',
@@ -80,6 +81,7 @@ sales_data['invoice line items'] = \
                                                      'Invoice': 'invoice_id',
                                                      'Product': 'product_id'})
 
+# Drop empty rows from the DataFrames
 for df_key in sales_data:
     sales_data[df_key].dropna(inplace=True)
     print(f'\nsales_data["{df_key}"]:\n{sales_data[df_key]}')
@@ -92,11 +94,17 @@ for df_key in sales_data:
 -----------------------------------------------------------
 """
 engine = create_engine(
-    'postgresql+psycopg2://postgres:postgres@localhost/sales', echo=True)
+    'postgresql+psycopg2://postgres:postgres@localhost/sales')
 
-# Load each DataFrame data into a postgres table
-# - do not add the DatFrame index/row numbers as a column
-# - set certain columns as Integer to avoid default 'bigint'
+# Load each DataFrame's data into a postgres table
+# - do not add the DataFrame index/row numbers as a column
+# - set certain columns as Integer to prevent them being set to 'bigint'
+#
+# NOTE: For some reason, every conversion from DataFrame to SQl table
+# reuslts in an error for the first key in each table:
+#
+# IntegrityError: ...duplicate key value violates unique constraint...
+# ...DETAIL:  Key (id)=(...) already exists.
 try:
     sales_data['customers'].to_sql('customers',
                                    engine,
@@ -105,7 +113,6 @@ try:
                                    dtype={'id': db.Integer})
 except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
-    pass
 
 try:
     sales_data['products'].to_sql('products',
@@ -117,7 +124,6 @@ try:
                                       'price': db.Integer})
 except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
-    pass
 
 try:
     sales_data['invoices'].to_sql('invoices',
@@ -130,7 +136,6 @@ try:
                                       'customer_id': db.Integer})
 except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
-    pass
 
 try:
     sales_data['invoice line items'].to_sql('line_items',
@@ -144,7 +149,6 @@ try:
                                                 'product_id': db.Integer})
 except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
-    pass
 
 
 """
@@ -152,22 +156,11 @@ except IntegrityError as e:
     Set primary key sequence to next highest value
 -----------------------------------------------------------
 """
-with engine.connect() as con:
-    set_val = con.execute
-    ("SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);")
-    # print(f'set_val = {set_val.__dict__}\n')
-    con.execute
-    ("SELECT setval('products_id_seq', (SELECT MAX(id) FROM products)+1);")
-    con.execute
-    ("SELECT setval('invoices_id_seq', (SELECT MAX(id) FROM invoices)+1);")
-    con.execute
-    ("SELECT setval('line_items_id_seq', (SELECT MAX(id) FROM line_items)+1);")
-
 # https://hcmc.uvic.ca/blogs/index.php/how_to_fix_postgresql_error_duplicate_ke?blog=22
 # Primary key sequence out of sync due to import process ('id' values in
-# spreadsheet often do not start from 1, and also skip some interim values)
+# spreadsheet often do not start from 1, and also skip some interim values).
 # Have to manually reset the primary key index to the next largest 'id'
-# value avaialable
+# value available
 #
 # a. Check the highest id:
 # SELECT MAX(id) FROM customers
@@ -179,6 +172,16 @@ with engine.connect() as con:
 # the next available value that's higher than any existing primary key
 # in the sequence
 # SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);
+with engine.connect() as con:
+    set_val = con.execute
+    ("SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);")
+    # print(f'set_val = {set_val.__dict__}\n')
+    con.execute
+    ("SELECT setval('products_id_seq', (SELECT MAX(id) FROM products)+1);")
+    con.execute
+    ("SELECT setval('invoices_id_seq', (SELECT MAX(id) FROM invoices)+1);")
+    con.execute
+    ("SELECT setval('line_items_id_seq', (SELECT MAX(id) FROM line_items)+1);")
 
 
 print(f'\ntables in postgres DB: {engine.table_names()}')
