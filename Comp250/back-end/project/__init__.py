@@ -9,7 +9,7 @@ flask db init
 flask db migrate -m "initial migration"
 flask db upgrade
 
-NOTE: before performing the migration, need to comment out any code which
+NOTE: Before performing the migration, need to comment out any code which
 writes to the database!
 """
 
@@ -24,10 +24,11 @@ import pandas as pd
 app = Flask(__name__)
 
 
-############################################
-#        POSTGRES DATABASE SETUP
-############################################
-
+"""
+-----------------------------------------------------------
+    POSTGRES DATABASE SETUP
+-----------------------------------------------------------
+"""
 app.config['SQLALCHEMY_DATABASE_URI'] = \
     'postgresql+psycopg2://postgres:postgres@localhost/sales'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,10 +37,11 @@ db = SQLAlchemy(app)
 Migrate(app, db)
 
 
-############################################
-#        LOAD SPREADSHEET INTO DATAFRAME
-############################################
-
+"""
+-----------------------------------------------------------
+    LOAD SPREADSHEET INTO DATAFRAME
+-----------------------------------------------------------
+"""
 # Load worksheets into a dictionary of DataFrames
 sales_data = pd.read_excel('sales_data.xlsx',
                            sheet_name=['customers',
@@ -84,10 +86,11 @@ for df_key in sales_data:
     print(f'\ndata types:\n{sales_data[df_key].dtypes}')
 
 
-############################################
-#        LOAD RECORDS INTO DATABASE
-############################################
-
+"""
+-----------------------------------------------------------
+    LOAD RECORDS INTO DATABASE
+-----------------------------------------------------------
+"""
 engine = create_engine(
     'postgresql+psycopg2://postgres:postgres@localhost/sales', echo=True)
 
@@ -144,12 +147,12 @@ except sqlalchemy.exc.IntegrityError as e:
     pass
 
 
-# set primary key sequence to the next highest available value
+"""
+-----------------------------------------------------------
+    Set primary key sequence to next highest value
+-----------------------------------------------------------
+"""
 with engine.connect() as con:
-    # max_id = con.execute('SELECT MAX(id) FROM customers;')
-    # print(f'\nmax_id = {max_id.__dict__}')
-    # next_val = con.execute("SELECT nextval('customers_id_seq');")
-    # print(f'next_val = {next_val.__dict__}\n')
     set_val = con.execute
     ("SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);")
     # print(f'set_val = {set_val.__dict__}\n')
