@@ -18,7 +18,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import create_engine
-import sqlalchemy
+from sqlalchemy.exc import IntegrityError
 import pandas as pd
 
 app = Flask(__name__)
@@ -103,7 +103,7 @@ try:
                                    if_exists='append',
                                    index=False,
                                    dtype={'id': db.Integer})
-except sqlalchemy.exc.IntegrityError as e:
+except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
     pass
 
@@ -115,7 +115,7 @@ try:
                                   dtype={
                                       'id': db.Integer,
                                       'price': db.Integer})
-except sqlalchemy.exc.IntegrityError as e:
+except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
     pass
 
@@ -128,7 +128,7 @@ try:
                                       'id': db.Integer,
                                       'date': db.Date,
                                       'customer_id': db.Integer})
-except sqlalchemy.exc.IntegrityError as e:
+except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
     pass
 
@@ -142,7 +142,7 @@ try:
                                                 'units': db.Integer,
                                                 'invoice_id': db.Integer,
                                                 'product_id': db.Integer})
-except sqlalchemy.exc.IntegrityError as e:
+except IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
     pass
 
