@@ -42,12 +42,10 @@ Migrate(app, db)
 
 # Load worksheets into a dictionary of DataFrames
 sales_data = pd.read_excel('sales_data.xlsx',
-                        #    sheet_name=['customers',
-                        #                'invoices',
-                        #                'invoice line items',
-                        #                'products'],
                            sheet_name=['customers',
-                                       'invoices'],
+                                       'products',
+                                       'invoices',
+                                       'invoice line items'],
                            dtype={
                                'Customer': db.Integer,
                                'Invoice': db.Integer,
@@ -56,18 +54,29 @@ sales_data = pd.read_excel('sales_data.xlsx',
                                'Units': db.Integer,
                            })
 
+
 # rename DataFrame columns to match DB table fields
 sales_data['customers'] = \
     sales_data['customers'].rename(index=str,
                                    columns={'Customer': 'id',
                                             'First': 'first_name',
                                             'Last': 'last_name'})
-
+sales_data['products'] = \
+    sales_data['products'].rename(index=str,
+                                  columns={'Product': 'id',
+                                           'Name': 'name',
+                                           'Price': 'price'})
 sales_data['invoices'] = \
     sales_data['invoices'].rename(index=str,
                                   columns={'Invoice': 'id',
                                            'Date': 'date',
                                            'Customer': 'customer_id'})
+sales_data['invoice line items'] = \
+    sales_data['invoice line items'].rename(index=str,
+                                            columns={'Line': 'id',
+                                                     'Units': 'units',
+                                                     'Invoice': 'invoice_id',
+                                                     'Product': 'product_id'})
 
 for df_key in sales_data:
     sales_data[df_key].dropna(inplace=True)
@@ -82,22 +91,9 @@ for df_key in sales_data:
 engine = create_engine(
     'postgresql+psycopg2://postgres:postgres@localhost/sales', echo=True)
 
-# Load DataFrame data into a postgres table
+# Load each DataFrame data into a postgres table
 # - do not add the DatFrame index/row numbers as a column
-# - set primary key 'id' as Integer to avoid default 'bigint'
-
-""" 
-with engine.connect() as con:
-    # https://gist.github.com/scaryguy/6269293
-    con.execute("ALTER TABLE customers DROP CONSTRAINT customers_pkey;")
-    # con.execute('ALTER TABLE customers RENAME COLUMN "Customer" TO "id";')
-    con.execute('ALTER TABLE customers ADD PRIMARY KEY (id);')
-sqlalchemy.exc.InternalError: (psycopg2.errors.DependentObjectsStillExist) cannot drop constraint customers_pkey on table customers because other objects depend on it
-DETAIL:  constraint invoices_customer_id_fkey on table invoices depends on index customers_pkey
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-
- """
-
+# - set certain columns as Integer to avoid default 'bigint'
 try:
     sales_data['customers'].to_sql('customers',
                                    engine,
@@ -108,13 +104,61 @@ except sqlalchemy.exc.IntegrityError as e:
     print(f'\nIntegrityError: {e}\n')
     pass
 
+try:
+    sales_data['products'].to_sql('products',
+                                  engine,
+                                  if_exists='append',
+                                  index=False,
+                                  dtype={
+                                      'id': db.Integer,
+                                      'price': db.Integer})
+except sqlalchemy.exc.IntegrityError as e:
+    print(f'\nIntegrityError: {e}\n')
+    pass
+
+try:
+    sales_data['invoices'].to_sql('invoices',
+                                  engine,
+                                  if_exists='append',
+                                  index=False,
+                                  dtype={
+                                      'id': db.Integer,
+                                      'date': db.Date,
+                                      'customer_id': db.Integer})
+except sqlalchemy.exc.IntegrityError as e:
+    print(f'\nIntegrityError: {e}\n')
+    pass
+
+try:
+    sales_data['invoice line items'].to_sql('line_items',
+                                            engine,
+                                            if_exists='append',
+                                            index=False,
+                                            dtype={
+                                                'id': db.Integer,
+                                                'units': db.Integer,
+                                                'invoice_id': db.Integer,
+                                                'product_id': db.Integer})
+except sqlalchemy.exc.IntegrityError as e:
+    print(f'\nIntegrityError: {e}\n')
+    pass
+
+
+# set primary key sequence to the next highest available value
 with engine.connect() as con:
-    max_id = con.execute('SELECT MAX(id) FROM customers;')
-    print(f'\nmax_id = {max_id.__dict__}')
-    next_val = con.execute("SELECT nextval('customers_id_seq');")
-    print(f'next_val = {next_val.__dict__}\n')
-    set_val = con.execute("SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);")
-    print(f'set_val = {set_val.__dict__}\n')
+    # max_id = con.execute('SELECT MAX(id) FROM customers;')
+    # print(f'\nmax_id = {max_id.__dict__}')
+    # next_val = con.execute("SELECT nextval('customers_id_seq');")
+    # print(f'next_val = {next_val.__dict__}\n')
+    set_val = con.execute
+    ("SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);")
+    # print(f'set_val = {set_val.__dict__}\n')
+    con.execute
+    ("SELECT setval('products_id_seq', (SELECT MAX(id) FROM products)+1);")
+    con.execute
+    ("SELECT setval('invoices_id_seq', (SELECT MAX(id) FROM invoices)+1);")
+    con.execute
+    ("SELECT setval('line_items_id_seq', (SELECT MAX(id) FROM line_items)+1);")
 
 # https://hcmc.uvic.ca/blogs/index.php/how_to_fix_postgresql_error_duplicate_ke?blog=22
 # Primary key sequence out of sync due to import process ('id' values in
@@ -133,47 +177,5 @@ with engine.connect() as con:
 # in the sequence
 # SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);
 
-
-""" 
-sales_data['invoices'].to_sql('invoices',
-                              engine,
-                              if_exists='append',
-                              index=False,
-                              dtype={
-                                  'id': db.Integer,
-                                  'customer_id': db.Integer})
-
-sales_data['invoice line items'].to_sql('invoice line items',
-                                        engine,
-                                        if_exists='replace',
-                                        index=False,
-                                        dtype={
-                                            'Line': db.Integer,
-                                            'Invoice': db.Integer,
-                                            'Product': db.Integer,
-                                            'Units': db.Integer})
-
-sales_data['products'].to_sql('products',
-                              engine,
-                              if_exists='replace',
-                              index=False,
-                              dtype={
-                                  'Product': db.Integer,
-                                  'Price': db.Integer})
-
-# Set specified columns of DataFrame as primary keys in tables
-with engine.connect() as con:
-    # https://gist.github.com/scaryguy/6269293
-    # con.execute('ALTER TABLE "customers" DROP CONSTRAINT "customers_pkey";')
-    con.execute('ALTER TABLE "customers" RENAME COLUMN "Customer" TO "id";')
-    con.execute('ALTER TABLE "customers" ADD PRIMARY KEY (id);')
-    con.execute('ALTER TABLE "invoices" RENAME COLUMN "Invoice" TO "id";')
-    con.execute('ALTER TABLE "invoices" ADD PRIMARY KEY (id);')
-    # con.execute('ALTER TABLE "invoices" ADD CONSTRAINT "invoices_fkey" FOREIGN KEY Customer REFERENCES Customers(id);')
-    con.execute('ALTER TABLE "invoice line items" RENAME COLUMN "Line" TO "id";')
-    con.execute('ALTER TABLE "invoice line items" ADD PRIMARY KEY (id);')
-    con.execute('ALTER TABLE "products" RENAME COLUMN "Product" TO "id";')
-    con.execute('ALTER TABLE "products" ADD PRIMARY KEY (id);')
- """
 
 print(f'\ntables in postgres DB: {engine.table_names()}')
