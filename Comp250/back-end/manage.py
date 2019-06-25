@@ -4,7 +4,7 @@
 2. Using Flask-Script...
 https://flask-migrate.readthedocs.io/en/latest/
 
-...create tables with columns & relationships as defined in python models,
+...create tables with columns & relationships as defined in 'project/models.py'
 by executing datatabase migration commands which can be accessed by running the
 'manage.py' script:
 
@@ -13,7 +13,7 @@ python manage.py db migrate -m "initial migration"
 python manage.py db upgrade
 python manage.py db --help
 
-3. In order to populate the database with records from sales_data.xlsx, run:
+3. In order to populate the database with records from 'sales_data.xlsx', run:
 python db_load_data.py
 """
 

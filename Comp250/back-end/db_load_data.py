@@ -141,7 +141,7 @@ except IntegrityError as e:
 # in the sequence
 # SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers)+1);
 #
-# NOTE: There is o need to add '+1' to the sequence - setval defaults to
+# NOTE: There is no need to add '+1' to the sequence - setval defaults to
 # incrementing the sequence by 1 before generating the next value
 # https://www.postgresql.org/docs/current/functions-sequence.html
 with engine.connect() as con:
