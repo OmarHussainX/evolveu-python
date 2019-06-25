@@ -1,5 +1,5 @@
 from flask import jsonify
-from project import app, db
+from project import app, db, dbdata
 from project.models import Customer, Product, Invoice, LineItem
 
 
@@ -33,4 +33,5 @@ def line_items():
 
 
 if __name__ == '__main__':
+    dbdata.load_data()
     app.run(debug=True)

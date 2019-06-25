@@ -32,7 +32,7 @@ class Customer(db.Model):
 class Product(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, nullable=False)
+    name = db.Column(db.Text, nullable=False, unique=True)
     price = db.Column(db.Integer, nullable=False)
     # One-to-many relationship (one product may be in many line items)
     line_items = db.relationship('LineItem',

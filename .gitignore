@@ -7,7 +7,10 @@
 test_Comp240
 __pycache__
 .pytest_cache
-migrations
+
+# migrations
+# https://flask-migrate.readthedocs.io/en/latest/
+# The contents of this folder need to be added to version control along with your other source files.
 
 # for virtual environments...
 pyvenv.cfg
