@@ -26,6 +26,22 @@ def invoices():
     return jsonify([invoice.serialize() for invoice in invoices])
 
 
+@app.route('/invoices/<id>')
+def invoice_by_id(id):
+    try:
+        invoice = Invoice.query.filter_by(id=id).first()
+
+        # The endpoint is valid, but the resource itself does not exist
+        if invoice is None:
+            return jsonify({'id': None}), 404
+
+        return jsonify(invoice.serialize())
+
+    # The server encountered a situation it doesn't know how to handle
+    except Exception as e:
+        return (str(e)), 500
+
+
 @app.route('/lineitems')
 def line_items():
     line_items = LineItem.query.all()
