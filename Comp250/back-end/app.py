@@ -1,5 +1,5 @@
 from flask import jsonify
-from project import app, db
+from project import app, db, session
 from project.models import Customer, Product, Invoice, LineItem
 
 
@@ -22,7 +22,8 @@ def products():
 
 @app.route('/invoices')
 def invoices():
-    invoices = Invoice.query.all()
+    invoices = session.query(Invoice).all()
+    print(f'session.query invoices: {invoices}, type: {type(invoices)}')
     return jsonify([invoice.serialize() for invoice in invoices])
 
 
