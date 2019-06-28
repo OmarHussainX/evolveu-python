@@ -2,7 +2,6 @@ from flask import jsonify
 from project import app, db, session
 from project.models import Customer, Product, Invoice, LineItem
 
-
 @app.route('/')
 def index():
     return f'<h1>Comp250 Flask server</h1>\n'
@@ -25,6 +24,62 @@ def invoices():
     invoices = session.query(Invoice).all()
     print(f'session.query invoices: {invoices}, type: {type(invoices)}')
     return jsonify([invoice.serialize() for invoice in invoices])
+
+
+"""
+TRANSLATE THIS SQL QUERY INTO SQLALCHEMY
+-- Get the customer id & name for each invoice...
+select
+invoices.id as invoice_id,
+invoices.date as invoice_date,
+customers.id as customer_id,
+customers.first_name || ' ' || customers.last_name as customer_name
+from invoices
+inner join customers
+on invoices.customer_id = customers.id
+"""
+@app.route('/test')
+def test():
+    cust_by_invoice = session.query(Invoice).\
+        select_from(Invoice).\
+        join(Customer, Customer.id == Invoice.customer_id).all()
+
+    print(f'cust_by_invoice: {cust_by_invoice}\ntype: {type(cust_by_invoice)}')
+
+    return jsonify({'test': 'please work'}), 200
+    # return jsonify([customer.serialize() for customer in cust_by_invoice])
+
+
+@app.route('/details')
+def details():
+    # invoices = session.query(Invoice).all()
+    # print(f'session.query invoices: {invoices}, type: {type(invoices)}')
+
+    # example of desired data structure
+    inv_224 = {
+        'id': 224,
+        'date': '2019-04-02',
+        'customer': {
+            'id': 131,
+            'first_name': 'Bob',
+            'last_name': 'Sugar',
+        },
+        'line_items': [
+            {'id': 9,
+             'product_id': 7,
+             'units': 7},
+            {'id': 10,
+             'product_id': 1,
+             'units': 5}
+        ],
+        'products': [
+            {'id': 1,
+             'name': 'Pencil'},
+            {'id': 7,
+             'name': 'Calculator'}
+        ]
+    }
+    return jsonify(inv_224), 200
 
 
 @app.route('/invoices/<id>')

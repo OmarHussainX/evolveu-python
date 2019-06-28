@@ -20,6 +20,7 @@ db = SQLAlchemy(app)
 # Session configuration
 Session = sessionmaker()
 engine = create_engine(
-    'postgresql+psycopg2://postgres:postgres@localhost/sales')
+    'postgresql+psycopg2://postgres:postgres@localhost/sales',
+    echo=True)
 Session.configure(bind=engine)
 session = Session()
