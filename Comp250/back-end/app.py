@@ -40,14 +40,14 @@ on invoices.customer_id = customers.id
 """
 @app.route('/test')
 def test():
-    cust_by_invoice = session.query(Invoice).\
+    cust_by_invoice = session.query(Invoice, Customer).\
         select_from(Invoice).\
         join(Customer, Customer.id == Invoice.customer_id).all()
 
     print(f'cust_by_invoice: {cust_by_invoice}\ntype: {type(cust_by_invoice)}')
 
-    return jsonify({'test': 'please work'}), 200
-    # return jsonify([customer.serialize() for customer in cust_by_invoice])
+    # return jsonify({'test': 'please work'}), 200
+    return jsonify([(cust.serialize(), inv.serialize()) for (cust, inv) in cust_by_invoice])
 
 
 @app.route('/details')
