@@ -52,7 +52,7 @@ def line_items():
 def invoice_details():
     """
         Example of desired data structure
-        inv_224 = {
+        '224': {
             'id': 224,
             'date': '2019-04-02',
             'customer': {
@@ -70,11 +70,14 @@ def invoice_details():
             ],
             'products': [
                 {'id': 1,
-                'name': 'Pencil'},
+                'name': 'Pencil',
+                'price': 10},
                 {'id': 7,
-                'name': 'Calculator'}
+                'name': 'Calculator',
+                'price': 100}
             ]
         }
+        ...
     """
     # obtain list of tuples:
     # [(Invoice, Customer), (Invoice, Customer), ...]
@@ -85,8 +88,10 @@ def invoice_details():
     # build dictionary of invoice details, with invoice id as key
     inv_details = {}
     for (inv, cust) in cust_by_invoice:
-        # add invoice record to dictionary
+        # add invoice record to dictionary, and
+        # remove extraneous 'customer_id' key
         inv_details[inv.id] = inv.serialize()
+        del inv_details[inv.id]['customer_id']
 
         # add customer record to dictionary
         inv_details[inv.id]['customer'] = cust.serialize()
@@ -98,11 +103,24 @@ def invoice_details():
         inv_details[inv.id]['line_items'] = []
         inv_details[inv.id]['products'] = []
         for line_item in line_items:
-            inv_details[inv.id]['line_items'].append(line_item.serialize())
+            # inv_details[inv.id]['line_items'].append(line_item.serialize())
+            # avoid adding extraneous 'invoice_id' key
+            inv_details[inv.id]['line_items'].append({
+                'id': line_item.id,
+                'product_id': line_item.product_id,
+                'units': line_item.units,
+            })
             inv_details[inv.id]['products'].append(Product.query.filter_by(
                 id=line_item.product_id).first().serialize())
 
     # print(f'inv_details: {inv_details}\ntype: {type(inv_details)}')
+
+    # NOTE: Unable to select only desired columns using
+    # .options(load_only('col1', 'col2'))
+    # or deferred columns in models...
+    # https://docs.sqlalchemy.org/en/13/orm/loading_columns.html#load-only-and-wildcard-options
+    #
+    # Therefore, manually removed extraneous keys from 'inv_details' dictionary
 
     return jsonify(inv_details), 200
 
