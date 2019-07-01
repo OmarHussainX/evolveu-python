@@ -44,10 +44,20 @@ def test():
         select_from(Invoice).\
         join(Customer, Customer.id == Invoice.customer_id).all()
 
-    print(f'cust_by_invoice: {cust_by_invoice}\ntype: {type(cust_by_invoice)}')
+    # build up a dictionary of invoice details, with invoice id as the key
+    inv_details = {}
+    for (inv, cust) in cust_by_invoice:
+        inv_details[inv.id] = inv.serialize()
+        inv_details[inv.id]['customer'] = cust.serialize()
+        line_items = LineItem.query.filter_by(invoice_id=inv.id).all()
 
-    # return jsonify({'test': 'please work'}), 200
-    return jsonify([(cust.serialize(), inv.serialize()) for (cust, inv) in cust_by_invoice])
+        inv_details[inv.id]['line_items'] = []
+        for line_item in line_items:
+            inv_details[inv.id]['line_items'].append(line_item.serialize())
+
+    print(f'inv_details: {inv_details}\ntype: {type(inv_details)}')
+
+    return jsonify(inv_details), 200
 
 
 @app.route('/details')
