@@ -26,72 +26,6 @@ def invoices():
     return jsonify([invoice.serialize() for invoice in invoices])
 
 
-"""
-TRANSLATE THIS SQL QUERY INTO SQLALCHEMY
--- Get the customer id & name for each invoice...
-select
-invoices.id as invoice_id,
-invoices.date as invoice_date,
-customers.id as customer_id,
-customers.first_name || ' ' || customers.last_name as customer_name
-from invoices
-inner join customers
-on invoices.customer_id = customers.id
-"""
-@app.route('/test')
-def test():
-    cust_by_invoice = session.query(Invoice, Customer).\
-        select_from(Invoice).\
-        join(Customer, Customer.id == Invoice.customer_id).all()
-
-    # build up a dictionary of invoice details, with invoice id as the key
-    inv_details = {}
-    for (inv, cust) in cust_by_invoice:
-        inv_details[inv.id] = inv.serialize()
-        inv_details[inv.id]['customer'] = cust.serialize()
-        line_items = LineItem.query.filter_by(invoice_id=inv.id).all()
-
-        inv_details[inv.id]['line_items'] = []
-        for line_item in line_items:
-            inv_details[inv.id]['line_items'].append(line_item.serialize())
-
-    print(f'inv_details: {inv_details}\ntype: {type(inv_details)}')
-
-    return jsonify(inv_details), 200
-
-
-@app.route('/details')
-def details():
-    # invoices = session.query(Invoice).all()
-    # print(f'session.query invoices: {invoices}, type: {type(invoices)}')
-
-    # example of desired data structure
-    inv_224 = {
-        'id': 224,
-        'date': '2019-04-02',
-        'customer': {
-            'id': 131,
-            'first_name': 'Bob',
-            'last_name': 'Sugar',
-        },
-        'line_items': [
-            {'id': 9,
-             'product_id': 7,
-             'units': 7},
-            {'id': 10,
-             'product_id': 1,
-             'units': 5}
-        ],
-        'products': [
-            {'id': 1,
-             'name': 'Pencil'},
-            {'id': 7,
-             'name': 'Calculator'}
-        ]
-    }
-    return jsonify(inv_224), 200
-
-
 @app.route('/invoices/<id>')
 def invoice_by_id(id):
     try:
@@ -112,6 +46,65 @@ def invoice_by_id(id):
 def line_items():
     line_items = LineItem.query.all()
     return jsonify([line_item.serialize() for line_item in line_items])
+
+
+@app.route('/invoicedetails')
+def invoice_details():
+    """
+        Example of desired data structure
+        inv_224 = {
+            'id': 224,
+            'date': '2019-04-02',
+            'customer': {
+                'id': 131,
+                'first_name': 'Bob',
+                'last_name': 'Sugar',
+            },
+            'line_items': [
+                {'id': 9,
+                'product_id': 7,
+                'units': 7},
+                {'id': 10,
+                'product_id': 1,
+                'units': 5}
+            ],
+            'products': [
+                {'id': 1,
+                'name': 'Pencil'},
+                {'id': 7,
+                'name': 'Calculator'}
+            ]
+        }
+    """
+    # obtain list of tuples:
+    # [(Invoice, Customer), (Invoice, Customer), ...]
+    cust_by_invoice = session.query(Invoice, Customer).\
+        select_from(Invoice).\
+        join(Customer, Customer.id == Invoice.customer_id).all()
+
+    # build dictionary of invoice details, with invoice id as key
+    inv_details = {}
+    for (inv, cust) in cust_by_invoice:
+        # add invoice record to dictionary
+        inv_details[inv.id] = inv.serialize()
+
+        # add customer record to dictionary
+        inv_details[inv.id]['customer'] = cust.serialize()
+
+        # obtain list of all line items related to invoice
+        line_items = LineItem.query.filter_by(invoice_id=inv.id).all()
+
+        # add line item records (and associated product records) to dictionary
+        inv_details[inv.id]['line_items'] = []
+        inv_details[inv.id]['products'] = []
+        for line_item in line_items:
+            inv_details[inv.id]['line_items'].append(line_item.serialize())
+            inv_details[inv.id]['products'].append(Product.query.filter_by(
+                id=line_item.product_id).first().serialize())
+
+    # print(f'inv_details: {inv_details}\ntype: {type(inv_details)}')
+
+    return jsonify(inv_details), 200
 
 
 if __name__ == '__main__':
