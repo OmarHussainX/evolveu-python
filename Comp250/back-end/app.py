@@ -162,7 +162,7 @@ def invoice_details_by_id(id):
                 line_items is None):
             return jsonify({'id': None}), 404
 
-        return jsonify(inv_details)
+        return jsonify(inv_details), 200
 
     # The server encountered a situation it doesn't know how to handle
     except Exception as e:
