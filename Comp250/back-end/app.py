@@ -2,6 +2,7 @@ from flask import jsonify
 from project import app, db, session
 from project.models import Customer, Product, Invoice, LineItem
 
+
 @app.route('/')
 def index():
     return f'<h1>Comp250 Flask server</h1>\n'
@@ -157,9 +158,7 @@ def invoice_details_by_id(id):
             inv_details['products'].append(Product.query.filter_by(
                 id=line_item.product_id).first().serialize())
 
-        if (invoice is None or
-                customer is None or
-                line_items is None):
+        if (invoice is None or customer is None or line_items is None):
             return jsonify({'id': None}), 404
 
         return jsonify(inv_details), 200
