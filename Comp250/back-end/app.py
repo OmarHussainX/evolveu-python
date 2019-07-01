@@ -51,7 +51,8 @@ def line_items():
 @app.route('/invoicedetails')
 def invoice_details():
     """
-        Example of desired data structure
+        Return a list of all invoices with their associated records - example
+        of returned data structure:
         '224': {
             'id': 224,
             'date': '2019-04-02',
@@ -121,8 +122,52 @@ def invoice_details():
     # https://docs.sqlalchemy.org/en/13/orm/loading_columns.html#load-only-and-wildcard-options
     #
     # Therefore, manually removed extraneous keys from 'inv_details' dictionary
-
     return jsonify(inv_details), 200
+
+
+@app.route('/invoicedetails/<id>')
+def invoice_details_by_id(id):
+    """
+    Return a dictionary of records related to invoice # 'id'
+    """
+    try:
+        invoice = Invoice.query.filter_by(id=id).first()
+
+        # The endpoint is valid, but the resource itself does not exist
+        if invoice is None:
+            return jsonify({'id': None}), 404
+
+        cust_by_invoice = session.query(Invoice, Customer).\
+            select_from(Invoice).\
+            join(Customer, Customer.id == Invoice.customer_id).\
+            filter(Invoice.id == id).\
+            all()
+
+        inv_details = {}
+        for (inv, cust) in cust_by_invoice:
+            inv_details = inv.serialize()
+            del inv_details['customer_id']
+
+            inv_details['customer'] = cust.serialize()
+
+            line_items = LineItem.query.filter_by(invoice_id=inv.id).all()
+
+            inv_details['line_items'] = []
+            inv_details['products'] = []
+            for line_item in line_items:
+                inv_details['line_items'].append({
+                    'id': line_item.id,
+                    'product_id': line_item.product_id,
+                    'units': line_item.units,
+                })
+                inv_details['products'].append(Product.query.filter_by(
+                    id=line_item.product_id).first().serialize())
+
+        return jsonify(inv_details), 200
+
+    # The server encountered a situation it doesn't know how to handle
+    except Exception as e:
+        return (str(e)), 500
 
 
 if __name__ == '__main__':
