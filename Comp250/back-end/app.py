@@ -1,5 +1,5 @@
-from flask import jsonify
-from project import app, db, session
+from flask import jsonify, request
+from project import app, db
 from project.models import Customer, Product, Invoice, LineItem
 
 
@@ -14,6 +14,50 @@ def customers():
     return jsonify([customer.serialize() for customer in customers])
 
 
+@app.route('/customers/<int:id>')
+def customer_by_id(id):
+    try:
+        customer = Customer.query.filter_by(id=id).first()
+
+        # The endpoint is valid, but the resource itself does not exist
+        if customer is None:
+            return jsonify({'id': None}), 404
+
+        return jsonify(customer.serialize())
+
+    # The server encountered a situation it doesn't know how to handle
+    except Exception as e:
+        return (str(e)), 500
+
+
+@app.route('/add_customer', methods=['POST'])
+def add_customer():
+    data = request.get_json()
+
+    if data is None:
+        return jsonify({'status': 'error',
+                        'message': 'JSON data expected, not found'
+                        }), 400
+
+    try:
+        if all(k in data for k in ('first_name', 'last_name')):
+            new_customer = Customer(data['first_name'], data['last_name'])
+            db.session.add(new_customer)
+            db.session.commit()
+            return jsonify({'customer': new_customer.serialize(),
+                            'location': f'{request.url_root}\
+customers/{new_customer.id}'}), 201
+
+        else:
+            return jsonify({'status': 'error',
+                            'message': 'JSON data missing required key(s)'
+                            }), 400
+
+    except Exception as e:
+        return jsonify({'status': 'error',
+                        'message': str(e)}), 500
+
+
 @app.route('/products')
 def products():
     products = Product.query.all()
@@ -22,12 +66,11 @@ def products():
 
 @app.route('/invoices')
 def invoices():
-    invoices = session.query(Invoice).all()
-    print(f'session.query invoices: {invoices}, type: {type(invoices)}')
+    invoices = db.session.query(Invoice).all()
     return jsonify([invoice.serialize() for invoice in invoices])
 
 
-@app.route('/invoices/<id>')
+@app.route('/invoices/<int:id>')
 def invoice_by_id(id):
     try:
         invoice = Invoice.query.filter_by(id=id).first()
@@ -83,7 +126,7 @@ def invoice_details():
     """
     # obtain list of tuples:
     # [(Invoice, Customer), (Invoice, Customer), ...]
-    cust_by_invoice = session.query(Invoice, Customer).\
+    cust_by_invoice = db.session.query(Invoice, Customer).\
         select_from(Invoice).\
         join(Customer, Customer.id == Invoice.customer_id).all()
 
@@ -123,10 +166,10 @@ def invoice_details():
     # https://docs.sqlalchemy.org/en/13/orm/loading_columns.html#load-only-and-wildcard-options
     #
     # Therefore, manually removed extraneous keys from 'inv_details' dictionary
-    return jsonify(inv_details), 200
+    return jsonify(inv_details)
 
 
-@app.route('/invoicedetails/<id>')
+@app.route('/invoicedetails/<int:id>')
 def invoice_details_by_id(id):
     """
     Return a dictionary of records related to invoice # 'id'
@@ -161,7 +204,7 @@ def invoice_details_by_id(id):
         if (invoice is None or customer is None or line_items is None):
             return jsonify({'id': None}), 404
 
-        return jsonify(inv_details), 200
+        return jsonify(inv_details)
 
     # The server encountered a situation it doesn't know how to handle
     except Exception as e:
