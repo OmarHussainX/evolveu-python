@@ -11,26 +11,89 @@ def index():
 # ------------------------------------------------------------
 @app.route('/customers')
 def customers():
-    """ Return list of all customers """
+    """ Get list of all customers """
     customers = Customer.query.all()
     return jsonify([customer.serialize() for customer in customers])
 
 
 @app.route('/customers/<int:id>')
 def customer_by_id(id):
-    """ Return customer with # 'id' """
+    """ Get customer with # 'id' """
     try:
         customer = Customer.query.filter_by(id=id).first()
 
-        # The endpoint is valid, but the resource itself does not exist
+        # Endpoint is valid, but resource itself does not exist
         if customer is None:
-            return jsonify({'id': None}), 404
+            return jsonify({'id': None,
+                            'status': 'error',
+                            'message': f'no customer with id {id}'
+                            }), 404
 
         return jsonify(customer.serialize())
 
-    # The server encountered a situation it doesn't know how to handle
+    # Server encountered situation it doesn't know how to handle
     except Exception as e:
         return (str(e)), 500
+
+
+@app.route('/customers/<int:id>', methods=['DELETE'])
+def delete_customer(id):
+    """ Delete customer with # 'id' """
+    try:
+        customer = Customer.query.filter_by(id=id).first()
+
+        if customer is None:
+            return jsonify({'id': None,
+                            'status': 'error',
+                            'message': f'no customer with id {id}'
+                            }), 404
+
+        db.session.delete(customer)
+        db.session.commit()
+        return jsonify({'customer': customer.serialize(),
+                        'message': 'successfully deleted'}), 201
+
+    except Exception as e:
+        return (str(e)), 500
+
+
+@app.route('/customers', methods=['PUT'])
+def update_customer():
+    """ Update an existing customer """
+    data = request.get_json()
+
+    if data is None:
+        return jsonify({'status': 'error',
+                        'message': 'JSON data expected, not found'
+                        }), 400
+
+    try:
+        if 'id' not in data:
+            return jsonify({'status': 'error',
+                            'message': 'JSON data missing required key (id)'
+                            }), 400
+
+        else:
+            customer = Customer.query.filter_by(id=data['id']).first()
+
+            if customer is None:
+                return jsonify({'id': None,
+                                'status': 'error',
+                                'message': f'no customer with id {data["id"]}'
+                                }), 404
+
+            customer.first_name = data.get('first_name', customer.first_name)
+            customer.last_name = data.get('last_name', customer.last_name)
+            db.session.commit()
+
+            return jsonify({'customer': customer.serialize(),
+                            'uri': url_for('customer_by_id',
+                                           id=customer.id,
+                                           _external=True)}), 201
+
+    except Exception as e:
+        return jsonify({'status': 'error',
+                        'message': str(e)}), 500
 
 
 @app.route('/customers', methods=['POST'])
@@ -89,13 +152,11 @@ def invoice_by_id(id):
     try:
         invoice = Invoice.query.filter_by(id=id).first()
 
-        # The endpoint is valid, but the resource itself does not exist
         if invoice is None:
             return jsonify({'id': None}), 404
 
         return jsonify(invoice.serialize())
 
-    # The server encountered a situation it doesn't know how to handle
     except Exception as e:
         return (str(e)), 500
 
@@ -157,7 +218,7 @@ def invoice_details():
         inv_details[inv.id]['products'] = []
         for line_item in line_items:
             # inv_details[inv.id]['line_items'].append(line_item.serialize())
-            # avoid adding extraneous 'invoice_id' key
+            # avoid extraneous 'invoice_id' key which 'serialize()' would add
             inv_details[inv.id]['line_items'].append({
                 'id': line_item.id,
                 'product_id': line_item.product_id,
@@ -165,8 +226,6 @@ def invoice_details():
             })
             inv_details[inv.id]['products'].append(Product.query.filter_by(
                 id=line_item.product_id).first().serialize())
-
-    # print(f'inv_details: {inv_details}\ntype: {type(inv_details)}')
 
     # NOTE: Unable to select only desired columns using
     # .options(load_only('col1', 'col2'))
@@ -208,11 +267,13 @@ def invoice_details_by_id(id):
                 id=line_item.product_id).first().serialize())
 
         if (invoice is None or customer is None or line_items is None):
-            return jsonify({'id': None}), 404
+            return jsonify({'status': 'error',
+                            'message': f'unable to obtain records \
+                                for invoice # {id}'
+                            }), 404
 
         return jsonify(inv_details)
 
-    # The server encountered a situation it doesn't know how to handle
     except Exception as e:
         return (str(e)), 500
 
