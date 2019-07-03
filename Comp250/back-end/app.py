@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, url_for
 from project import app, db
 from project.models import Customer, Product, Invoice, LineItem
 
@@ -8,14 +8,17 @@ def index():
     return f'<h1>Comp250 Flask server</h1>\n'
 
 
+# ------------------------------------------------------------
 @app.route('/customers')
 def customers():
+    """ Return list of all customers """
     customers = Customer.query.all()
     return jsonify([customer.serialize() for customer in customers])
 
 
 @app.route('/customers/<int:id>')
 def customer_by_id(id):
+    """ Return customer with # 'id' """
     try:
         customer = Customer.query.filter_by(id=id).first()
 
@@ -30,8 +33,9 @@ def customer_by_id(id):
         return (str(e)), 500
 
 
-@app.route('/add_customer', methods=['POST'])
+@app.route('/customers', methods=['POST'])
 def add_customer():
+    """ Add new customer """
     data = request.get_json()
 
     if data is None:
@@ -45,8 +49,9 @@ def add_customer():
             db.session.add(new_customer)
             db.session.commit()
             return jsonify({'customer': new_customer.serialize(),
-                            'location': f'{request.url_root}\
-customers/{new_customer.id}'}), 201
+                            'uri': url_for('customer_by_id',
+                                           id=new_customer.id,
+                                           _external=True)}), 201
 
         else:
             return jsonify({'status': 'error',
@@ -58,12 +63,21 @@ customers/{new_customer.id}'}), 201
                         'message': str(e)}), 500
 
 
+# ------------------------------------------------------------
 @app.route('/products')
 def products():
     products = Product.query.all()
     return jsonify([product.serialize() for product in products])
 
 
+# ------------------------------------------------------------
+@app.route('/lineitems')
+def line_items():
+    line_items = LineItem.query.all()
+    return jsonify([line_item.serialize() for line_item in line_items])
+
+
+# ------------------------------------------------------------
 @app.route('/invoices')
 def invoices():
     invoices = db.session.query(Invoice).all()
@@ -86,16 +100,10 @@ def invoice_by_id(id):
         return (str(e)), 500
 
 
-@app.route('/lineitems')
-def line_items():
-    line_items = LineItem.query.all()
-    return jsonify([line_item.serialize() for line_item in line_items])
-
-
+# ------------------------------------------------------------
 @app.route('/invoicedetails')
 def invoice_details():
-    """
-        Return a list of all invoices with their associated records - example
+    """ Return a list of all invoices with their associated records - example
         of returned data structure:
         '224': {
             'id': 224,
@@ -171,9 +179,7 @@ def invoice_details():
 
 @app.route('/invoicedetails/<int:id>')
 def invoice_details_by_id(id):
-    """
-    Return a dictionary of records related to invoice # 'id'
-    """
+    """ Return a dictionary of records related to invoice # 'id' """
     try:
         inv_details = {
             'customer': None,
@@ -211,5 +217,6 @@ def invoice_details_by_id(id):
         return (str(e)), 500
 
 
+# ------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True)
