@@ -33,7 +33,8 @@ def customer_by_id(id):
 
     # Server encountered situation it doesn't know how to handle
     except Exception as e:
-        return (str(e)), 500
+        return jsonify({'status': 'error',
+                        'message': str(e)}), 500
 
 
 @app.route('/customers/<int:id>', methods=['DELETE'])
@@ -54,7 +55,7 @@ def delete_customer(id):
                         'message': 'successfully deleted'}), 201
 
     except Exception as e:
-        return (str(e)), 500
+        return str(e), 500
 
 
 @app.route('/customers', methods=['PUT'])
@@ -92,8 +93,7 @@ def update_customer():
                                            _external=True)}), 201
 
     except Exception as e:
-        return jsonify({'status': 'error',
-                        'message': str(e)}), 500
+        return str(e), 500
 
 
 @app.route('/customers', methods=['POST'])
@@ -122,8 +122,7 @@ def add_customer():
                             }), 400
 
     except Exception as e:
-        return jsonify({'status': 'error',
-                        'message': str(e)}), 500
+        return str(e), 500
 
 
 # ------------------------------------------------------------
@@ -158,7 +157,7 @@ def invoice_by_id(id):
         return jsonify(invoice.serialize())
 
     except Exception as e:
-        return (str(e)), 500
+        return str(e), 500
 
 
 # ------------------------------------------------------------
@@ -232,31 +231,48 @@ def invoice_details():
     # or deferred columns in models...
     # https://docs.sqlalchemy.org/en/13/orm/loading_columns.html#load-only-and-wildcard-options
     #
-    # Therefore, manually removed extraneous keys from 'inv_details' dictionary
+    # Therefore, manually removed unwanted keys from 'inv_details'
+    # dictionary above
+
     return jsonify(inv_details)
 
 
 @app.route('/invoicedetails/<int:id>')
 def invoice_details_by_id(id):
-    """ Return a dictionary of records related to invoice # 'id' """
-    try:
-        inv_details = {
-            'customer': None,
-            'line_items': [],
-            'products': []
-        }
+    """ Return details of records associated with invoice # 'id' """
+    inv_details = {
+        'customer': None,
+        'line_items': [],
+        'products': []
+    }
 
-        # Obtain invoice, add to dictionary
-        invoice = Invoice.query.filter_by(id=id).first()
+    invoice = Invoice.query.filter_by(id=id).first()
+    if invoice is None:
+        return jsonify({'status': 'error',
+                        'message': f'no invoice with id {id}'
+                        }), 404
+
+    customer = Customer.query.filter_by(id=invoice.customer_id).first()
+    if customer is None:
+        return jsonify({'status': 'error',
+                        'message': f'no customer with id {invoice.customer_id}'
+                        }), 404
+
+    line_items = LineItem.query.filter_by(invoice_id=invoice.id).all()
+    if line_items is None:
+        return jsonify({'status': 'error',
+                        'message': f'no line_items for invoice with id {id}'
+                        }), 404
+
+    try:
+        # Merge invoice into dictionary
         inv_details.update(invoice.serialize())
         del inv_details['customer_id']
 
-        # Obtain customer, add to dictionary
-        customer = Customer.query.filter_by(id=invoice.customer_id).first()
+        # Add customer to dictionary
         inv_details['customer'] = customer.serialize()
 
-        # Obtain line items (and associated products), add to dictionary
-        line_items = LineItem.query.filter_by(invoice_id=invoice.id).all()
+        # Add line items (and associated products) to dictionary
         for line_item in line_items:
             inv_details['line_items'].append({
                 'id': line_item.id,
@@ -266,16 +282,10 @@ def invoice_details_by_id(id):
             inv_details['products'].append(Product.query.filter_by(
                 id=line_item.product_id).first().serialize())
 
-        if (invoice is None or customer is None or line_items is None):
-            return jsonify({'status': 'error',
-                            'message': f'unable to obtain records \
-                                for invoice # {id}'
-                            }), 404
-
         return jsonify(inv_details)
 
     except Exception as e:
-        return (str(e)), 500
+        return str(e), 500
 
 
 # ------------------------------------------------------------
