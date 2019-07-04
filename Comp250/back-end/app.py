@@ -58,7 +58,8 @@ def delete_customer(id):
         return str(e), 500
 
 
-@app.route('/customers', methods=['PUT'])
+# https://blog.fullstacktraining.com/restful-api-design-post-vs-put-vs-patch/
+@app.route('/customers', methods=['PATCH'])
 def update_customer():
     """ Update an existing customer """
     data = request.get_json()
