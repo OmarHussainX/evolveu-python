@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-const DEBUG_MSG = true  // control output of debug messages
+const DEBUG_MSG = true
 
 class Customers extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Customers extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     if (DEBUG_MSG) console.log(`--- Customers componentDidMount`)
     const customers = (await axios.get('http://127.0.0.1:5000/customers')).data
     this.setState({
@@ -21,12 +21,21 @@ class Customers extends Component {
     })
   }
 
+  addCustomer = () => {
+    if (DEBUG_MSG) console.log(`--- Customers addCustomer`)
+    this.props.history.push('addcustomer')
+  }
+
   render() {
     return (
       <div className='flex-container-col'>
         <div className='panel'>
           <h1>Customers</h1>
-          <button className='prominent'>Add customer</button>
+          <button
+            className='prominent'
+            onClick={this.addCustomer}>
+            Add customer
+            </button>
           <table className='customers'>
             <thead>
               <tr>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Customers from './Customers'
+import AddCustomer from './forms/AddCustomer'
 import Invoices from './Invoices'
 
 const Main = () => {
@@ -9,6 +10,7 @@ const Main = () => {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route path='/customers' component={Customers} />
+        <Route path='/addcustomer' component={AddCustomer} />
         <Route path='/invoices' component={Invoices} />
       </Switch>
     </main>

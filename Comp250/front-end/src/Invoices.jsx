@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-const DEBUG_MSG = true  // control output of debug messages
+const DEBUG_MSG = true
 
 class Invoices extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Invoices extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     if (DEBUG_MSG) console.log(`--- Invoices componentDidMount`)
     const invoices = (await axios.get('http://127.0.0.1:5000/invoices')).data
     this.setState({

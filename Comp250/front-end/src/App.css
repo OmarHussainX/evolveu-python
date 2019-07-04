@@ -113,6 +113,7 @@ body {
   /* --> Customers, Invoices tables ---------- */
   table.customers th,
   table.invoices th {
+    font-size: 1.1em;
     text-align: left;
     color: grey;
   }
