@@ -16,13 +16,17 @@ const Main = () => {
 export default Main
 
 const Home = () => (
-  <div>
-    <h1>Comp250 front-end</h1>
+  <div className='flex-container-col'>
+    <div className='panel'>
+      <h1>Comp250 front-end</h1>
+    </div>
   </div>
 )
 
 const Invoices = () => (
-  <div>
-    <h1>List of invoices</h1>
+  <div className='flex-container-col'>
+    <div className='panel'>
+      <h1>Invoices</h1>
+    </div>
   </div>
 )
