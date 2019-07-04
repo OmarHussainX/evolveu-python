@@ -37,6 +37,7 @@ def customer_by_id(id):
                         'message': str(e)}), 500
 
 
+# https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7
 @app.route('/customers/<int:id>', methods=['DELETE'])
 def delete_customer(id):
     """ Delete customer with # 'id' """
@@ -52,7 +53,7 @@ def delete_customer(id):
         db.session.delete(customer)
         db.session.commit()
         return jsonify({'customer': customer.serialize(),
-                        'message': 'successfully deleted'}), 201
+                        'message': 'successfully deleted'}), 200
 
     except Exception as e:
         return str(e), 500
