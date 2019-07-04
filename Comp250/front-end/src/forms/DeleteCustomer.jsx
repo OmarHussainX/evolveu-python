@@ -47,7 +47,7 @@ class DeleteCustomer extends Component {
       }
     }
 
-    // this.props.history.push('/customers')
+    this.props.history.push('/customers')
   }
 
   render() {
@@ -57,10 +57,10 @@ class DeleteCustomer extends Component {
         <div className='panel'>
           <h1>Delete Customer</h1>
           <p>
-            Delete {first_name} {last_name} (associated invoices will also be deleted)?
+            Delete <strong>{first_name} {last_name}</strong> (associated invoices will also be deleted)?
             </p>
-            <button onClick={this.submitForm}>Submit</button>
-            <button onClick={this.cancelForm}>Cancel</button>
+          <button onClick={this.submitForm}>Submit</button>
+          <button onClick={this.cancelForm}>Cancel</button>
         </div>
       </div>
     )
