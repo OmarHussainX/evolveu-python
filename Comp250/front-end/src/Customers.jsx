@@ -9,6 +9,7 @@ class Customers extends Component {
     this.state = {
       customers: null,
       editCustomer: false,
+      deleteCustomer: false,
       customer_id: null
     }
   }
@@ -27,8 +28,15 @@ class Customers extends Component {
   editCustomer = event => {
     this.setState({
       editCustomer: true,
-      customer_id: event.target.id.slice(9)
+      customer_id: event.target.id.slice('editCust_'.length)
     })
+}
+
+deleteCustomer = event => {
+  this.setState({
+    deleteCustomer: true,
+    customer_id: event.target.id.slice('deleteCust_'.length)
+  })
 }
 
   render() {
@@ -39,8 +47,14 @@ class Customers extends Component {
           state: { id: this.state.customer_id }
         }}
       />
-    }
-    return (
+    } else if (this.state.deleteCustomer) {
+      return <Redirect
+        to={{
+          pathname: '/deletecustomer',
+          state: { id: this.state.customer_id }
+        }}
+      />
+    } else return (
       <div className='flex-container-col'>
         <div className='panel'>
           <h1>Customers</h1>
@@ -69,7 +83,7 @@ class Customers extends Component {
                       <td>{cust.first_name} {cust.last_name}</td>
                       <td>
                         <button id={'editCust_'+cust.id} onClick={this.editCustomer}>Edit</button>
-                        <button>Delete</button>
+                        <button id={'deleteCust_'+cust.id} onClick={this.deleteCustomer}>Delete</button>
                         {/* <button className='severe'>Delete</button> */}
                       </td>
                     </tr>
