@@ -110,15 +110,19 @@ body {
 
 
 
-  /* --> Customers table ---------- */
-  table.customers th {
+  /* --> Customers, Invoices tables ---------- */
+  table.customers th,
+  table.invoices th {
     text-align: left;
     color: grey;
   }
-  table.customers td:first-child {
+  table.customers td:first-child,
+  table.invoices td:first-child {
     padding-right: 1em;
   }
-  table.customers td:last-child {
+  table.customers td:last-child,
+  table.invoices td:last-child,
+  table.invoices th:last-child {
     padding-left: 1em;
   }
   table.customers button:first-child {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Customers from './Customers'
+import Invoices from './Invoices'
 
 const Main = () => {
   return (
@@ -19,14 +20,6 @@ const Home = () => (
   <div className='flex-container-col'>
     <div className='panel'>
       <h1>Comp250 front-end</h1>
-    </div>
-  </div>
-)
-
-const Invoices = () => (
-  <div className='flex-container-col'>
-    <div className='panel'>
-      <h1>Invoices</h1>
     </div>
   </div>
 )

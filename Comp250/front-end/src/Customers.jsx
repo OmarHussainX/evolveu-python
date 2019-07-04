@@ -38,7 +38,7 @@ class Customers extends Component {
             <tbody>
               {this.state.customers === null ? (
                 <tr>
-                  <td colSpan={3}>No users</td>
+                  <td colSpan={3}>No data...</td>
                 </tr>
               ) : (
                   this.state.customers.map(cust => (
