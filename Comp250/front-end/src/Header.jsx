@@ -6,8 +6,8 @@ const Header = () => (
     <nav>
       <ul>
         <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/customers'>Customers</NavLink></li>
-        <li><NavLink to='/invoices'>Invoices</NavLink></li>
+        <li><NavLink to='/customers'>List customers</NavLink></li>
+        <li><NavLink to='/invoices'>List invoices</NavLink></li>
       </ul>
     </nav>
   </header>
