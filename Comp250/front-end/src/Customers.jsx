@@ -23,7 +23,7 @@ class Customers extends Component {
 
   addCustomer = () => {
     if (DEBUG_MSG) console.log(`--- Customers addCustomer`)
-    this.props.history.push('addcustomer')
+    this.props.history.push('/addcustomer')
   }
 
   render() {
