@@ -5,7 +5,6 @@ const DEBUG_MSG = true
 
 class AddCustomer extends Component {
   constructor(props) {
-    if (DEBUG_MSG) console.log(`--- AddCustomer constructor`)
     super(props)
 
     this.state = {
@@ -18,11 +17,8 @@ class AddCustomer extends Component {
 
   handleChange = event => {
     const { name, value } = event.target
-    if (DEBUG_MSG) console.log(`--- AddCustomer handleChange`)
-    if (DEBUG_MSG) console.log(`name: ${name}, value: ${value}`)
-
     this.setState((prevState) => ({
-      customer: { ...this.state.customer, [name]: value }
+      customer: { ...prevState.customer, [name]: value }
     }))
   }
 
@@ -31,10 +27,11 @@ class AddCustomer extends Component {
   }
 
   submitForm = async (event) => {
-    event.preventDefault()  //prevent form submission
-    if (DEBUG_MSG) console.log(`--- AddCustomer submitForm`)
+    const { customer } = this.state
+    event.preventDefault()        //prevent form submission
+    if (!customer.first_name || !customer.last_name) return
 
-    const response = await axios.post('http://127.0.0.1:5000/customers', this.state.customer)
+    const response = await axios.post('http://127.0.0.1:5000/customers', customer)
 
     if (DEBUG_MSG) {
       console.log(`--- response after adding customer:\n`)
