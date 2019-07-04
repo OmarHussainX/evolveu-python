@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import axios from 'axios'
 
-const DEBUG_MSG = true
 
 class Customers extends Component {
   constructor(props) {
-    if (DEBUG_MSG) console.log(`--- Customers constructor`)
     super(props)
-
     this.state = {
       customers: null,
+      editCustomer: false,
+      customer_id: null
     }
   }
 
   componentDidMount = async () => {
-    if (DEBUG_MSG) console.log(`--- Customers componentDidMount`)
     const customers = (await axios.get('http://127.0.0.1:5000/customers')).data
     this.setState({
       customers,
@@ -22,11 +21,25 @@ class Customers extends Component {
   }
 
   addCustomer = () => {
-    if (DEBUG_MSG) console.log(`--- Customers addCustomer`)
     this.props.history.push('/addcustomer')
   }
 
+  editCustomer = event => {
+    this.setState({
+      editCustomer: true,
+      customer_id: event.target.id.slice(9)
+    })
+}
+
   render() {
+    if (this.state.editCustomer) {
+      return <Redirect
+        to={{
+          pathname: '/editcustomer',
+          state: { id: this.state.customer_id }
+        }}
+      />
+    }
     return (
       <div className='flex-container-col'>
         <div className='panel'>
@@ -55,7 +68,7 @@ class Customers extends Component {
                       <td><em>{cust.id}</em></td>
                       <td>{cust.first_name} {cust.last_name}</td>
                       <td>
-                        <button>Edit</button>
+                        <button id={'editCust_'+cust.id} onClick={this.editCustomer}>Edit</button>
                         <button>Delete</button>
                         {/* <button className='severe'>Delete</button> */}
                       </td>

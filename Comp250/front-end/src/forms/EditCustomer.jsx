@@ -3,16 +3,30 @@ import axios from 'axios'
 
 const DEBUG_MSG = true
 
-class AddCustomer extends Component {
+class EditCustomer extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       customer: {
+        id: null,
         first_name: '',
         last_name: ''
       }
     }
+  }
+
+  componentDidMount = async () => {
+    if (DEBUG_MSG) console.log(`--- EditCustomer componentDidMount`)
+    const customer = (await axios.get(`http://127.0.0.1:5000/customers/${this.props.location.state.id}`)).data
+
+    this.setState({
+      customer: {
+        id: customer.id,
+        first_name: customer.first_name,
+        last_name: customer.last_name
+      }
+    })
   }
 
   handleChange = event => {
@@ -31,7 +45,7 @@ class AddCustomer extends Component {
     event.preventDefault()        //prevent form submission
     if (!customer.first_name || !customer.last_name) return
 
-    const response = await axios.post('http://127.0.0.1:5000/customers', customer)
+    const response = await axios.patch('http://127.0.0.1:5000/customers', customer)
 
     if (DEBUG_MSG) {
       console.log(`--- response after adding customer:\n`)
@@ -48,18 +62,18 @@ class AddCustomer extends Component {
     return (
       <div className='flex-container-col'>
         <div className='panel'>
-          <h1>Add Customer</h1>
+          <h1>Edit Customer</h1>
           <form>
             <input
               type='text'
               name='first_name'
-              placeholder='Enter first name'
+              // placeholder='Enter first name'
               value={first_name}
               onChange={this.handleChange} />
             <input
               type='text'
               name='last_name'
-              placeholder='Enter last name'
+              // placeholder='Enter last name'
               value={last_name}
               onChange={this.handleChange} />
             <br />
@@ -72,4 +86,4 @@ class AddCustomer extends Component {
   }
 }
 
-export default AddCustomer
+export default EditCustomer
