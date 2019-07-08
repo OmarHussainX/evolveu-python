@@ -5,6 +5,7 @@ import AddCustomer from './forms/AddCustomer'
 import EditCustomer from './forms/EditCustomer'
 import DeleteCustomer from './forms/DeleteCustomer'
 import Invoices from './Invoices'
+import ViewInvoice from './ViewInvoice'
 
 const Main = () => {
   return (
@@ -16,6 +17,7 @@ const Main = () => {
         <Route path='/editcustomer' component={EditCustomer} />
         <Route path='/deletecustomer' component={DeleteCustomer} />
         <Route path='/invoices' component={Invoices} />
+        <Route path='/viewinvoice' component={ViewInvoice} />
       </Switch>
     </main>
   )

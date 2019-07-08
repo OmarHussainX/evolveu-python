@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import axios from 'axios'
 
 const DEBUG_MSG = true
@@ -10,6 +11,8 @@ class Invoices extends Component {
 
     this.state = {
       invoices: null,
+      viewInvoice: false,
+      invoice_id: null
     }
   }
 
@@ -21,8 +24,22 @@ class Invoices extends Component {
     })
   }
 
+  viewInvoice = event => {
+    this.setState({
+      viewInvoice: true,
+      invoice_id: event.target.id.slice('viewInv_'.length)
+    })
+  }
+
   render() {
-    return (
+    if (this.state.viewInvoice) {
+        return <Redirect
+          to={{
+            pathname: '/viewinvoice',
+            state: { id: this.state.invoice_id }
+          }}
+        />
+      } else return (
       <div className='flex-container-col'>
         <div className='panel'>
           <h1>Invoices</h1>
@@ -30,21 +47,25 @@ class Invoices extends Component {
             <thead>
               <tr>
                 <th>id #</th>
-                <th>Customer id #</th>
-                <th>Date</th>
+                <th>Cust. id</th>
+                <th>&nbsp;Date</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {this.state.invoices === null ? (
                 <tr>
-                  <td colSpan={3}>No data...</td>
+                  <td colSpan={4}>No data...</td>
                 </tr>
               ) : (
                   this.state.invoices.map(inv => (
                     <tr key={inv.id}>
                       <td><em>{inv.id}</em></td>
                       <td>{inv.customer_id}</td>
-                      <td>{inv.date}</td>
+                      <td>&nbsp;{inv.date}</td>
+                      <td>
+                        <button id={'viewInv_' + inv.id} onClick={this.viewInvoice}>View details</button>
+                      </td>
                     </tr>
                   ))
                 )}

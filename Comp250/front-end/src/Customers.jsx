@@ -30,14 +30,14 @@ class Customers extends Component {
       editCustomer: true,
       customer_id: event.target.id.slice('editCust_'.length)
     })
-}
+  }
 
-deleteCustomer = event => {
-  this.setState({
-    deleteCustomer: true,
-    customer_id: event.target.id.slice('deleteCust_'.length)
-  })
-}
+  deleteCustomer = event => {
+    this.setState({
+      deleteCustomer: true,
+      customer_id: event.target.id.slice('deleteCust_'.length)
+    })
+  }
 
   render() {
     if (this.state.editCustomer) {
@@ -82,8 +82,8 @@ deleteCustomer = event => {
                       <td><em>{cust.id}</em></td>
                       <td>{cust.first_name} {cust.last_name}</td>
                       <td>
-                        <button id={'editCust_'+cust.id} onClick={this.editCustomer}>Edit</button>
-                        <button id={'deleteCust_'+cust.id} onClick={this.deleteCustomer}>Delete</button>
+                        <button id={'editCust_' + cust.id} onClick={this.editCustomer}>Edit</button>
+                        <button id={'deleteCust_' + cust.id} onClick={this.deleteCustomer}>Delete</button>
                         {/* <button className='severe'>Delete</button> */}
                       </td>
                     </tr>
