@@ -110,9 +110,10 @@ body {
 
 
 
-  /* --> Customers, Invoices tables ---------- */
+  /* --> Customer list, Invoice list, invoice details tables ---------- */
   table.customers th,
-  table.invoices th {
+  table.invoices th,
+  table.invoice-details th {
     font-size: 1.1em;
     text-align: left;
     color: grey;
@@ -129,7 +130,47 @@ body {
   table.customers button:first-child {
     margin-right: 0.5em;
   }
-  /* ================================================== */
+
+  table.invoice-details td.price {
+    text-align: right;
+  }
+  table.invoice-details th.units,
+  table.invoice-details td.units {
+    text-align: center;
+  }
+  table.invoice-details th.item,
+  table.invoice-details td.item {
+    padding-left: 1em;
+  }
+  table.invoice-details td:last-child,
+  table.invoice-details th:last-child {
+        padding-left: 2em;
+  }
+  table.invoice-details tfoot {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  table.invoice-details tfoot td:last-child {
+    border-top: 2px solid grey;
+    line-height: 2.5em;
+  }
+  p.invoice-customer,
+  p.invoice-date {
+    font-size: 1.2em;
+  }
+  p.invoice-customer :last-child {
+    font-style: italic;
+    font-size: 0.9em;
+    padding-left: 0.5em;
+  }
+  h1 :last-child {
+    font-family: monospace;
+    font-size: 0.7em;
+    font-weight: normal;
+    padding-left: 2em;
+  }
+  
+/* ================================================== */
 
   
   

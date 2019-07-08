@@ -245,7 +245,7 @@ def invoice_details_by_id(id):
     inv_details = {
         'customer': None,
         'line_items': [],
-        'products': []
+        'total': 0
     }
 
     invoice = Invoice.query.filter_by(id=id).first()
@@ -275,14 +275,18 @@ def invoice_details_by_id(id):
         inv_details['customer'] = customer.serialize()
 
         # Add line items (and associated products) to dictionary
+        # NOTE: incorporating product data (name, price) with line
+        # item data for ease on front-end
         for line_item in line_items:
+            product = Product.query.filter_by(id=line_item.product_id).first()
             inv_details['line_items'].append({
                 'id': line_item.id,
-                'product_id': line_item.product_id,
+                'product': product.name,
+                'price': product.price,
                 'units': line_item.units,
+                'line_total': product.price * line_item.units
             })
-            inv_details['products'].append(Product.query.filter_by(
-                id=line_item.product_id).first().serialize())
+            inv_details['total'] += product.price * line_item.units
 
         return jsonify(inv_details)
 

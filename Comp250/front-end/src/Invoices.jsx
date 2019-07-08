@@ -31,6 +31,7 @@ class Invoices extends Component {
     })
   }
 
+  
   render() {
     if (this.state.viewInvoice) {
         return <Redirect

@@ -57,6 +57,7 @@ class EditCustomer extends Component {
     this.props.history.push('/customers')
   }
 
+  
   render() {
     const { first_name, last_name } = this.state.customer
     return (

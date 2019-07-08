@@ -39,6 +39,7 @@ class Customers extends Component {
     })
   }
 
+  
   render() {
     if (this.state.editCustomer) {
       return <Redirect
