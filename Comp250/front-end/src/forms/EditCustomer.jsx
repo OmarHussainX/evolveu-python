@@ -36,7 +36,8 @@ class EditCustomer extends Component {
     }))
   }
 
-  cancelForm = () => {
+  cancelForm = (event) => {
+    event.preventDefault()        //prevent form submission
     this.props.history.push('/customers')
   }
 
@@ -68,13 +69,11 @@ class EditCustomer extends Component {
             <input
               type='text'
               name='first_name'
-              // placeholder='Enter first name'
               value={first_name}
               onChange={this.handleChange} />
             <input
               type='text'
               name='last_name'
-              // placeholder='Enter last name'
               value={last_name}
               onChange={this.handleChange} />
             <br />

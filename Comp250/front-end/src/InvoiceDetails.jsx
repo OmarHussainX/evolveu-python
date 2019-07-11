@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const DEBUG_MSG = true
 
-class ViewInvoice extends Component {
+class InvoiceDetails extends Component {
   constructor(props) {
     super(props)
 
@@ -13,7 +13,7 @@ class ViewInvoice extends Component {
   }
 
   componentDidMount = async () => {
-    if (DEBUG_MSG) console.log(`--- ViewInvoice componentDidMount`)
+    if (DEBUG_MSG) console.log(`--- InvoiceDetails componentDidMount`)
     const inv_data = (await axios.get(`http://127.0.0.1:5000/invoicedetails/${this.props.match.params.id}`)).data
 
     if (DEBUG_MSG) {
@@ -85,4 +85,4 @@ class ViewInvoice extends Component {
   }
 }
 
-export default ViewInvoice
+export default InvoiceDetails

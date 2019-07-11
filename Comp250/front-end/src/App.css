@@ -269,6 +269,10 @@ body {
     transform: scale(0.90);
   }
 
+  .button-link:last-child {
+    margin-left: 0.5em;  
+  }
+
   button.severe {
     background: rgb(230, 90, 90);
   }

@@ -29,13 +29,12 @@ class DeleteCustomer extends Component {
     })
   }
 
-  cancelForm = () => {
+  cancelDelete = () => {
     this.props.history.push('/customers')
   }
 
-  submitForm = async (event) => {
+  confirmDelete = async (event) => {
     const { customer } = this.state
-    // event.preventDefault()        //prevent form submission
     if (!customer.id) return
 
     const response = await axios.delete(`http://127.0.0.1:5000/customers/${customer.id}`)
@@ -59,8 +58,8 @@ class DeleteCustomer extends Component {
           <p>
             Delete <strong>{first_name} {last_name}</strong>? (Associated invoices will also be deleted.)
           </p>
-          <button onClick={this.submitForm} className='severe'>Delete</button>
-          <button onClick={this.cancelForm}>Cancel</button>
+          <button onClick={this.confirmDelete} className='severe'>Delete</button>
+          <button onClick={this.cancelDelete}>Cancel</button>
         </div>
       </div>
     )

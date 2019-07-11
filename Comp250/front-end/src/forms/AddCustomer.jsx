@@ -28,7 +28,7 @@ class AddCustomer extends Component {
 
   submitForm = async (event) => {
     const { customer } = this.state
-    event.preventDefault()        //prevent form submission
+    event.preventDefault()
     if (!customer.first_name || !customer.last_name) return
 
     const response = await axios.post('http://127.0.0.1:5000/customers', customer)

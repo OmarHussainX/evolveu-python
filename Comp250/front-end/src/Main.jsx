@@ -1,11 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Customers from './Customers'
-import AddCustomer from './forms/AddCustomer'
-import EditCustomer from './forms/EditCustomer'
-import DeleteCustomer from './forms/DeleteCustomer'
 import Invoices from './Invoices'
-import ViewInvoice from './ViewInvoice'
 
 const Main = () => {
   return (
@@ -13,11 +9,7 @@ const Main = () => {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route path='/customers' component={Customers} />
-        <Route path='/addcustomer' component={AddCustomer} />
-        <Route path='/editcustomer/:id' component={EditCustomer} />
-        <Route path='/deletecustomer/:id' component={DeleteCustomer} />
         <Route path='/invoices' component={Invoices} />
-        <Route path='/viewinvoice/:id' component={ViewInvoice} />
       </Switch>
     </main>
   )
