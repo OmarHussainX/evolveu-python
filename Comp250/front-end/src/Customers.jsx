@@ -7,15 +7,12 @@ import DeleteCustomer from './forms/DeleteCustomer'
 
 
 const Customers = () => (
-  <React.Fragment>
     <Switch>
       <Route exact path='/customers' component={CustomerList} />
       <Route path='/customers/add' component={AddCustomer} />
       <Route path='/customers/edit/:id' component={EditCustomer} />
       <Route path='/customers/delete/:id' component={DeleteCustomer} />
     </Switch>
-
-  </React.Fragment>
 )
 
 export default Customers

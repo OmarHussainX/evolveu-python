@@ -5,12 +5,10 @@ import InvoiceDetails from './InvoiceDetails'
 
 
 const Invoices = () => (
-  <React.Fragment>
     <Switch>
       <Route exact path='/invoices' component={InvoiceList} />
       <Route path='/invoices/details/:id' component={InvoiceDetails} />
     </Switch>
-  </React.Fragment>
 )
 
 export default Invoices
