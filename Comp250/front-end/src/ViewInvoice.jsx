@@ -44,10 +44,10 @@ class ViewInvoice extends Component {
         <div className='panel'>
           <h1>
             Invoice # {this.props.location.state.id}
-            <span>{inv_data.date}</span></h1>
+            <span>(Date: {inv_data.date})</span></h1>
           <p className='invoice-customer'>
             {inv_data.customer.first_name} {inv_data.customer.last_name}
-            &nbsp;<span>(customer id: {inv_data.customer.id})</span>
+            &nbsp;<span>(Customer id: {inv_data.customer.id})</span>
           </p>
           <table className='invoice-details'>
             <thead>
@@ -64,16 +64,16 @@ class ViewInvoice extends Component {
                 <tr key={item.id}>
                   <td className='units'>{item.units}</td>
                   <td className='item'>{item.product}</td>
-                  <td className='price'>${item.price}</td>
+                  <td className='price'>{item.price}</td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                  <td className='price'>${item.line_total}</td>
+                  <td className='price'>{item.line_total}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={4}>TOTAL</td>
-                <td className='price'>${inv_data.total}</td>
+                <td colSpan={4}>Total</td>
+                <td className='price'>$ {inv_data.total}</td>
               </tr>
             </tfoot>
           </table>

@@ -85,7 +85,6 @@ class Customers extends Component {
                       <td>
                         <button id={'editCust_' + cust.id} onClick={this.editCustomer}>Edit</button>
                         <button id={'deleteCust_' + cust.id} onClick={this.deleteCustomer}>Delete</button>
-                        {/* <button className='severe'>Delete</button> */}
                       </td>
                     </tr>
                   ))

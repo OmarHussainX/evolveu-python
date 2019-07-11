@@ -57,9 +57,9 @@ class DeleteCustomer extends Component {
         <div className='panel'>
           <h1>Delete Customer</h1>
           <p>
-            Delete <strong>{first_name} {last_name}</strong> (associated invoices will also be deleted)?
-            </p>
-          <button onClick={this.submitForm}>Submit</button>
+            Delete <strong>{first_name} {last_name}</strong>? (Associated invoices will also be deleted.)
+          </p>
+          <button onClick={this.submitForm} className='severe'>Delete</button>
           <button onClick={this.cancelForm}>Cancel</button>
         </div>
       </div>
