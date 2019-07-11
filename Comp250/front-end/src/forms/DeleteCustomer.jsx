@@ -18,7 +18,7 @@ class DeleteCustomer extends Component {
 
   componentDidMount = async () => {
     if (DEBUG_MSG) console.log(`--- DeleteCustomer componentDidMount`)
-    const customer = (await axios.get(`http://127.0.0.1:5000/customers/${this.props.location.state.id}`)).data
+    const customer = (await axios.get(`http://127.0.0.1:5000/customers/${this.props.match.params.id}`)).data
 
     this.setState({
       customer: {

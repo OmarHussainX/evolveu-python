@@ -14,8 +14,8 @@ const Main = () => {
         <Route exact path='/' component={Home} />
         <Route path='/customers' component={Customers} />
         <Route path='/addcustomer' component={AddCustomer} />
-        <Route path='/editcustomer' component={EditCustomer} />
-        <Route path='/deletecustomer' component={DeleteCustomer} />
+        <Route path='/editcustomer/:id' component={EditCustomer} />
+        <Route path='/deletecustomer/:id' component={DeleteCustomer} />
         <Route path='/invoices' component={Invoices} />
         <Route path='/viewinvoice/:id' component={ViewInvoice} />
       </Switch>
