@@ -17,7 +17,7 @@ const Main = () => {
         <Route path='/editcustomer' component={EditCustomer} />
         <Route path='/deletecustomer' component={DeleteCustomer} />
         <Route path='/invoices' component={Invoices} />
-        <Route path='/viewinvoice' component={ViewInvoice} />
+        <Route path='/viewinvoice/:id' component={ViewInvoice} />
       </Switch>
     </main>
   )

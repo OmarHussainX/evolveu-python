@@ -14,7 +14,7 @@ class ViewInvoice extends Component {
 
   componentDidMount = async () => {
     if (DEBUG_MSG) console.log(`--- ViewInvoice componentDidMount`)
-    const inv_data = (await axios.get(`http://127.0.0.1:5000/invoicedetails/${this.props.location.state.id}`)).data
+    const inv_data = (await axios.get(`http://127.0.0.1:5000/invoicedetails/${this.props.match.params.id}`)).data
 
     if (DEBUG_MSG) {
       console.log(`--- details of invoice:\n`)
@@ -43,7 +43,7 @@ class ViewInvoice extends Component {
       <div className='flex-container-col'>
         <div className='panel'>
           <h1>
-            Invoice # {this.props.location.state.id}
+            Invoice #{inv_data.id}
             <span>(Date: {inv_data.date})</span></h1>
           <p className='invoice-customer'>
             {inv_data.customer.first_name} {inv_data.customer.last_name}

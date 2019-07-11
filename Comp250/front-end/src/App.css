@@ -235,7 +235,7 @@ body {
     - Any <button> with class="severe" is red
     - Text and number input fields have rounded corners with thin borders, which darken on hover
   */
-  button {
+  button, .button-link {
     background: rgb(50, 120, 200);
     border-radius: 0.25em;
     border: none;
@@ -258,14 +258,17 @@ body {
   }
   
   button:hover,
-  button:focus {
-    background: rgb(50, 90, 170);
+  button:focus,
+  .button-link:hover,
+  .button-link:focus {
+      background: rgb(50, 90, 170);
   }
   
-  button:active {
+  button:active,
+  .button-link:active {
     transform: scale(0.90);
   }
-  
+
   button.severe {
     background: rgb(230, 90, 90);
   }

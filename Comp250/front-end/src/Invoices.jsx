@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 const DEBUG_MSG = true
@@ -10,9 +10,7 @@ class Invoices extends Component {
     super(props)
 
     this.state = {
-      invoices: null,
-      viewInvoice: false,
-      invoice_id: null
+      invoices: null
     }
   }
 
@@ -24,23 +22,9 @@ class Invoices extends Component {
     })
   }
 
-  viewInvoice = event => {
-    this.setState({
-      viewInvoice: true,
-      invoice_id: event.target.id.slice('viewInv_'.length)
-    })
-  }
-
   
   render() {
-    if (this.state.viewInvoice) {
-        return <Redirect
-          to={{
-            pathname: '/viewinvoice',
-            state: { id: this.state.invoice_id }
-          }}
-        />
-      } else return (
+    return (
       <div className='flex-container-col'>
         <div className='panel'>
           <h1>Invoices</h1>
@@ -65,7 +49,11 @@ class Invoices extends Component {
                       <td>{inv.customer_id}</td>
                       <td>&nbsp;{inv.date}</td>
                       <td>
-                        <button id={'viewInv_' + inv.id} onClick={this.viewInvoice}>View details</button>
+                        <Link
+                          className='button-link'
+                          to={`/viewinvoice/${inv.id}`}>
+                          View details
+                        </Link>
                       </td>
                     </tr>
                   ))
