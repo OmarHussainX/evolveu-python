@@ -1,4 +1,4 @@
-#  React SPA
+#  python3, back-end & full stack
 Solutions for python, back-end & full stack competencies assigned in EvolveU's [Full Stack Developer Program](https://www.evolveu.ca/program).
 
 
