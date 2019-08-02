@@ -42,23 +42,22 @@ $ python format_email.py
 
 * [Comp 200 - Python Logic](#comp-200---python-logic)
 * [Comp 220 - Python File IO](#comp-220---python-file-io)
-* [Comp 230 - Python Excel](#comp-230---python-excel)
+*  - Python Excel](#comp-230---python-excel)
 * [Comp 240 - Python Flask](#comp-240---python-flask)
 * [Comp 250 - Full Stack](#comp-250---full-stack)
 
 
 &nbsp;
 
-
-## Comp 200 - Python Logic
-_[Solution for Comp 200 - Python Logic](Comp200/Comp%20200%20-%20Python%20Logic.pdf)_
+p 200 - Python Logic
+_[Comp 200 - Python Logic](Comp200/Comp%20200%20-%20Python%20Logic.pdf)_
 
 
 &nbsp;
 
 
-## Comp 220 - Python File IO
-_[Solution for Comp 220 - Python File IO](Comp220/Comp%20220%20-%20Python%20File%20IO.pdf)_
+## - Python File IO
+_[Comp 220 - Python File IO](Comp220/Comp%20220%20-%20Python%20File%20IO.pdf)_
 
 
 
@@ -66,14 +65,14 @@ _[Solution for Comp 220 - Python File IO](Comp220/Comp%20220%20-%20Python%20File
 
 
 ## Comp 230 - Python Excel
-_[Solution for Comp 230 - Python Excel](Comp230/Comp%20230%20-%20Python%20Excel.pdf)_
+_[Comp 230 - Python Excel](Comp230/Comp%20230%20-%20Python%20Excel.pdf)_
 
 
 &nbsp;
 
 
 ## Comp 240 - Python Flask
-_[Solution forComp 240 - Python Flask](Comp240/Comp%20240%20-%20Python%20Flask.pdf)_
+_[Comp 240 - Python Flask](Comp240/Comp%20240%20-%20Python%20Flask.pdf)_
 
 __NOTE:__ This project has two subfolders for the client (front-end) and server (back-end) which need to be run independently.
 
@@ -81,6 +80,6 @@ __NOTE:__ This project has two subfolders for the client (front-end) and server 
 
 
 ## Comp 250 - Full Stack
-_[Solution for Comp 250 - Full Stack](Comp250/Comp%20250%20-%20Full%20Stack.pdf)_
+_[Comp 250 - Full Stack](Comp250/Comp%20250%20-%20Full%20Stack.pdf)_
 
 __NOTE:__ This project has two subfolders for the client (front-end) and server (back-end) which need to be run independently.
