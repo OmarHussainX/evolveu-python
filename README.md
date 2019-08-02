@@ -10,10 +10,11 @@ Solutions for python, back-end & full stack competencies assigned in EvolveU's [
 
 __Prerequsites:__ [Git](https://git-scm.com) and [pipenv](https://github.com/pypa/pipenv) installed
 
-Each folder (`Comp 200, Comp220, Comp230, Comp240, Comp250`) contains a seperate python3-based project.
+Each folder (`Comp200, Comp220, Comp230, Comp240, Comp250`) contains a seperate python3-based project.
 
 After cloning the repo., in order to run a project, one would have to enter the project's folder, use `pipenv` to install all required dependencies & re-create the virtual environment for the project, and then run the python3 scripts therein from within the virtual environment.
 
+__General installation instructions:__
 ```bash
 # Clone repository
 $ git clone https://github.com/OmarHussainX/evolveu-python.git
