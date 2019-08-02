@@ -42,7 +42,7 @@ $ python format_email.py
 
 * [Comp 200 - Python Logic](#comp-200---python-logic)
 * [Comp 220 - Python File IO](#comp-220---python-file-io)
-*  - Python Excel](#comp-230---python-excel)
+* [Comp 230 - Python Excel](#comp-230---python-excel)
 * [Comp 240 - Python Flask](#comp-240---python-flask)
 * [Comp 250 - Full Stack](#comp-250---full-stack)
 
