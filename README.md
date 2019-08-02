@@ -49,14 +49,14 @@ $ python format_email.py
 
 &nbsp;
 
-p 200 - Python Logic
+## Comp 200 - Python Logic
 _[Comp 200 - Python Logic](Comp200/Comp%20200%20-%20Python%20Logic.pdf)_
 
 
 &nbsp;
 
 
-## - Python File IO
+## Comp 220 - Python File IO
 _[Comp 220 - Python File IO](Comp220/Comp%20220%20-%20Python%20File%20IO.pdf)_
 
 
