@@ -9,6 +9,7 @@ pytest = "*"
 
 [packages]
 openpyxl = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"
