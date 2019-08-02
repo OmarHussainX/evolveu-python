@@ -43,6 +43,8 @@ $ python format_email.py
 
 ## Usage
 
+Varies quite a bit depending on the project... Until this README is further developed, the best way to understand the purpose of a given project would be to review the corresponding assignment. Then the solution developed for the project will make sense.
+
 * [Comp 200 - Python Logic](#comp-200---python-logic)
 * [Comp 220 - Python File IO](#comp-220---python-file-io)
 * [Comp 230 - Python Excel](#comp-230---python-excel)
