@@ -28,7 +28,10 @@ $ pipenv install --ignore-pipfile
 # OR to install all dependencies (regular and development dependencies)
 $ pipenv install --dev
 
-# Run scripts (from inside the `pipenv` virtual environment for the project)
+# Activate the virtual environment just created
+$ pipenv shell
+
+# Run scripts (from inside the virtual environment)
 $ python tax_calc.py
 $ python format_email.py
 ```
