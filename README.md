@@ -77,7 +77,7 @@ _[Comp 230 - Python Excel](Comp230/Comp%20230%20-%20Python%20Excel.pdf)_
 ## Comp 240 - Python Flask
 _[Comp 240 - Python Flask](Comp240/Comp%20240%20-%20Python%20Flask.pdf)_
 
-__NOTE:__ This project contains two subfolders for the client (front-end) and server (back-end) which need to be run independently.
+__NOTE:__ This project contains two subfolders: one for the front-end, one for the back-end, each of which need to be run independently.
 
 &nbsp;
 
@@ -85,4 +85,4 @@ __NOTE:__ This project contains two subfolders for the client (front-end) and se
 ## Comp 250 - Full Stack
 _[Comp 250 - Full Stack](Comp250/Comp%20250%20-%20Full%20Stack.pdf)_
 
-__NOTE:__ This project contains two subfolders for the client (front-end) and server (back-end) which need to be run independently.
+__NOTE:__ This project contains two subfolders: one for the front-end, one for the back-end, each of which need to be run independently.
